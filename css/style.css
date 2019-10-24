@@ -9903,3 +9903,22 @@ span.customSelect.changed {
 #sendmessage.show, #errormessage.show, .show {
 	display:block;
 }
+
+.alert{
+    width: 100%;
+    background: #66e07d66;
+    border-radius: 6px;
+    margin: 20px auto;
+}
+
+.msg_error{
+    color:#e65656;
+}
+
+.msg.save{
+    color: #126e00;
+}
+
+.alert p{
+    padding: 10px;
+}

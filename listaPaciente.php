@@ -79,7 +79,7 @@
             </a>
             <ul class="sub">
               <li><a class="" href="listaPaciente.php"> Lista de Pacientes</a></li>
-              <li><a class="" href="indexCadastroPaciente.html"> Cadastrar Paciente</a></li>
+              <li><a class="" href="index_cadastro_paciente.php"> Cadastrar Paciente</a></li>
             </ul>
           </li>
           <li class="sub-menu">
