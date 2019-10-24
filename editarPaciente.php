@@ -5,15 +5,35 @@ include_once("conexao.php");
 	{
 		$alert='';
 
-		if(empty($_POST['nome']) || empty($_POST['data_nasc']) || empty($_POST['telefone']) || empty($_POST['sexo']) || empty($_POST['']) || empty($_POST['']) || empty($_POST['']) || empty($_POST['']) || empty($_POST['']) || empty($_POST['']) ()))
+		if(empty($_POST['nome']) || empty($_POST['data_nasc']) || empty($_POST['telefone']) || empty($_POST['sexo']) || empty($_POST['estado_civil']) || empty($_POST['']) || empty($_POST['rg']) || empty($_POST['cpf']) || empty($_POST['endereco']) || empty($_POST['bairro']) || empty($_POST['cep']) || empty($_POST['cidade']) || empty($_POST['email']))
+		{
+			echo 'Todos os campos são obrigatorios'
+		}else{
+
+			$idPaciente = $_POST['idPaciente'];
+			$nome = $_POST['nome'];
+			$data_nasc = $_POST['data_nasc'];
+			$telefone = $_POST['telefone'];
+			$sexo = $_POST['sexo'];
+			$estado_civil = $_POST['estado_civil'];
+			$rg = $_POST['rg'];
+			$cpf = $_POST['cpf'];
+			$endereco = $_POST['endereco'];
+			$bairro = $_POST['bairro'];
+			$cep = $_POST['cep'];
+			$cidade = $_POST['cidade'];
+			$email = $_POST['email'];
+
+			$slq_insert_paciente = "INSERT INTO paciente (nome, data_nasc, telefone, sexo, estado_civil, rg, cpf, endereco, bairro, cep, cidade, email) VALUES ('$nome', '$data_nasc', '$telefone', '$sexo', '$estado_civil', '$rg', '$cpf', '$endereco', '$bairro', '$cep','$cidade','$email')";
+
+			$salvar_paciente = mysqli_query($conexao, $slq_insert_paciente);
+
+		}
 
 	}
 
 
-
-
-
-//Retornar dados:
+	//Retornar dados:
     if(empty($_GET['id']))
     {
 
