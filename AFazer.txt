@@ -1,0 +1,6 @@
+*Adicionar campo de pesquisa para listar, facilitando a vizualização e tambem a edição.
+essa adição deve ser feita da lista de pacientes e na lista de profissionais.
+
+*fazer integração com o banco de dados com as tabelas e formularios.
+
+*
