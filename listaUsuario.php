@@ -77,7 +77,7 @@
             </a>
             <ul class="sub">
               <li><a class="" href="listaPaciente.php"> Lista de Pacientes</a></li>
-              <li><a class="" href="indexCadastroPaciente.html"> Cadastrar Paciente</a></li>
+              <li><a class="" href="index_cadastro_paciente.php"> Cadastrar Paciente</a></li>
             </ul>
           </li>
           <li class="sub-menu">
@@ -88,7 +88,7 @@
             </a>
             <ul class="sub">
               <li><a class="" href="listaUsuario.php"> Lista de Usuários</a></li>
-              <li><a class="" href="cadastroUsuario.php"> Cadastrar Usuários</a></li>
+              <li><a class="" href="index_cadastro_usuario.php"> Cadastrar Usuários</a></li>
             </ul>
           </li>
           <li class="sub-menu">
@@ -144,10 +144,10 @@
                             <th><i class="icon_calendar"></i> D. Nascimento</th>
                             <th><i class="icon_pin_alt"></i> CPF</th>
                             <th><i class="icon_mobile"></i> Telefone</th>
-                            <th><i class="icon_cogs"></i> Editar</th>
+                            <th><i class="icon_cogs"></i></th>
                           </tr>
                           <?php
-                            $sql_lista_usuario = "SELECT nome, tipoUsuario, data_nasc, cpf, telefone FROM usuario";
+                            $sql_lista_usuario = "SELECT idUsuario, nome, tipoUsuario, data_nasc, cpf, telefone FROM usuario";
                             $lista_usuarios = mysqli_query ($conexao, $sql_lista_usuario);
                             $registros_usuarios = mysqli_num_rows($lista_usuarios);
 
@@ -161,9 +161,7 @@
                                     <td><?= $data ["cpf"]; ?></td>
                                     <td><?= $data ["telefone"]; ?></td>
                                     <td>
-                                      <div class="btn-group">
-                                        <a class="btn btn-info" href=""><i class="icon_plus_alt2"></i></a>
-                                      </div>
+                                      <a class="link_edit" href="editarUsuario.php?id=<?= $data['idUsuario']; ?>">Editar</a>
                                     </td>
                                   </tr>
                                 <?php

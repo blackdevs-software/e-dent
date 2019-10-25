@@ -77,7 +77,7 @@
             </a>
             <ul class="sub">
               <li><a class="" href="listaPaciente.php"> Lista de Pacientes</a></li>
-              <li><a class="" href="indexCadastroPaciente.php"> Cadastrar Paciente</a></li>
+              <li><a class="" href="index_cadastro_paciente.php"> Cadastrar Paciente</a></li>
             </ul>
           </li>
           <li class="sub-menu">
@@ -132,7 +132,7 @@
                           <th><i class="icon_mail_alt"></i> Email</th>
                           <th><i class="icon_pin_alt"></i> CPF</th>
                           <th><i class="icon_mobile"></i> Telefone</th>
-                          <th><i class="icon_cogs"></i> Editar</th>
+                          <th><i class="icon_cogs"></i></th>
                         </tr>
                         <?php
                           $sql_lista_paciente = "SELECT idPaciente, nome, data_nasc, email, cpf, telefone FROM paciente";

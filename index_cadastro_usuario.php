@@ -5,61 +5,65 @@
   if(!empty($_POST))
   {
     if (
-      empty($_POST['nome']) || empty($_POST['data_nasc']) || empty($_POST['telefone']) || empty($_POST['sexo']) || empty($_POST['estado_civil']) || 
-      empty($_POST['rg']) || empty($_POST['cpf']) || empty($_POST['endereco']) || empty($_POST['bairro']) || empty($_POST['cep']) || 
-      empty($_POST['cidade']) || empty($_POST['email'])
-    ){
+      empty($_POST['nome']) || empty($_POST['tipoUsuario'])||  empty($_POST['data_nasc']) || empty($_POST['cpf']) || empty($_POST['rg']) || 
+      empty($_POST['telefone']) || empty($_POST['email']) || empty($_POST['sexo']) || empty($_POST['estado_civil']) || 
+      empty($_POST['cep']) || empty($_POST['enderecoResidencial']) || empty($_POST['bairro']) || empty($_POST['cidade']) || 
+      empty($_POST['senha']) || empty($_POST['confirmar_senha'])
+    ){      
     ?>
       <script>
         alert("Todos os campos são obrigatorios");               
       </script>
-    <?php                
+    <?php               
       header("Refresh: 0; index_cadastro_paciente.php");
-    } else {              
+    }else{
           $nome = $_POST['nome'];
+          $tipoUsuario = $_POST['tipoUsuario'];
           $data_nasc = $_POST['data_nasc'];
+          $cpf_usuario = $_POST['cpf'];
+          $rg = $_POST['rg'];
           $telefone = $_POST['telefone'];
+          $email = $_POST['email'];
           $sexo = $_POST['sexo'];
           $estado_civil = $_POST['estado_civil'];
-          $rg = $_POST['rg'];
-          $cpf_paciente = $_POST['cpf'];
-          $endereco = $_POST['endereco'];
-          $bairro = $_POST['bairro'];
           $cep = $_POST['cep'];
+          $enderecoResidencial = $_POST['enderecoResidencial'];
+          $bairro = $_POST['bairro'];
           $cidade = $_POST['cidade'];
-          $email = $_POST['email'];
+          $senha = $_POST['senha'];
+          $confirmar_senha = $_POST['confirmar_senha'];
 
-          $query = mysqli_query ($conexao, "SELECT * FROM paciente WHERE cpf = '$cpf_paciente' ");
+          $query = mysqli_query ($conexao, "SELECT * FROM usuario WHERE cpf = '$cpf_usuario' ");
 
           $result = mysqli_fetch_array ($query);
 
-          if($result > 0){
+          if($result > null){
           ?>
             <script>
-              alert("Paciente já cadastrado no sistema, reeveja os dados!");               
+              alert("Usuário já cadastrado no sistema, reeveja os dados!");               
             </script>
           <?php               
-          header("Refresh: 0; index_cadastro_paciente.php"); 
-          } else {
-            $sql_insert_paciente = mysqli_query($conexao, "INSERT INTO paciente (nome, data_nasc, telefone, sexo, estado_civil, rg, cpf, endereco, bairro, cep, cidade, email) VALUES ('$nome', '$data_nasc', '$telefone', '$sexo', '$estado_civil', '$rg', '$cpf_paciente', '$endereco', '$bairro', '$cep','$cidade','$email')");
-              if($sql_insert_paciente){
+            header("Refresh: 0; index_cadastro_usuario.php");
+            } else {
+            $slq_insert_usuario = mysqli_query($conexao, "INSERT INTO usuario (senha, tipoUsuario, nome, data_nasc, telefone, sexo, estado_civil, rg, cpf, bairro, cep, cidade, enderecoResidencial, email, confirmar_senha) VALUES ('$senha', '$tipoUsuario', '$nome', '$data_nasc', '$telefone', '$sexo', '$estado_civil', '$rg', '$cpf_usuario', '$bairro', '$cep', '$cidade', '$enderecoResidencial', '$email', '$confirmar_senha')");
+
+              if($slq_insert_usuario){
               ?>
                 <script>
-                  alert("Paciente cadastrado com sucesso no sistema!");               
+                  alert("Usuário cadastrado com sucesso no sistema!");               
                 </script>
               <?php               
-              header("Refresh: 0; listaPaciente.php");
+              header("Refresh: 0; listaUsuario.php");
               }else{
               ?>
-                <script>
-                  alert("Erro ao cadastrar paciente!");               
-                </script>
+                  <script>
+                    alert("Erro ao cadastrar usuário!");               
+                  </script>
               <?php               
-              header("Refresh: 0; index.html"); 
+              header("Refresh: 0; index_cadastro_usuario.php"); 
               }
-          }
+            }
     }
-
   }
 ?>
 
@@ -69,12 +73,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Creative - Bootstrap 3 Responsive Admin Template">
-  <meta name="author" content="GeeksLabs">
+  <meta name="description" content="Lista de Pacientes">
   <meta name="keyword" content="Creative, Dashboard, Admin, Template, Theme, Bootstrap, Responsive, Retina, Minimal">
   
 
-  <title>Cadastro de Paciente</title>
+  <title>Cadastro Usuário</title>
 
   <!-- Bootstrap CSS -->
   <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -84,16 +87,6 @@
   <!-- font icon -->
   <link href="css/elegant-icons-style.css" rel="stylesheet" />
   <link href="css/font-awesome.min.css" rel="stylesheet" />
-  <!-- full calendar css-->
-  <link href="assets/fullcalendar/fullcalendar/bootstrap-fullcalendar.css" rel="stylesheet" />
-  <link href="assets/fullcalendar/fullcalendar/fullcalendar.css" rel="stylesheet" />
-  <!-- easy pie chart-->
-  <link href="assets/jquery-easy-pie-chart/jquery.easy-pie-chart.css" rel="stylesheet" type="text/css" media="screen" />
-  <!-- owl carousel -->
-  <link rel="stylesheet" href="css/owl.carousel.css" type="text/css">
-  <link href="css/jquery-jvectormap-1.2.2.css" rel="stylesheet">
-  <!-- Custom styles -->
-  <link rel="stylesheet" href="css/fullcalendar.css">
   <link href="css/widgets.css" rel="stylesheet">
   <link href="css/style.css" rel="stylesheet">
   <link href="css/style-responsive.css" rel="stylesheet" />
@@ -105,7 +98,6 @@
   <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
   <script type="text/javascript" src="js/bootstrap.min.js"></script>
 
-
 </head>
 
 <body>
@@ -116,8 +108,8 @@
         <div class="icon-reorder tooltips" data-original-title="Toggle Navigation" data-placement="bottom"><i class="icon_menu"></i></div>
       </div>
       <a class="navbar-brand" href="#">
-        <img src="images/icons/E-DENT-3.png" class="nav-item " alt="logo" style="width: 90px">
-      </a>
+          <img src="images/icons/E-DENT-3.png" class="nav-item " alt="logo" style="width: 90px">
+      </a> 
     </header>
     <!--header end-->
 
@@ -127,7 +119,7 @@
         <!-- sidebar menu start-->
         <ul class="sidebar-menu">
           <li class="active">
-            <a class="" href="index.html">
+            <a class="" href="indexCoordenador.html">
               <i class="icon_house_alt"></i>
               <span>Home</span>
             </a>
@@ -135,7 +127,7 @@
           <li class="sub-menu">
             <a href="javascript:;" class="">
               <i class="icon_document_alt"></i>
-              <span>Pacientes</span>
+              <span> Pacientes</span>
               <span class="menu-arrow arrow_carrot-right"></span>
             </a>
             <ul class="sub">
@@ -146,11 +138,22 @@
           <li class="sub-menu">
             <a href="javascript:;" class="">
               <i class="icon_document_alt"></i>
+              <span> Usuários</span>
+              <span class="menu-arrow arrow_carrot-right"></span>
+            </a>
+            <ul class="sub">
+              <li><a class="" href="listaUsuario.php"> Lista Usuarios</a></li>
+              <li><a class="" href="index_cadastro_usuario.php"> Cadastrar Usuario</a></li>
+            </ul>
+          </li>
+          <li class="sub-menu">
+            <a href="javascript:;" class="">
+              <i class="icon_document_alt"></i>
               <span> Prontuarios</span>
               <span class="menu-arrow arrow_carrot-right"></span>
             </a>
             <ul class="sub">
-              <li><a class="" href="indexCadastroHistoriaMedica.html"> Historia Clinica</a></li>
+              <li><a class="" href="indexCadastroHistoriaClinica.html"> Historia Clinica</a></li>
               <li><a class="" href="indexHigieneOral.html"> Higiene Oral</a></li>
               <li><a class="" href="ProntuarioOdontologico.html"> Odontológico</a></li>
             </ul>
@@ -170,7 +173,7 @@
           <div class="col-lg-12">
             <section class="panel">
               <header class="panel-heading">
-                CADASTRO DE PACIENTE
+                CADASTRO USUARIO
               </header>
               <div class="panel-body">
                 <div class="form">
@@ -178,31 +181,41 @@
                     <div class="form-group ">
                       <label for="nome" class="control-label col-lg-2">Nome Completo<span class="required">*</span></label>
                       <div class="col-lg-10">
-                        <input class=" form-control" id="nome" name="nome" type="text" placeholder="Digite o Nome" required="required"/>
+                        <input class=" form-control" type="text" name="nome" required="required" placeholder="Digite o Nome"/>
                       </div>
+                    </div>
+                    <div class="form-group ">
+                      <label for="tipoUsuario" class="control-label col-lg-2">Tipo Usuário<span class="required">*</span></label>
+                        <div class="col-lg-10">
+                          <select name="tipoUsuario" class="form-control" required="required">
+                            <option value="" selected>Selecionar</option>
+                            <option value="Profissional">Profissional</option>
+                            <option value="Coordenador">Coordenador</option>
+                          </select>
+                        </div>
                     </div>
                     <div class="form-group ">
                       <label for="data_nasc" class="control-label col-lg-2">Data de Nascimento<span class="required">*</span></label>
                       <div class="col-lg-10">
-                        <input class=" form-control" id="data_nasc" name="data_nasc" type="date" required="required" />
-                      </div>
-                    </div>
-                    <div class="form-group ">
-                      <label for="rg" class="control-label col-lg-2">RG<span class="required">*</span></label>
-                      <div class="col-lg-10">
-                        <input class="form-control " id="rg" name="rg" type="text" placeholder="123456789" required="required"/>
+                        <input class="form-control" type="date" name="data_nasc" required="required"/>
                       </div>
                     </div>
                     <div class="form-group ">
                       <label for="cpf" class="control-label col-lg-2">CPF<span class="required">*</span></label>
                       <div class="col-lg-10">
-                        <input class="form-control " id="cpf" name="cpf" placeholder="12345678910" type="text" required="required"/>
+                        <input class="form-control" type="text" name="cpf" required="required" placeholder="12345678910"/>
+                      </div>
+                    </div>
+                    <div class="form-group ">
+                      <label for="rg" class="control-label col-lg-2">RG<span class="required">*</span></label>
+                      <div class="col-lg-10">
+                        <input class="form-control" type="text" name="rg" required="required" placeholder="123456789"/>
                       </div>
                     </div>
                     <div class="form-group ">
                       <label for="telefone" class="control-label col-lg-2">Telefone<span class="required">*</span></label>
                       <div class="col-lg-10">
-                        <input class="form-control " id="telefone" name="telefone" type="text" placeholder="(DD)99999-9999" required="required"/>
+                        <input class="form-control" type="text" name="telefone" required="required" placeholder="(DD)99999-9999"/>
                       </div>
                     </div>
                     <div class="form-group ">
@@ -214,66 +227,75 @@
                     <div class="form-group ">
                       <label for="sexo" class="control-label col-lg-2">Sexo<span class="required">*</span></label>
                         <div class="col-lg-10">
-                              <select name = "sexo" class="form-control" required="required">
-                                <option value = "" selected>Selecionar</option>
-                                <option value="f">Feminino</option>
-                                <option value ="m">Masculino</option>
-                              </select>
+                          <select name="sexo" class="form-control" required="required">
+                            <option value="" selected>Selecionar</option>
+                            <option value="f">Feminino</option>
+                            <option value="m">Masculino</option>
+                          </select>
                         </div>
                     </div>
                     <div class="form-group ">
                       <label for="estado_civil" class="control-label col-lg-2">Estado Civil<span class="required">*</span></label>
                         <div class="col-lg-10">
-                              <select required="required" name ="estado_civil" class="form-control">
-                                <option value = "" selected>Selecionar</option>
-                                <option value = "s">Solteiro</option>
-                                <option value = "c">Casado</option>
-                                <option value = "d">Divorciado</option>
-                              </select>
+                          <select name="estado_civil" class="form-control" required="required">
+                            <option value="" selected>Selecionar</option>
+                            <option value="s">Solteiro</option>
+                            <option value="c">Casado</option>
+                            <option value="d">Divorciado</option>
+                          </select>
                         </div>
                     </div>
-                    <div class="form-group ">
+                    <div class="form-group">
                       <label for="cep" class="control-label col-lg-2">CEP<span class="required">*</span></label>
                       <div class="col-lg-10">
-                        <input class="form-control" id="cep" name="cep" placeholder="Digite o CEP" type="text" required="required"/>
+                        <input class="form-control" type="text" name="cep" required="required" placeholder="Digite o CEP"/>
                       </div>
                     </div>
-                    <div class="form-group ">
-                      <label for="endereco" class="control-label col-lg-2">Endereço Residencial<span class="required">*</span></label>
+                    <div class="form-group">
+                      <label for="enderecoResidencial" class="control-label col-lg-2">Endereço Residencial<span class="required">*</span></label>
                       <div class="col-lg-10">
-                        <input class="form-control" id="endereco" name="endereco" class="form-control" id="endereco" placeholder="Digite o Endereço" type="text" required="required" />
+                        <input class="form-control"  type="text" name="enderecoResidencial" required="required" placeholder="Digite o Endereço"/>
                       </div>
                     </div>
                     <div class="form-group ">
                       <label for="bairro" class="control-label col-lg-2">Bairro<span class="required">*</span></label>
                       <div class="col-lg-10">
-                        <input class="form-control" id="bairro" name="bairro" class="form-control" id="" placeholder="Digite o Bairro" type="text" required="required" />
+                        <input class="form-control" type="text" name="bairro" required="required" placeholder="Digite o Bairro"/>
                       </div>
                     </div>
                     <div class="form-group ">
                       <label for="cidade" class="control-label col-lg-2">Cidade<span class="required">*</span></label>
                       <div class="col-lg-10">
-                        <input class="form-control" id="cidade" name="cidade" class="form-control" id="" placeholder="Digite a Cidade" type="text" required="required" />
+                        <input class="form-control" type="text" name="cidade" required="required" placeholder="Digite a Cidade"/>
+                      </div>
+                    </div>
+                    <div class="form-group ">
+                      <label for="senha" class="control-label col-lg-2">Senha<span class="required">*</span></label>
+                      <div class="col-lg-10">
+                        <input class="form-control" type="password" name="senha" required="required" placeholder="Digite a Senha"/>
+                      </div>
+                    </div>
+                    <div class="form-group ">
+                      <label for="confirmar_senha" class="control-label col-lg-2">Confirme a Senha<span class="required">*</span></label>
+                      <div class="col-lg-10">
+                        <input class="form-control" type="password"name="confirmar_senha" required="required" placeholder="Confirme a senha"/>
                       </div>
                     </div>
                     <center>
                       <div>
                         <small id="" class="form-text text">
-                           OBS: Antes de encerrar o cadastro verificar e com o auxilio do paciente verificar se todos os dados estão corretos.              
-                        </small>
-                      </div>
-                      <br>                  
-
+                           OBS: Antes de encerrar o cadastro verificar com o auxilio do profissional se todos os dados estão corretos.             
+                         </small>
+                      </div>                    
                       <div class="form-group">
                         <div class="col-lg-offset-2 col-lg-10">
-                          <button class="btn btn-primary" type="submit" value = "Cadastrar Paciente">Salvar</button>
+                          <button class="btn btn-primary" type="submit" value = "">Salvar</button>
                           <button class="btn btn-default" type="button">Cancelar</button>
                         </div>
                       </div>
-                	  </center>
+                    </center>
                   </form>
-                </div>
-              </div>
+                </div> 
             </section>
           </div>
         </div>
@@ -293,25 +315,18 @@
   <!-- nice scroll -->
   <script src="js/jquery.scrollTo.min.js"></script>
   <script src="js/jquery.nicescroll.js" type="text/javascript"></script>
-  <!--script for this page only-->
-  <script src="js/calendar-custom.js"></script>
-  <script src="js/jquery.rateit.min.js"></script>
   <!-- custom select -->
   <script src="js/jquery.customSelect.min.js"></script>
   <script src="assets/chart-master/Chart.js"></script>
-
   <!--custome script for all page-->
   <script src="js/scripts.js"></script>
   <!-- custom script for this page-->
-  <script src="js/sparkline-chart.js"></script>
-  <script src="js/easy-pie-chart.js"></script>
-  <script src="js/jquery-jvectormap-1.2.2.min.js"></script>
-  <script src="js/jquery-jvectormap-world-mill-en.js"></script>
   <script src="js/xcharts.min.js"></script>
   <script src="js/jquery.autosize.min.js"></script>
   <script src="js/jquery.placeholder.min.js"></script>
   <script src="js/charts.js"></script>
   <script src="js/jquery.slimscroll.min.js"></script>
+
 </body>
 
 </html>

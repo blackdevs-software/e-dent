@@ -1,29 +1,33 @@
 <?php
   include_once("conexao.php");
 
-	if(!empty($_POST))
-	{
+  if(!empty($_POST))
+  {
     if (
-      empty($_POST['idPaciente']) || empty($_POST['nome']) || empty($_POST['data_nasc']) || empty($_POST['telefone']) ||
-      empty($_POST['sexo']) || empty($_POST['estado_civil']) || empty($_POST['rg']) || empty($_POST['cpf']) || empty($_POST['endereco']) ||
-      empty($_POST['bairro']) || empty($_POST['cep']) || empty($_POST['cidade']) || empty($_POST['email'])
+      empty($_POST['idUsuario'])|| empty($_POST['senha']) || empty($_POST['tipoUsuario']) || empty($_POST['nome']) || empty($_POST['data_nasc']) || 
+      empty($_POST['telefone']) || empty($_POST['sexo']) || empty($_POST['estado_civil']) || empty($_POST['rg']) || empty($_POST['cpf']) ||
+      empty($_POST['bairro']) || empty($_POST['cep']) || empty($_POST['cidade']) || empty($_POST['enderecoResidencial']) || empty($_POST['email']) || 
+      empty($_POST['confirmar_senha'])
     ) {
       echo 'Todos os campos são obrigatorios';
-		} else {
-      $id = $_POST['idPaciente'];
+    } else {
+      $id = $_POST['idUsuario'];
       $data = [
-        'nome' => $_POST['nome'],
+        'senha' => $_POST['senha'],
+        'tipoUsuario' => $_POST['tipoUsuario'],
+        'nome' => $_POST['nome'],        
         'data_nasc' => $_POST['data_nasc'],
         'telefone' => $_POST['telefone'],
         'sexo' => $_POST['sexo'],
         'estado_civil' => $_POST['estado_civil'],
         'rg' => $_POST['rg'],
         'cpf' => $_POST['cpf'],
-        'endereco' => $_POST['endereco'],
         'bairro' => $_POST['bairro'],
         'cep' => $_POST['cep'],
         'cidade' => $_POST['cidade'],
-        'email' => $_POST['email'],
+        'enderecoResidencial' => $_POST['enderecoResidencial'],       
+        'email' => $_POST['email'],         
+        'confirmar_senha' => $_POST['confirmar_senha'],
       ];
 
       $update_fields = [];
@@ -37,42 +41,42 @@
 
       $update_fields = implode(', ', $update_fields);
 
-      $slq_update_paciente = "UPDATE
-                                paciente
+      $slq_update_usuario = "UPDATE
+                                usuario
                               SET
                                 {$update_fields}
                               WHERE
-                                idPaciente = {$id}";
+                                idUsuario = {$id}";
 
-      $salvar_paciente = mysqli_query($conexao, $slq_update_paciente);
+      $salvar_usuario = mysqli_query($conexao, $slq_update_usuario);
 
-      if($salvar_paciente){
+      if($salvar_usuario){
       ?>
         <script>
-          alert("Cadasto alterado com sucesso no sistema!");               
+          alert("Cadasto do usuario alterado com sucesso no sistema!");               
         </script>
       <?php
-        header("Refresh: 0; listaPaciente.php");
+        header("Refresh: 0; listaUsuario.php");
       }else{
       ?>
         <script>
-          alert("Erro ao alterar o cadastro do paciente!");               
+          alert("Erro ao alterar o cadastro do usuario!");               
         </script>
       <?php               
-        header("Refresh: 0; listaPaciente.php");    
+        header("Refresh: 0; listaUsuario.php");    
 
       }
-		}
-	}
+    }
+  }
 
-	//Retornar dados do paciente:
+  //Retornar dados do usuário:
     if(empty($_GET['id']))
     {
-      header('Location: listaPaciente.php');
+      header('Location: listaUsuario.php');
     }
-    $idP = $_GET['id'];
+    $idU = $_GET['id'];
 
-    $sql = mysqli_query($conexao, "SELECT idPaciente, nome, data_nasc, telefone, sexo, estado_civil, rg, cpf, endereco, bairro, cep, cidade, email FROM paciente WHERE idPaciente = $idP ");
+    $sql = mysqli_query($conexao, "SELECT idUsuario, senha, tipoUsuario, nome, data_nasc, telefone, sexo, estado_civil, rg, cpf, bairro, cep, cidade, enderecoResidencial, email, confirmar_senha FROM usuario WHERE idUsuario = $idU ");
 
     $result_sql = mysqli_num_rows($sql);
 
@@ -81,7 +85,9 @@
     }else{
       while ($data = mysqli_fetch_array($sql)) {
 
-        $idPaciente = $data['idPaciente'];
+        $idUsuario = $data['idUsuario'];
+        $senha = $data['senha'];
+        $tipoUsuario = $data['tipoUsuario'];
         $nome = $data['nome'];
         $data_nasc = $data['data_nasc'];
         $telefone = $data['telefone'];
@@ -89,11 +95,13 @@
         $estado_civil = $data['estado_civil'];
         $rg = $data['rg'];
         $cpf = $data['cpf'];
-        $endereco = $data['endereco'];
         $bairro = $data['bairro'];
         $cep = $data['cep'];
         $cidade = $data['cidade'];
+        $enderecoResidencial = $data['enderecoResidencial'];
         $email = $data['email'];
+        $confirmar_senha = $data['confirmar_senha'];
+
       }
     }
 
@@ -118,8 +126,9 @@
   <meta name="description" content="Creative - Bootstrap 3 Responsive Admin Template">
   <meta name="author" content="GeeksLabs">
   <meta name="keyword" content="Creative, Dashboard, Admin, Template, Theme, Bootstrap, Responsive, Retina, Minimal">
+  
 
-  <title>Editar Paciente</title>
+  <title>Editar Usuário</title>
 
   <!-- Bootstrap CSS -->
   <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -129,8 +138,6 @@
   <!-- font icon -->
   <link href="css/elegant-icons-style.css" rel="stylesheet" />
   <link href="css/font-awesome.min.css" rel="stylesheet" />
-  <!-- Custom styles -->
-  <link rel="stylesheet" href="css/fullcalendar.css">
   <link href="css/widgets.css" rel="stylesheet">
   <link href="css/style.css" rel="stylesheet">
   <link href="css/style-responsive.css" rel="stylesheet" />
@@ -153,7 +160,7 @@
       </div>
       <a class="navbar-brand" href="#">
         <img src="images/icons/E-DENT-3.png" class="nav-item " alt="logo" style="width: 90px">
-      </a>
+      </a> 
     </header>
     <!--header end-->
 
@@ -163,7 +170,7 @@
         <!-- sidebar menu start-->
         <ul class="sidebar-menu">
           <li class="active">
-            <a class="" href="index.html">
+            <a class="" href="indexCoordenador.html">
               <i class="icon_house_alt"></i>
               <span>Home</span>
             </a>
@@ -182,74 +189,91 @@
           <li class="sub-menu">
             <a href="javascript:;" class="">
               <i class="icon_document_alt"></i>
+              <span> Usuários</span>
+              <span class="menu-arrow arrow_carrot-right"></span>
+            </a>
+            <ul class="sub">
+              <li><a class="" href="listaUsuario.php"> Lista Usuarios</a></li>
+              <li><a class="" href="index_cadastro_usuario.php"> Cadastrar Usuario</a></li>
+            </ul>
+          </li>
+          <li class="sub-menu">
+            <a href="javascript:;" class="">
+              <i class="icon_document_alt"></i>
               <span> Prontuarios</span>
               <span class="menu-arrow arrow_carrot-right"></span>
             </a>
             <ul class="sub">
-              <li><a class="" href="indexCadastroHistoriaMedica.html"> Historia Clinica</a></li>
+              <li><a class="" href="indexCadastroHistoriaClinica.html"> Historia Clinica</a></li>
               <li><a class="" href="indexHigieneOral.html"> Higiene Oral</a></li>
               <li><a class="" href="ProntuarioOdontologico.html"> Odontológico</a></li>
             </ul>
           </li>
-          <li>
-            <a class="" href="">
-              <i class="icon_genius"></i>
-              <span>Odontograma</span>
-            </a>
-          </li>
-
+          <li><a class="" href="agendaConsultas.html"><i class="icon_genius"></i><span>Consultas</span></a></li>
+          <li><a class="" href="odontograma.html"><i class="icon_genius"></i><span>Odontograma</span></a></li>
         </ul>
         <!-- sidebar menu end-->
       </div>
     </aside>
-        <!--sidebar end-->
-        <!--main content start-->
+    <!--sidebar end-->
+
+    <!--main content start-->
     <section id="main-content">
       <section class="wrapper">
         <div class="row">
           <div class="col-lg-12">
             <section class="panel">
               <header class="panel-heading">
-                EDITAR CADASTRO DE PACIENTE
+                CADASTRO USUARIO
               </header>
               <div class="panel-body">
                 <div class="form">
-                  <form class="form-validate form-horizontal" id="register_form" method="post" action="">
-                    <input type = "hidden" name="idPaciente" value="<?= $idP; ?>">
+                  <form class="form-validate form-horizontal " id="register_form" method="post" action="">
+                    <input type = "hidden" name="idUsuario" value="<?= $idU; ?>">
                     <div class="form-group ">
                       <label for="nome" class="control-label col-lg-2">Nome Completo<span class="required">*</span></label>
                       <div class="col-lg-10">
-                        <input class="form-control" type="text" name="nome" placeholder="Digite o Nome" required="required" value = "<?php echo $nome; ?>"/>
+                        <input class=" form-control" type="text" name="nome" required="required" placeholder="Digite o Nome" value="<?php echo $nome; ?>"/>
                       </div>
+                    </div>
+                    <div class="form-group ">
+                      <label for="tipoUsuario" class="control-label col-lg-2">Tipo Usuário<span class="required">*</span></label>
+                        <div class="col-lg-10">
+                          <select name="tipoUsuario" class="form-control" required="required">                          
+                            <option value="<?php echo $tipoUsuario; ?>" selected><?php echo $tipoUsuario; ?></option>
+                            <option value="profissional">Profissional</option>
+                            <option value="coordenador">Coordenador</option>                          
+                          </select>
+                        </div>
                     </div>
                     <div class="form-group ">
                       <label for="data_nasc" class="control-label col-lg-2">Data de Nascimento<span class="required">*</span></label>
                       <div class="col-lg-10">
-                        <input class=" form-control"  type="date"  name="data_nasc"required="required" value = "<?php echo $data_nasc; ?>" />
+                        <input class="form-control" type="date" name="data_nasc" required="required" value="<?php echo $data_nasc; ?>"/>
                       </div>
                     </div>
                     <div class="form-group ">
                       <label for="cpf" class="control-label col-lg-2">CPF<span class="required">*</span></label>
                       <div class="col-lg-10">
-                        <input class="form-control" type="text" name="cpf" placeholder="12345678910" value = "<?php echo $cpf; ?>" />
+                        <input class="form-control" type="text" name="cpf" required="required" placeholder="12345678910" value="<?php echo $cpf; ?>"/>
                       </div>
                     </div>
                     <div class="form-group ">
                       <label for="rg" class="control-label col-lg-2">RG<span class="required">*</span></label>
                       <div class="col-lg-10">
-                        <input class="form-control" name="rg" type="text" placeholder="123456789" value = "<?php echo $rg; ?>" />
+                        <input class="form-control" type="text" name="rg" required="required" placeholder="123456789" value="<?php echo $rg; ?>"/>
                       </div>
                     </div>
                     <div class="form-group ">
                       <label for="telefone" class="control-label col-lg-2">Telefone<span class="required">*</span></label>
                       <div class="col-lg-10">
-                        <input class="form-control" name="telefone" type="text" placeholder="(DD)99999-9999" value = "<?php echo $telefone; ?>" />
+                        <input class="form-control" type="text" name="telefone" required="required" placeholder="(DD)99999-9999" value="<?php echo $telefone; ?>"/>
                       </div>
                     </div>
                     <div class="form-group ">
                       <label for="email" class="control-label col-lg-2">Email<span class="required">*</span></label>
                       <div class="col-lg-10">
-                        <input class="form-control" name="email" type="email" placeholder="seunome@email.com" value = "<?php echo $email ;?>" />
+                        <input class="form-control" name="email" type="email" placeholder="seunome@email.com" value="<?php echo $email; ?>"/>
                       </div>
                     </div>
                     <div class="form-group ">
@@ -279,7 +303,7 @@
                     <div class="form-group ">
                       <label for="estado_civil" class="control-label col-lg-2">Estado Civil<span class="required">*</span></label>
                         <div class="col-lg-10">
-                          <select class="form-control" name="estado_civil" required="required">
+                          <select name="estado_civil" class="form-control" required="required">
                             <?php
                               foreach ($estado_civil_options as $option) {
                                 if ($estado_civil === $option['value']) {
@@ -300,53 +324,65 @@
                           </select>
                         </div>
                     </div>
-                    <div class="form-group ">
+                    <div class="form-group">
                       <label for="cep" class="control-label col-lg-2">CEP<span class="required">*</span></label>
                       <div class="col-lg-10">
-                        <input class="form-control"  type="text" name="cep" placeholder="Digite o CEP" value = "<?php echo $cep ;?>" />
+                        <input class="form-control" type="text" name="cep" required="required" placeholder="Digite o CEP" value="<?php echo $cep; ?>"/>
                       </div>
                     </div>
-                    <div class="form-group ">
-                      <label for="endereco" class="control-label col-lg-2">Endereço Residencial<span class="required">*</span></label>
+                    <div class="form-group">
+                      <label for="enderecoResidencial" class="control-label col-lg-2">Endereço Residencial<span class="required">*</span></label>
                       <div class="col-lg-10">
-                        <input class="form-control" type="text" name="endereco" placeholder="Digite o Endereço" value = "<?php echo $endereco ; ?>" />
+                        <input class="form-control"  type="text" name="enderecoResidencial" required="required" placeholder="Digite o Endereço" value="<?php echo $enderecoResidencial; ?>"/>
                       </div>
                     </div>
                     <div class="form-group ">
                       <label for="bairro" class="control-label col-lg-2">Bairro<span class="required">*</span></label>
                       <div class="col-lg-10">
-                        <input class="form-control" type="text" name="bairro" placeholder="Digite o Bairro" value = "<?php echo $bairro ; ?>"/>
+                        <input class="form-control" type="text" name="bairro" required="required" placeholder="Digite o Bairro" value="<?php echo $bairro; ?>" />
                       </div>
                     </div>
                     <div class="form-group ">
                       <label for="cidade" class="control-label col-lg-2">Cidade<span class="required">*</span></label>
                       <div class="col-lg-10">
-                        <input class="form-control" type="text" name="cidade" placeholder="Digite a Cidade" value = "<?php echo $cidade ;?>"/>
+                        <input class="form-control" type="text" name="cidade" required="required" placeholder="Digite a Cidade" value="<?php echo $cidade; ?>"/>
+                      </div>
+                    </div>
+                    <div class="form-group ">
+                      <label for="senha" class="control-label col-lg-2">Senha<span class="required">*</span></label>
+                      <div class="col-lg-10">
+                        <input class="form-control" type="password" name="senha" required="required" placeholder="Digite a Senha" value="<?php echo $senha; ?>"/>
+                      </div>
+                    </div>
+                    <div class="form-group ">
+                      <label for="confirmar_senha" class="control-label col-lg-2">Confirme a Senha<span class="required">*</span></label>
+                      <div class="col-lg-10">
+                        <input class="form-control" type="password"name="confirmar_senha" required="required" placeholder="Confirme a senha" value="<?php echo $confirmar_senha; ?>"/>
                       </div>
                     </div>
                     <center>
-                    <div>
-                      <small id="" class="form-text text">
-                        OBS: Antes de encerrar o cadastro verificar e com o auxilio do paciente verificar se todos os dados estão corretos.
-                      </small>
-                    </div>
-                    <br>
-                    <div class="form-group">
-                      <div class="col-lg-offset-2 col-lg-10">
-                        <button class="btn btn-primary" type="submit" value="">Salvar</button>
-                        <button class="btn btn-default" type="button">Cancelar</button>
+                      <div>
+                        <small id="" class="form-text text">
+                           OBS: Antes de encerrar o cadastro verificar com o auxilio do profissional se todos os dados estão corretos.             
+                         </small>
+                      </div>    
+                      <br>                
+                      <div class="form-group">
+                        <div class="col-lg-offset-2 col-lg-10">
+                          <button class="btn btn-primary" type="submit" value = "">Salvar</button>
+                          <button class="btn btn-default" type="button">Cancelar</button>
+                        </div>
                       </div>
-                    </div>
-                  </center>
+                    </center>
                   </form>
-                </div>
-              </div>
+                </div> 
             </section>
           </div>
         </div>
       </section>
     </section>
     <!--main content end-->
+  
   <!-- container section start -->
 
   <!-- javascripts -->
