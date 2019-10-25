@@ -1,37 +1,6 @@
 <?php
 
 include_once("conexao.php");
-	if(!empty($_POST))
-	{
-		$alert='';
-
-		if(empty($_POST['nome']) || empty($_POST['data_nasc']) || empty($_POST['telefone']) || empty($_POST['sexo']) || empty($_POST['estado_civil']) || empty($_POST['']) || empty($_POST['rg']) || empty($_POST['cpf']) || empty($_POST['endereco']) || empty($_POST['bairro']) || empty($_POST['cep']) || empty($_POST['cidade']) || empty($_POST['email']))
-		{
-			echo 'Todos os campos são obrigatorios'
-		}else{
-
-			$idPaciente = $_POST['idPaciente'];
-			$nome = $_POST['nome'];
-			$data_nasc = $_POST['data_nasc'];
-			$telefone = $_POST['telefone'];
-			$sexo = $_POST['sexo'];
-			$estado_civil = $_POST['estado_civil'];
-			$rg = $_POST['rg'];
-			$cpf = $_POST['cpf'];
-			$endereco = $_POST['endereco'];
-			$bairro = $_POST['bairro'];
-			$cep = $_POST['cep'];
-			$cidade = $_POST['cidade'];
-			$email = $_POST['email'];
-
-			$slq_insert_paciente = "INSERT INTO paciente (nome, data_nasc, telefone, sexo, estado_civil, rg, cpf, endereco, bairro, cep, cidade, email) VALUES ('$nome', '$data_nasc', '$telefone', '$sexo', '$estado_civil', '$rg', '$cpf', '$endereco', '$bairro', '$cep','$cidade','$email')";
-
-			$salvar_paciente = mysqli_query($conexao, $slq_insert_paciente);
-
-		}
-
-	}
-
 
 	//Retornar dados:
     if(empty($_GET['id']))
@@ -71,6 +40,7 @@ include_once("conexao.php");
       }
     }
 
+    $sql_update_paciente = mysqli_query ($conexao, "UPDATE paciente SET nome = '$nome', data_nasc = '$data_nasc', telefone = '$telefone', sexo ='$sexo', estado_civil='$estado_civil', rg='$rg', cpf='$cpf', endereco='$endereco', bairro='$bairro', cep='$cep', cidade='$cidade', email='$email' WHERE idPaciente= idP ");
 
 ?>
 
@@ -97,14 +67,6 @@ include_once("conexao.php");
   <!-- font icon -->
   <link href="css/elegant-icons-style.css" rel="stylesheet" />
   <link href="css/font-awesome.min.css" rel="stylesheet" />
-  <!-- full calendar css-->
-  <link href="assets/fullcalendar/fullcalendar/bootstrap-fullcalendar.css" rel="stylesheet" />
-  <link href="assets/fullcalendar/fullcalendar/fullcalendar.css" rel="stylesheet" />
-  <!-- easy pie chart-->
-  <link href="assets/jquery-easy-pie-chart/jquery.easy-pie-chart.css" rel="stylesheet" type="text/css" media="screen" />
-  <!-- owl carousel -->
-  <link rel="stylesheet" href="css/owl.carousel.css" type="text/css">
-  <link href="css/jquery-jvectormap-1.2.2.css" rel="stylesheet">
   <!-- Custom styles -->
   <link rel="stylesheet" href="css/fullcalendar.css">
   <link href="css/widgets.css" rel="stylesheet">
@@ -190,7 +152,7 @@ include_once("conexao.php");
               </header>
               <div class="panel-body">
                 <div class="form">
-                  <form class="form-validate form-horizontal " id="register_form" method="post" action="">
+                  <form class="form-validate form-horizontal " id="register_form" method="put" action="">
                     <input type = "hidden" name="idPaciente" value="<?php echo $idP; ?>">
                     <div class="form-group ">
                       <label for="nome" class="control-label col-lg-2">Nome Completo<span class="required">*</span></label>
@@ -309,82 +271,16 @@ include_once("conexao.php");
   <!-- nice scroll -->
   <script src="js/jquery.scrollTo.min.js"></script>
   <script src="js/jquery.nicescroll.js" type="text/javascript"></script>
-  <!-- charts scripts -->
-  <script src="assets/jquery-knob/js/jquery.knob.js"></script>
-  <script src="js/jquery.sparkline.js" type="text/javascript"></script>
-  <script src="assets/jquery-easy-pie-chart/jquery.easy-pie-chart.js"></script>
-  <script src="js/owl.carousel.js"></script>
-  <!-- jQuery full calendar -->
-  <<script src="js/fullcalendar.min.js"></script>
-    <!-- Full Google Calendar - Calendar -->
-    <script src="assets/fullcalendar/fullcalendar/fullcalendar.js"></script>
-    <!--script for this page only-->
-    <script src="js/calendar-custom.js"></script>
-    <script src="js/jquery.rateit.min.js"></script>
-    <!-- custom select -->
-    <script src="js/jquery.customSelect.min.js"></script>
-    <script src="assets/chart-master/Chart.js"></script>
-
-    <!--custome script for all page-->
-    <script src="js/scripts.js"></script>
-    <!-- custom script for this page-->
-    <script src="js/sparkline-chart.js"></script>
-    <script src="js/easy-pie-chart.js"></script>
-    <script src="js/jquery-jvectormap-1.2.2.min.js"></script>
-    <script src="js/jquery-jvectormap-world-mill-en.js"></script>
-    <script src="js/xcharts.min.js"></script>
-    <script src="js/jquery.autosize.min.js"></script>
-    <script src="js/jquery.placeholder.min.js"></script>
-    <script src="js/gdp-data.js"></script>
-    <script src="js/morris.min.js"></script>
-    <script src="js/sparklines.js"></script>
-    <script src="js/charts.js"></script>
-    <script src="js/jquery.slimscroll.min.js"></script>
-    <script>
-      //knob
-      $(function() {
-        $(".knob").knob({
-          'draw': function() {
-            $(this.i).val(this.cv + '%')
-          }
-        })
-      });
-
-      //carousel
-      $(document).ready(function() {
-        $("#owl-slider").owlCarousel({
-          navigation: true,
-          slideSpeed: 300,
-          paginationSpeed: 400,
-          singleItem: true
-
-        });
-      });
-
-      //custom select box
-
-      $(function() {
-        $('select.styled').customSelect();
-      });
-
-      /* ---------- Map ---------- */
-      $(function() {
-        $('#map').vectorMap({
-          map: 'world_mill_en',
-          series: {
-            regions: [{
-              values: gdpData,
-              scale: ['#000', '#000'],
-              normalizeFunction: 'polynomial'
-            }]
-          },
-          backgroundColor: '#eef3f7',
-          onLabelShow: function(e, el, code) {
-            el.html(el.html() + ' (GDP - ' + gdpData[code] + ')');
-          }
-        });
-      });
-    </script>
+  <!-- custom select -->
+  <script src="js/jquery.customSelect.min.js"></script>
+  <script src="assets/chart-master/Chart.js"></script>
+  <!--custome script for all page-->
+  <script src="js/scripts.js"></script>    
+  <!-- custom script for this page-->
+  <script src="js/xcharts.min.js"></script>
+  <script src="js/jquery.autosize.min.js"></script>
+  <script src="js/jquery.placeholder.min.js"></script>
+  <script src="js/jquery.slimscroll.min.js"></script>
 
 </body>
 

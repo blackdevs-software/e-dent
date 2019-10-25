@@ -86,7 +86,8 @@ include_once("conexao.php");
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Cadastrar Pacientes">
+  <meta name="description" content="Creative - Bootstrap 3 Responsive Admin Template">
+  <meta name="author" content="GeeksLabs">
   <meta name="keyword" content="Creative, Dashboard, Admin, Template, Theme, Bootstrap, Responsive, Retina, Minimal">
   
 
@@ -122,20 +123,19 @@ include_once("conexao.php");
   <script type="text/javascript" src="js/bootstrap.min.js"></script>
 
 
-
 </head>
 
 <body>
   <!-- container section start -->
   <section id="container" class="">
-      <header class="header dark-bg">
-        <div class="toggle-nav">
-          <div class="icon-reorder tooltips" data-original-title="Menu lateral" data-placement="bottom"><i class="icon_menu"></i></div>
-        </div>
-        <a class="navbar-brand" href="">
-          <img src="images/icons/E-DENT-3.png" class="nav-item " alt="logo" style="width: 90px">
-        </a>
-      </header>
+    <header class="header dark-bg">
+      <div class="toggle-nav">
+        <div class="icon-reorder tooltips" data-original-title="Toggle Navigation" data-placement="bottom"><i class="icon_menu"></i></div>
+      </div>
+      <a class="navbar-brand" href="#">
+        <img src="images/icons/E-DENT-3.png" class="nav-item " alt="logo" style="width: 90px">
+      </a>
+    </header>
     <!--header end-->
 
     <!--sidebar start-->
@@ -191,7 +191,7 @@ include_once("conexao.php");
               </header>
               <div class="panel-body">
                 <div class="form">
-                  <form class="form-validate form-horizontal " id="register_form" method="post" action="" enctype="multipart/form-data">
+                  <form class="form-validate form-horizontal " id="register_form" method="post" action="">
                     <div class="form-group ">
                       <label for="nome" class="control-label col-lg-2">Nome Completo<span class="required">*</span></label>
                       <div class="col-lg-10">
@@ -341,54 +341,6 @@ include_once("conexao.php");
     <script src="js/sparklines.js"></script>
     <script src="js/charts.js"></script>
     <script src="js/jquery.slimscroll.min.js"></script>
-    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-    <script>
-      //knob
-      $(function() {
-        $(".knob").knob({
-          'draw': function() {
-            $(this.i).val(this.cv + '%')
-          }
-        })
-      });
-
-      //carousel
-      $(document).ready(function() {
-        $("#owl-slider").owlCarousel({
-          navigation: true,
-          slideSpeed: 300,
-          paginationSpeed: 400,
-          singleItem: true
-
-        });
-      });
-
-      //custom select box
-
-      $(function() {
-        $('select.styled').customSelect();
-      });
-
-      /* ---------- Map ---------- */
-      $(function() {
-        $('#map').vectorMap({
-          map: 'world_mill_en',
-          series: {
-            regions: [{
-              values: gdpData,
-              scale: ['#000', '#000'],
-              normalizeFunction: 'polynomial'
-            }]
-          },
-          backgroundColor: '#eef3f7',
-          onLabelShow: function(e, el, code) {
-            el.html(el.html() + ' (GDP - ' + gdpData[code] + ')');
-          }
-        });
-      });
-
-    </script>
-
 </body>
 
 </html>
