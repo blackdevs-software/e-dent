@@ -3,83 +3,64 @@
 include_once("conexao.php");
   if(!empty($_POST))
   {
-    $alert='';
-
-    if(empty($_POST['nome']) || empty($_POST['data_nasc']) || empty($_POST['telefone']) || empty($_POST['sexo']) || empty($_POST['estado_civil']) || empty($_POST['rg']) || empty($_POST['cpf']) || empty($_POST['endereco']) || empty($_POST['bairro']) || empty($_POST['cep']) || empty($_POST['cidade']) || empty($_POST['email']))
-    {
+    if(empty($_POST['nome']) || empty($_POST['data_nasc']) || empty($_POST['telefone']) ||
+    empty($_POST['sexo']) || empty($_POST['estado_civil']) || empty($_POST['rg']) || empty($_POST['cpf']) ||
+    empty($_POST['endereco']) || empty($_POST['bairro']) || empty($_POST['cep']) || empty($_POST['cidade']) ||
+    empty($_POST['email'])) {
     ?>
-        <script>
-          alert("Paciente já cadastrado no sistema, reeveja os dados!");               
-        </script>
-
+      <script>
+        alert("Paciente já cadastrado no sistema, reeveja os dados!");
+      </script>
     <?php
-               
-        header("Refresh: 0; index.html");    
-
+      header("Refresh: 0; index.html");
     }else{
+      $nome = $_POST['nome'];
+      $data_nasc = $_POST['data_nasc'];
+      $telefone = $_POST['telefone'];
+      $sexo = $_POST['sexo'];
+      $estado_civil = $_POST['estado_civil'];
+      $rg = $_POST['rg'];
+      $cpf_paciente = $_POST['cpf'];
+      $endereco = $_POST['endereco'];
+      $bairro = $_POST['bairro'];
+      $cep = $_POST['cep'];
+      $cidade = $_POST['cidade'];
+      $email = $_POST['email'];
 
-          
-          $nome = $_POST['nome'];
-          $data_nasc = $_POST['data_nasc'];
-          $telefone = $_POST['telefone'];
-          $sexo = $_POST['sexo'];
-          $estado_civil = $_POST['estado_civil'];
-          $rg = $_POST['rg'];
-          $cpf_paciente = $_POST['cpf'];
-          $endereco = $_POST['endereco'];
-          $bairro = $_POST['bairro'];
-          $cep = $_POST['cep'];
-          $cidade = $_POST['cidade'];
-          $email = $_POST['email'];
+      $query = mysqli_query ($conexao, "SELECT * FROM paciente WHERE cpf = '$cpf_paciente' ");
 
-          $query = mysqli_query ($conexao, "SELECT * FROM paciente WHERE cpf = '$cpf_paciente' ");
+      $result = mysqli_fetch_array ($query);
 
-          $result = mysqli_fetch_array ($query);
+      if($result > 0){
+      ?>
+        <script>
+          alert("Paciente já cadastrado no sistema, reeveja os dados!");
+        </script>
+      <?php
+        header("Refresh: 2; index.html");
+      }else{
 
-          if($result > 0){
+        $sql_insert_paciente = mysqli_query($conexao, "INSERT INTO paciente (nome, data_nasc, telefone, sexo, estado_civil, rg, cpf, endereco, bairro, cep, cidade, email) VALUES ('$nome', '$data_nasc', '$telefone', '$sexo', '$estado_civil', '$rg', '$cpf_paciente', '$endereco', '$bairro', '$cep','$cidade','$email')");
 
+        if($sql_insert_paciente){
           ?>
-              <script>
-                alert("Paciente já cadastrado no sistema, reeveja os dados!");               
-              </script>
+            <script>
+              alert("Paciente cadastrado com sucesso no sistema!");
+            </script>
+          <?php
+
+          header("Refresh: 2; index.html");
+        }else{
+          ?>
+            <script>
+              alert("Erro ao cadastrar paciente!");
+            </script>
 
           <?php
-               
-          header("Refresh: 2; index.html");          
-
-          
-
-          }else{
-
-              $sql_insert_paciente = mysqli_query($conexao, "INSERT INTO paciente (nome, data_nasc, telefone, sexo, estado_civil, rg, cpf, endereco, bairro, cep, cidade, email) VALUES ('$nome', '$data_nasc', '$telefone', '$sexo', '$estado_civil', '$rg', '$cpf_paciente', '$endereco', '$bairro', '$cep','$cidade','$email')");
-
-              if($sql_insert_paciente){
-
-              ?>
-                  <script>
-                    alert("Paciente cadastrado com sucesso no sistema!");               
-                  </script>
-
-              <?php
-               
-              header("Refresh: 2; index.html");    
-
-              }else{
-
-              ?>
-                  <script>
-                    alert("Erro ao cadastrar paciente!");               
-                  </script>
-
-              <?php
-               
-              header("Refresh: 2; index.html");    
-
-              }
-
-          }
+          header("Refresh: 2; index.html");
+        }
+      }
     }
-
   }
 ?>
 
@@ -91,7 +72,6 @@ include_once("conexao.php");
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Cadastrar Pacientes">
   <meta name="keyword" content="Creative, Dashboard, Admin, Template, Theme, Bootstrap, Responsive, Retina, Minimal">
-  
 
   <title>Cadastro de Paciente</title>
 
@@ -123,8 +103,6 @@ include_once("conexao.php");
   <link rel="stylesheet" href="css/main.css">
   <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
   <script type="text/javascript" src="js/bootstrap.min.js"></script>
-
-
 
 </head>
 
@@ -279,10 +257,10 @@ include_once("conexao.php");
                     <center>
                       <div>
                         <small id="" class="form-text text">
-                           OBS: Antes de encerrar o cadastro verificar e com o auxilio do paciente verificar se todos os dados estão corretos.              
+                           OBS: Antes de encerrar o cadastro verificar e com o auxilio do paciente verificar se todos os dados estão corretos.
                         </small>
                       </div>
-                      <br>                  
+                      <br>
 
                       <div class="form-group">
                         <div class="col-lg-offset-2 col-lg-10">
@@ -300,7 +278,7 @@ include_once("conexao.php");
       </section>
     </section>
     <!--main content end-->
-  
+
   <!-- container section start -->
 
   <!-- javascripts -->
@@ -320,77 +298,76 @@ include_once("conexao.php");
   <script src="js/owl.carousel.js"></script>
   <!-- jQuery full calendar -->
   <script src="js/fullcalendar.min.js"></script>
-    <!-- Full Google Calendar - Calendar -->
-    <script src="assets/fullcalendar/fullcalendar/fullcalendar.js"></script>
-    <!--script for this page only-->
-    <script src="js/calendar-custom.js"></script>
-    <script src="js/jquery.rateit.min.js"></script>
-    <!-- custom select -->
-    <script src="js/jquery.customSelect.min.js"></script>
-    <script src="assets/chart-master/Chart.js"></script>
+  <!-- Full Google Calendar - Calendar -->
+  <script src="assets/fullcalendar/fullcalendar/fullcalendar.js"></script>
+  <!--script for this page only-->
+  <script src="js/calendar-custom.js"></script>
+  <script src="js/jquery.rateit.min.js"></script>
+  <!-- custom select -->
+  <script src="js/jquery.customSelect.min.js"></script>
+  <script src="assets/chart-master/Chart.js"></script>
 
-    <!--custome script for all page-->
-    <script src="js/scripts.js"></script>
-    <!-- custom script for this page-->
-    <script src="js/sparkline-chart.js"></script>
-    <script src="js/easy-pie-chart.js"></script>
-    <script src="js/jquery-jvectormap-1.2.2.min.js"></script>
-    <script src="js/jquery-jvectormap-world-mill-en.js"></script>
-    <script src="js/xcharts.min.js"></script>
-    <script src="js/jquery.autosize.min.js"></script>
-    <script src="js/jquery.placeholder.min.js"></script>
-    <script src="js/gdp-data.js"></script>
-    <script src="js/morris.min.js"></script>
-    <script src="js/sparklines.js"></script>
-    <script src="js/charts.js"></script>
-    <script src="js/jquery.slimscroll.min.js"></script>
-    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-    <script>
-      //knob
-      $(function() {
-        $(".knob").knob({
-          'draw': function() {
-            $(this.i).val(this.cv + '%')
-          }
-        })
+  <!--custome script for all page-->
+  <script src="js/scripts.js"></script>
+  <!-- custom script for this page-->
+  <script src="js/sparkline-chart.js"></script>
+  <script src="js/easy-pie-chart.js"></script>
+  <script src="js/jquery-jvectormap-1.2.2.min.js"></script>
+  <script src="js/jquery-jvectormap-world-mill-en.js"></script>
+  <script src="js/xcharts.min.js"></script>
+  <script src="js/jquery.autosize.min.js"></script>
+  <script src="js/jquery.placeholder.min.js"></script>
+  <script src="js/gdp-data.js"></script>
+  <script src="js/morris.min.js"></script>
+  <script src="js/sparklines.js"></script>
+  <script src="js/charts.js"></script>
+  <script src="js/jquery.slimscroll.min.js"></script>
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+  <script>
+    //knob
+    $(function() {
+      $(".knob").knob({
+        'draw': function() {
+          $(this.i).val(this.cv + '%')
+        }
+      })
+    });
+
+    //carousel
+    $(document).ready(function() {
+      $("#owl-slider").owlCarousel({
+        navigation: true,
+        slideSpeed: 300,
+        paginationSpeed: 400,
+        singleItem: true
+
       });
+    });
 
-      //carousel
-      $(document).ready(function() {
-        $("#owl-slider").owlCarousel({
-          navigation: true,
-          slideSpeed: 300,
-          paginationSpeed: 400,
-          singleItem: true
+    //custom select box
+    $(function() {
+      $('select.styled').customSelect();
+    });
 
-        });
+    /* ---------- Map ---------- */
+    $(function() {
+      $('#map').vectorMap({
+        map: 'world_mill_en',
+        series: {
+          regions: [{
+            values: gdpData,
+            scale: ['#000', '#000'],
+            normalizeFunction: 'polynomial'
+          }]
+        },
+        backgroundColor: '#eef3f7',
+        onLabelShow: function(e, el, code) {
+          el.html(el.html() + ' (GDP - ' + gdpData[code] + ')');
+        }
       });
+    });
 
-      //custom select box
-
-      $(function() {
-        $('select.styled').customSelect();
-      });
-
-      /* ---------- Map ---------- */
-      $(function() {
-        $('#map').vectorMap({
-          map: 'world_mill_en',
-          series: {
-            regions: [{
-              values: gdpData,
-              scale: ['#000', '#000'],
-              normalizeFunction: 'polynomial'
-            }]
-          },
-          backgroundColor: '#eef3f7',
-          onLabelShow: function(e, el, code) {
-            el.html(el.html() + ' (GDP - ' + gdpData[code] + ')');
-          }
-        });
-      });
-
-    </script>
+  </script>
 
 </body>
 

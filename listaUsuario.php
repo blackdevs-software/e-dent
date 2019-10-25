@@ -7,7 +7,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Lista de Pacientes">
   <meta name="keyword" content="Creative, Dashboard, Admin, Template, Theme, Bootstrap, Responsive, Retina, Minimal">
-  
 
   <title>Lista de Usuários</title>
 
@@ -48,7 +47,6 @@
   <!-- container section start -->
   <section id="container" class="">
 
-
     <header class="header dark-bg">
       <div class="toggle-nav">
         <div class="icon-reorder tooltips" data-original-title="Menu lateral" data-placement="bottom"><i class="icon_menu"></i></div>
@@ -57,9 +55,6 @@
       <a class="navbar-brand" href="loginEDENT/indexLogin.html">
         <img src="images/icons/E-DENT-3.png" class="nav-item " alt="logo" style="width: 90px">
       </a>
-    
-      
-      
     </header>
     <!--header end-->
 
@@ -82,7 +77,7 @@
             </a>
             <ul class="sub">
               <li><a class="" href="listaPaciente.php"> Lista de Pacientes</a></li>
-              <li><a class="" href="index_cadastro_paciente.php"> Cadastrar Paciente</a></li>
+              <li><a class="" href="indexCadastroPaciente.html"> Cadastrar Paciente</a></li>
             </ul>
           </li>
           <li class="sub-menu">
@@ -93,7 +88,7 @@
             </a>
             <ul class="sub">
               <li><a class="" href="listaUsuario.php"> Lista de Usuários</a></li>
-              <li><a class="" href="cadastroUsuario.html"> Cadastrar Usuários</a></li>
+              <li><a class="" href="cadastroUsuario.php"> Cadastrar Usuários</a></li>
             </ul>
           </li>
           <li class="sub-menu">
@@ -137,7 +132,7 @@
                       </div>
                   </div>
                   </form>
-                </div>              
+                </div>
                 <div class="panel-body">
                   <div class="col-lg-12">
                     <section class="panel">
@@ -147,46 +142,34 @@
                             <th><i class="icon_profile"></i> Nome</th>
                             <th><i class="icon_profile"></i> Tipo Usuario</th>
                             <th><i class="icon_calendar"></i> D. Nascimento</th>
-                            <th><i class="icon_pin_alt"></i> CPF</th>                        
+                            <th><i class="icon_pin_alt"></i> CPF</th>
                             <th><i class="icon_mobile"></i> Telefone</th>
                             <th><i class="icon_cogs"></i> Editar</th>
                           </tr>
                           <?php
-
                             $sql_lista_usuario = "SELECT nome, tipoUsuario, data_nasc, cpf, telefone FROM usuario";
-                            $lista_usuarios = mysqli_query ($conexao, $sql_lista_usuario);                  
+                            $lista_usuarios = mysqli_query ($conexao, $sql_lista_usuario);
                             $registros_usuarios = mysqli_num_rows($lista_usuarios);
 
-                          if($lista_usuarios > null){
-                            while ($data = mysqli_fetch_array($lista_usuarios)){
-
-                          ?>
-
-                          <tr>
-                            <td><?php echo $data ["nome"]; ?></td>
-                            <td><?php echo $data ["tipoUsuario"]; ?></td>
-                            <td><?php echo $data ["data_nasc"]; ?></td>
-                            <td><?php echo $data ["cpf"]; ?></td>
-                            <td><?php echo $data ["telefone"]; ?></td>
-                            <td>
-                              <div class="btn-group">
-                                <a class="btn btn-info" href=""><i class="icon_plus_alt2"></i></a>
-                              </div>
-                            </td>
-                          </tr>
-
-
-
-
-                          <?php
+                            if($lista_usuarios > null){
+                              while ($data = mysqli_fetch_array($lista_usuarios)){
+                                ?>
+                                  <tr>
+                                    <td><?= $data ["nome"]; ?></td>
+                                    <td><?= $data ["tipoUsuario"]; ?></td>
+                                    <td><?= $data ["data_nasc"]; ?></td>
+                                    <td><?= $data ["cpf"]; ?></td>
+                                    <td><?= $data ["telefone"]; ?></td>
+                                    <td>
+                                      <div class="btn-group">
+                                        <a class="btn btn-info" href=""><i class="icon_plus_alt2"></i></a>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                <?php
+                              }
                             }
-
-
-                          }
-
-
                           ?>
-                    
                         </tbody>
                       </table>
                     </section>
@@ -199,8 +182,8 @@
     </section>
   </section>
 
-    <!--main content end-->
-  
+  <!--main content end-->
+
   <!-- container section start -->
 
   <!-- javascripts -->
@@ -220,32 +203,30 @@
   <script src="js/owl.carousel.js"></script>
   <!-- jQuery full calendar -->
   <script src="js/fullcalendar.min.js"></script>
-    <!-- Full Google Calendar - Calendar -->
-    <script src="assets/fullcalendar/fullcalendar/fullcalendar.js"></script>
-    <!--script for this page only-->
-    <script src="js/calendar-custom.js"></script>
-    <script src="js/jquery.rateit.min.js"></script>
-    <!-- custom select -->
-    <script src="js/jquery.customSelect.min.js"></script>
-    <script src="assets/chart-master/Chart.js"></script>
+  <!-- Full Google Calendar - Calendar -->
+  <script src="assets/fullcalendar/fullcalendar/fullcalendar.js"></script>
+  <!--script for this page only-->
+  <script src="js/calendar-custom.js"></script>
+  <script src="js/jquery.rateit.min.js"></script>
+  <!-- custom select -->
+  <script src="js/jquery.customSelect.min.js"></script>
+  <script src="assets/chart-master/Chart.js"></script>
 
-    <!--custome script for all page-->
-    <script src="js/scripts.js"></script>
-    <!-- custom script for this page-->
-    <script src="js/sparkline-chart.js"></script>
-    <script src="js/easy-pie-chart.js"></script>
-    <script src="js/jquery-jvectormap-1.2.2.min.js"></script>
-    <script src="js/jquery-jvectormap-world-mill-en.js"></script>
-    <script src="js/xcharts.min.js"></script>
-    <script src="js/jquery.autosize.min.js"></script>
-    <script src="js/jquery.placeholder.min.js"></script>
-    <script src="js/gdp-data.js"></script>
-    <script src="js/morris.min.js"></script>
-    <script src="js/sparklines.js"></script>
-    <script src="js/charts.js"></script>
-    <script src="js/jquery.slimscroll.min.js"></script>
-
+  <!--custome script for all page-->
+  <script src="js/scripts.js"></script>
+  <!-- custom script for this page-->
+  <script src="js/sparkline-chart.js"></script>
+  <script src="js/easy-pie-chart.js"></script>
+  <script src="js/jquery-jvectormap-1.2.2.min.js"></script>
+  <script src="js/jquery-jvectormap-world-mill-en.js"></script>
+  <script src="js/xcharts.min.js"></script>
+  <script src="js/jquery.autosize.min.js"></script>
+  <script src="js/jquery.placeholder.min.js"></script>
+  <script src="js/gdp-data.js"></script>
+  <script src="js/morris.min.js"></script>
+  <script src="js/sparklines.js"></script>
+  <script src="js/charts.js"></script>
+  <script src="js/jquery.slimscroll.min.js"></script>
 </body>
 
 </html>
-
