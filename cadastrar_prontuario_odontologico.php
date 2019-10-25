@@ -1,8 +1,7 @@
 <?php
-
 	include_once("conexao.php");
 
-	echo print_r($_POST); 
+	echo print_r($_POST);
 
 	$dificuldade_engolir_alimentos = $_POST['dificuldade_engolir_alimentos'];
 	$protese_dentadura = $_POST['protese_dentadura'];
@@ -18,19 +17,13 @@
 
 	$salvar_prontuarioO = mysqli_query($conexao, $slq_insert_prontuarioO);
 
-
 	mysqli_close($conexao);
-
 ?>
 
-<script> 
-
-alert("Prontuario odontológico cadastrado!");
- 
+<script>
+  alert("Prontuario odontológico cadastrado!");
 </script>
 
 <?PHP
- 
-header("Refresh: 0; index.html");
- 
+  header("Refresh: 0; index.html");
 ?>

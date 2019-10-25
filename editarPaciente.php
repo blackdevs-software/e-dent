@@ -1,15 +1,58 @@
 <?php
+  include_once("conexao.php");
 
-include_once("conexao.php");
+	if(!empty($_POST))
+	{
+    if (
+      empty($_POST['idPaciente']) || empty($_POST['nome']) || empty($_POST['data_nasc']) || empty($_POST['telefone']) ||
+      empty($_POST['sexo']) || empty($_POST['estado_civil']) || empty($_POST['rg']) || empty($_POST['cpf']) || empty($_POST['endereco']) ||
+      empty($_POST['bairro']) || empty($_POST['cep']) || empty($_POST['cidade']) || empty($_POST['email'])
+    ) {
+      echo 'Todos os campos são obrigatorios';
+		} else {
+      $id = $_POST['idPaciente'];
+      $data = [
+        'nome' => $_POST['nome'],
+        'data_nasc' => $_POST['data_nasc'],
+        'telefone' => $_POST['telefone'],
+        'sexo' => $_POST['sexo'],
+        'estado_civil' => $_POST['estado_civil'],
+        'rg' => $_POST['rg'],
+        'cpf' => $_POST['cpf'],
+        'endereco' => $_POST['endereco'],
+        'bairro' => $_POST['bairro'],
+        'cep' => $_POST['cep'],
+        'cidade' => $_POST['cidade'],
+        'email' => $_POST['email'],
+      ];
+
+      $update_fields = [];
+
+      $update_fields = array_map(function($key, $value) {
+        if (preg_match("/[^0-9]+/", $value)) {
+          $value = "'{$value}'";
+        }
+        return "{$key} = {$value}";
+      }, array_keys($data), $data);
+
+      $update_fields = implode(', ', $update_fields);
+
+      $slq_update_paciente = "UPDATE
+                                paciente
+                              SET
+                                {$update_fields}
+                              WHERE
+                                idPaciente = {$id}";
+
+      $salvar_paciente = mysqli_query($conexao, $slq_update_paciente);
+		}
+	}
 
 	//Retornar dados:
     if(empty($_GET['id']))
     {
-
       header('Location: listaPaciente.php');
-
     }
-
     $idP = $_GET['id'];
 
     $sql = mysqli_query($conexao, "SELECT idPaciente, nome, data_nasc, telefone, sexo, estado_civil, rg, cpf, endereco, bairro, cep, cidade, email FROM paciente WHERE idPaciente = $idP ");
@@ -18,33 +61,35 @@ include_once("conexao.php");
 
     if($result_sql == 0){
       header('Location: listaPaciente.php');
-
     }else{
-      
       while ($data = mysqli_fetch_array($sql)) {
-        # code...
-        $idPaciente = $data ['idPaciente'];
-        $nome = $data ['nome'];
-        $data_nasc = $data ['data_nasc'];
-        $telefone = $data ['telefone'];
-        $sexo = $data ['sexo'];
-        $estado_civil = $data ['estado_civil'];
-        $rg = $data ['rg'];
-        $cpf = $data ['cpf'];
-        $endereco = $data ['endereco'];
-        $bairro = $data ['bairro'];
-        $cep = $data ['cep'];
-        $cidade = $data ['cidade'];
-        $email = $data ['email'];
-
+        $idPaciente = $data['idPaciente'];
+        $nome = $data['nome'];
+        $data_nasc = $data['data_nasc'];
+        $telefone = $data['telefone'];
+        $sexo = $data['sexo'];
+        $estado_civil = $data['estado_civil'];
+        $rg = $data['rg'];
+        $cpf = $data['cpf'];
+        $endereco = $data['endereco'];
+        $bairro = $data['bairro'];
+        $cep = $data['cep'];
+        $cidade = $data['cidade'];
+        $email = $data['email'];
       }
     }
 
-    $sql_update_paciente = mysqli_query ($conexao, "UPDATE paciente SET nome = '$nome', data_nasc = '$data_nasc', telefone = '$telefone', sexo ='$sexo', estado_civil='$estado_civil', rg='$rg', cpf='$cpf', endereco='$endereco', bairro='$bairro', cep='$cep', cidade='$cidade', email='$email' WHERE idPaciente= idP ");
+    $sexo_options = [
+      [ 'name' => 'Feminino', 'value' => 'f' ],
+      [ 'name' => 'Masculino', 'value' => 'm' ],
+    ];
 
+    $estado_civil_options = [
+      [ 'name' => 'Casado', 'value' => 'c' ],
+      [ 'name' => 'Solteiro', 'value' => 's' ],
+      [ 'name' => 'Divorciado', 'value' => 'd' ],
+    ];
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -55,7 +100,6 @@ include_once("conexao.php");
   <meta name="description" content="Creative - Bootstrap 3 Responsive Admin Template">
   <meta name="author" content="GeeksLabs">
   <meta name="keyword" content="Creative, Dashboard, Admin, Template, Theme, Bootstrap, Responsive, Retina, Minimal">
-  
 
   <title>Editar Paciente</title>
 
@@ -67,6 +111,14 @@ include_once("conexao.php");
   <!-- font icon -->
   <link href="css/elegant-icons-style.css" rel="stylesheet" />
   <link href="css/font-awesome.min.css" rel="stylesheet" />
+  <!-- full calendar css-->
+  <link href="assets/fullcalendar/fullcalendar/bootstrap-fullcalendar.css" rel="stylesheet" />
+  <link href="assets/fullcalendar/fullcalendar/fullcalendar.css" rel="stylesheet" />
+  <!-- easy pie chart-->
+  <link href="assets/jquery-easy-pie-chart/jquery.easy-pie-chart.css" rel="stylesheet" type="text/css" media="screen" />
+  <!-- owl carousel -->
+  <link rel="stylesheet" href="css/owl.carousel.css" type="text/css">
+  <link href="css/jquery-jvectormap-1.2.2.css" rel="stylesheet">
   <!-- Custom styles -->
   <link rel="stylesheet" href="css/fullcalendar.css">
   <link href="css/widgets.css" rel="stylesheet">
@@ -91,7 +143,7 @@ include_once("conexao.php");
       </div>
       <a class="navbar-brand" href="#">
         <img src="images/icons/E-DENT-3.png" class="nav-item " alt="logo" style="width: 90px">
-      </a>      
+      </a>
     </header>
     <!--header end-->
 
@@ -101,7 +153,7 @@ include_once("conexao.php");
         <!-- sidebar menu start-->
         <ul class="sidebar-menu">
           <li class="active">
-            <a class="" href="indexProfissional.html">
+            <a class="" href="index.html">
               <i class="icon_house_alt"></i>
               <span>Home</span>
             </a>
@@ -152,8 +204,8 @@ include_once("conexao.php");
               </header>
               <div class="panel-body">
                 <div class="form">
-                  <form class="form-validate form-horizontal " id="register_form" method="put" action="">
-                    <input type = "hidden" name="idPaciente" value="<?php echo $idP; ?>">
+                  <form class="form-validate form-horizontal" id="register_form" method="POST" enctype="multipart/form-data" action="">
+                    <input type = "hidden" name="idPaciente" value="<?= $idP; ?>">
                     <div class="form-group ">
                       <label for="nome" class="control-label col-lg-2">Nome Completo<span class="required">*</span></label>
                       <div class="col-lg-10">
@@ -193,10 +245,24 @@ include_once("conexao.php");
                     <div class="form-group ">
                       <label for="sexo" class="control-label col-lg-2">Sexo<span class="required">*</span></label>
                         <div class="col-lg-10">
-                          <select name ="sexo" class="form-control" required="required">
-                            <option selected value = "$sexo"><?php echo $sexo ;?></option>
-                            <option value="f">Feminino</option>
-                            <option value="m">Masculino</option>
+                          <select name="sexo" class="form-control" required="required">
+                            <?php
+                              foreach ($sexo_options as $option) {
+                                if ($sexo === $option['value']) {
+                                  ?>
+                                    <option selected value="<?= $option['value']; ?>">
+                                      <?= $option['name']; ?>
+                                    </option>
+                                  <?php
+                                } else {
+                                  ?>
+                                    <option value="<?= $option['value']; ?>">
+                                      <?= $option['name']; ?>
+                                    </option>
+                                  <?php
+                                }
+                              }
+                            ?>
                           </select>
                         </div>
                     </div>
@@ -204,10 +270,23 @@ include_once("conexao.php");
                       <label for="estado_civil" class="control-label col-lg-2">Estado Civil<span class="required">*</span></label>
                         <div class="col-lg-10">
                           <select class="form-control" name="estado_civil" required="required">
-                            <option selected value = ""><?php echo $estado_civil ;?></option>
-                            <option value="s" >Solteiro</option>
-                            <option value="c">Casado</option>
-                            <option value="d" >Divorciado</option>
+                            <?php
+                              foreach ($estado_civil_options as $option) {
+                                if ($estado_civil === $option['value']) {
+                                  ?>
+                                    <option selected value="<?= $option['value']; ?>">
+                                      <?= $option['name']; ?>
+                                    </option>
+                                  <?php
+                                } else {
+                                  ?>
+                                    <option value="<?= $option['value']; ?>">
+                                      <?= $option['name']; ?>
+                                    </option>
+                                  <?php
+                                }
+                              }
+                            ?>
                           </select>
                         </div>
                     </div>
@@ -238,13 +317,13 @@ include_once("conexao.php");
                     <center>
                     <div>
                       <small id="" class="form-text text">
-                         OBS: Antes de encerrar o cadastro verificar e com o auxilio do paciente verificar se todos os dados estão corretos.               
+                        OBS: Antes de encerrar o cadastro verificar e com o auxilio do paciente verificar se todos os dados estão corretos.
                       </small>
                     </div>
-                    <br>   
+                    <br>
                     <div class="form-group">
                       <div class="col-lg-offset-2 col-lg-10">
-                        <button class="btn btn-primary" type="submit" value = "">Salvar</button>
+                        <button class="btn btn-primary" type="submit">Salvar</button>
                         <button class="btn btn-default" type="button">Cancelar</button>
                       </div>
                     </div>
@@ -258,7 +337,6 @@ include_once("conexao.php");
       </section>
     </section>
     <!--main content end-->
-  
   <!-- container section start -->
 
   <!-- javascripts -->
@@ -271,16 +349,81 @@ include_once("conexao.php");
   <!-- nice scroll -->
   <script src="js/jquery.scrollTo.min.js"></script>
   <script src="js/jquery.nicescroll.js" type="text/javascript"></script>
+  <!-- charts scripts -->
+  <script src="assets/jquery-knob/js/jquery.knob.js"></script>
+  <script src="js/jquery.sparkline.js" type="text/javascript"></script>
+  <script src="assets/jquery-easy-pie-chart/jquery.easy-pie-chart.js"></script>
+  <script src="js/owl.carousel.js"></script>
+  <!-- jQuery full calendar -->
+  <script src="js/fullcalendar.min.js"></script>
+  <!-- Full Google Calendar - Calendar -->
+  <script src="assets/fullcalendar/fullcalendar/fullcalendar.js"></script>
+  <!--script for this page only-->
+  <script src="js/calendar-custom.js"></script>
+  <script src="js/jquery.rateit.min.js"></script>
   <!-- custom select -->
   <script src="js/jquery.customSelect.min.js"></script>
   <script src="assets/chart-master/Chart.js"></script>
+
   <!--custome script for all page-->
-  <script src="js/scripts.js"></script>    
+  <script src="js/scripts.js"></script>
   <!-- custom script for this page-->
+  <script src="js/sparkline-chart.js"></script>
+  <script src="js/easy-pie-chart.js"></script>
+  <script src="js/jquery-jvectormap-1.2.2.min.js"></script>
+  <script src="js/jquery-jvectormap-world-mill-en.js"></script>
   <script src="js/xcharts.min.js"></script>
   <script src="js/jquery.autosize.min.js"></script>
   <script src="js/jquery.placeholder.min.js"></script>
+  <script src="js/gdp-data.js"></script>
+  <script src="js/morris.min.js"></script>
+  <script src="js/sparklines.js"></script>
+  <script src="js/charts.js"></script>
   <script src="js/jquery.slimscroll.min.js"></script>
+  <script>
+    //knob
+    $(function() {
+      $(".knob").knob({
+        'draw': function() {
+          $(this.i).val(this.cv + '%')
+        }
+      })
+    });
+
+    //carousel
+    $(document).ready(function() {
+      $("#owl-slider").owlCarousel({
+        navigation: true,
+        slideSpeed: 300,
+        paginationSpeed: 400,
+        singleItem: true
+
+      });
+    });
+
+    //custom select box
+    $(function() {
+      $('select.styled').customSelect();
+    });
+
+    /* ---------- Map ---------- */
+    $(function() {
+      $('#map').vectorMap({
+        map: 'world_mill_en',
+        series: {
+          regions: [{
+            values: gdpData,
+            scale: ['#000', '#000'],
+            normalizeFunction: 'polynomial'
+          }]
+        },
+        backgroundColor: '#eef3f7',
+        onLabelShow: function(e, el, code) {
+          el.html(el.html() + ' (GDP - ' + gdpData[code] + ')');
+        }
+      });
+    });
+  </script>
 
 </body>
 

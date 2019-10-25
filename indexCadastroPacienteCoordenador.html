@@ -7,7 +7,7 @@
   <meta name="description" content="Creative - Bootstrap 3 Responsive Admin Template">
   <meta name="author" content="GeeksLabs">
   <meta name="keyword" content="Creative, Dashboard, Admin, Template, Theme, Bootstrap, Responsive, Retina, Minimal">
-  
+
 
   <title>Cadastro de Paciente</title>
 
@@ -45,13 +45,19 @@
 <body>
   <!-- container section start -->
   <section id="container" class="">
+
+
     <header class="header dark-bg">
       <div class="toggle-nav">
         <div class="icon-reorder tooltips" data-original-title="Toggle Navigation" data-placement="bottom"><i class="icon_menu"></i></div>
       </div>
+
       <a class="navbar-brand" href="#">
-        <img src="images/icons/E-DENT-3.png" class="nav-item " alt="logo" style="width: 90px">
-      </a>     
+          <img src="images/icons/E-DENT-3.png" class="nav-item " alt="logo" style="width: 90px">
+      </a>
+
+
+
     </header>
     <!--header end-->
 
@@ -61,7 +67,7 @@
         <!-- sidebar menu start-->
         <ul class="sidebar-menu">
           <li class="active">
-            <a class="" href="indexProfissional.html">
+            <a class="" href="index.html">
               <i class="icon_house_alt"></i>
               <span>Home</span>
             </a>
@@ -208,10 +214,10 @@
                     <center>
                     <div>
                       <small id="" class="form-text text">
-                         OBS: Antes de encerrar o cadastro verificar e com o auxilio do paciente verificar se todos os dados estão corretos.               
+                         OBS: Antes de encerrar o cadastro verificar e com o auxilio do paciente verificar se todos os dados estão corretos.
                       </small>
                     </div>
-                    <br>   
+                    <br>
                     <div class="form-group">
                       <div class="col-lg-offset-2 col-lg-10">
                         <button class="btn btn-primary" type="submit">Salvar</button>
@@ -228,7 +234,7 @@
       </section>
     </section>
     <!--main content end-->
-  
+
   <!-- container section start -->
 
   <!-- javascripts -->
@@ -248,30 +254,74 @@
   <script src="js/owl.carousel.js"></script>
   <!-- jQuery full calendar -->
   <script src="js/fullcalendar.min.js"></script>
-    <!-- Full Google Calendar - Calendar -->
-    <script src="assets/fullcalendar/fullcalendar/fullcalendar.js"></script>
-    <!--script for this page only-->
-    <script src="js/calendar-custom.js"></script>
-    <script src="js/jquery.rateit.min.js"></script>
-    <!-- custom select -->
-    <script src="js/jquery.customSelect.min.js"></script>
-    <script src="assets/chart-master/Chart.js"></script>
+  <!-- Full Google Calendar - Calendar -->
+  <script src="assets/fullcalendar/fullcalendar/fullcalendar.js"></script>
+  <!--script for this page only-->
+  <script src="js/calendar-custom.js"></script>
+  <script src="js/jquery.rateit.min.js"></script>
+  <!-- custom select -->
+  <script src="js/jquery.customSelect.min.js"></script>
+  <script src="assets/chart-master/Chart.js"></script>
 
-    <!--custome script for all page-->
-    <script src="js/scripts.js"></script>
-    <!-- custom script for this page-->
-    <script src="js/sparkline-chart.js"></script>
-    <script src="js/easy-pie-chart.js"></script>
-    <script src="js/jquery-jvectormap-1.2.2.min.js"></script>
-    <script src="js/jquery-jvectormap-world-mill-en.js"></script>
-    <script src="js/xcharts.min.js"></script>
-    <script src="js/jquery.autosize.min.js"></script>
-    <script src="js/jquery.placeholder.min.js"></script>
-    <script src="js/gdp-data.js"></script>
-    <script src="js/morris.min.js"></script>
-    <script src="js/sparklines.js"></script>
-    <script src="js/charts.js"></script>
-    <script src="js/jquery.slimscroll.min.js"></script>
+  <!--custome script for all page-->
+  <script src="js/scripts.js"></script>
+  <!-- custom script for this page-->
+  <script src="js/sparkline-chart.js"></script>
+  <script src="js/easy-pie-chart.js"></script>
+  <script src="js/jquery-jvectormap-1.2.2.min.js"></script>
+  <script src="js/jquery-jvectormap-world-mill-en.js"></script>
+  <script src="js/xcharts.min.js"></script>
+  <script src="js/jquery.autosize.min.js"></script>
+  <script src="js/jquery.placeholder.min.js"></script>
+  <script src="js/gdp-data.js"></script>
+  <script src="js/morris.min.js"></script>
+  <script src="js/sparklines.js"></script>
+  <script src="js/charts.js"></script>
+  <script src="js/jquery.slimscroll.min.js"></script>
+  <script>
+    //knob
+    $(function() {
+      $(".knob").knob({
+        'draw': function() {
+          $(this.i).val(this.cv + '%')
+        }
+      })
+    });
+
+    //carousel
+    $(document).ready(function() {
+      $("#owl-slider").owlCarousel({
+        navigation: true,
+        slideSpeed: 300,
+        paginationSpeed: 400,
+        singleItem: true
+
+      });
+    });
+
+    //custom select box
+    $(function() {
+      $('select.styled').customSelect();
+    });
+
+    /* ---------- Map ---------- */
+    $(function() {
+      $('#map').vectorMap({
+        map: 'world_mill_en',
+        series: {
+          regions: [{
+            values: gdpData,
+            scale: ['#000', '#000'],
+            normalizeFunction: 'polynomial'
+          }]
+        },
+        backgroundColor: '#eef3f7',
+        onLabelShow: function(e, el, code) {
+          el.html(el.html() + ' (GDP - ' + gdpData[code] + ')');
+        }
+      });
+    });
+  </script>
 
 </body>
 

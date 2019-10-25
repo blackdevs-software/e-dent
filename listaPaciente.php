@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Lista de Pacientes">
   <meta name="keyword" content="Creative, Dashboard, Admin, Template, Theme, Bootstrap, Responsive, Retina, Minimal">
-  
 
   <title>Lista de Paciente</title>
 
@@ -54,9 +53,8 @@
 
       <a class="navbar-brand" href="loginEDENT/indexLogin.html">
         <img src="images/icons/E-DENT-3.png" class="nav-item " alt="logo" style="width: 90px">
-      </a>  
-      
-      
+      </a>
+
     </header>
     <!--header end-->
 
@@ -79,7 +77,7 @@
             </a>
             <ul class="sub">
               <li><a class="" href="listaPaciente.php"> Lista de Pacientes</a></li>
-              <li><a class="" href="index_cadastro_paciente.php"> Cadastrar Paciente</a></li>
+              <li><a class="" href="indexCadastroPaciente.php"> Cadastrar Paciente</a></li>
             </ul>
           </li>
           <li class="sub-menu">
@@ -122,7 +120,7 @@
                       </div>
                   </div>
                   </form>
-              </div>                 
+              </div>
               <div class="panel-body">
                 <div class="col-lg-12">
                   <section class="panel">
@@ -137,34 +135,27 @@
                           <th><i class="icon_cogs"></i> Editar</th>
                         </tr>
                         <?php
-
-                            $sql_lista_paciente = "SELECT idPaciente, nome, data_nasc, email, cpf, telefone FROM paciente";
-                            $lista_paciente = mysqli_query ($conexao, $sql_lista_paciente);                  
-                            $registros_paciente = mysqli_num_rows($lista_paciente);
+                          $sql_lista_paciente = "SELECT idPaciente, nome, data_nasc, email, cpf, telefone FROM paciente";
+                          $lista_paciente = mysqli_query ($conexao, $sql_lista_paciente);
+                          $registros_paciente = mysqli_num_rows($lista_paciente);
 
                           if($lista_paciente > null){
                             while ($data = mysqli_fetch_array($lista_paciente)){
-
-                          ?>
-
-                          <tr>
-                            <td><?php echo $data ["nome"]; ?></td>
-                            <td><?php echo $data ["data_nasc"]; ?></td>
-                            <td><?php echo $data ["email"]; ?></td>
-                            <td><?php echo $data ["cpf"]; ?></td>
-                            <td><?php echo $data ["telefone"]; ?></td>
-                            <td>
-                                <a class="link_edit" href="editarPaciente.php?id=<?php echo $data['idPaciente']; ?>">Editar</a>
-                            </td>
-                          </tr>
-
-                          <?php
+                              ?>
+                                <tr>
+                                  <td><?= $data ["nome"]; ?></td>
+                                  <td><?= $data ["data_nasc"]; ?></td>
+                                  <td><?= $data ["email"]; ?></td>
+                                  <td><?= $data ["cpf"]; ?></td>
+                                  <td><?= $data ["telefone"]; ?></td>
+                                  <td>
+                                    <a class="link_edit" href="editarPaciente.php?id=<?= $data['idPaciente']; ?>">Editar</a>
+                                  </td>
+                                </tr>
+                              <?php
                             }
-
-
                           }
-
-                          ?>
+                        ?>
                       </tbody>
                     </table>
                   </section>
@@ -177,7 +168,6 @@
     </section>
   </section>
     <!--main content end-->
-  
   <!-- container section start -->
 
   <!-- javascripts -->

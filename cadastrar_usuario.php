@@ -1,8 +1,7 @@
 <?php
-
 	include_once("conexao.php");
 
-	echo print_r($_POST); 
+	echo print_r($_POST);
 
 	$nome = $_POST['nome'];
 	$tipoUsuario = $_POST['tipoUsuario'];
@@ -20,26 +19,16 @@
 	$senha = $_POST['senha'];
 	$confirmar_senha = $_POST['confirmar_senha'];
 
-
-
 	$slq_insert_usuario = "insert into usuario (senha, tipoUsuario, nome, data_nasc, telefone, sexo, estado_civil, rg, cpf, bairro, cep, cidade, enderecoResidencial, email, confirmar_senha) values ('$senha', '$tipoUsuario', '$nome', '$data_nasc', '$telefone', '$sexo', '$estado_civil', '$rg', '$cpf', '$bairro', '$cep', '$cidade', '$enderecoResidencial', '$email', '$confirmar_senha')";
 
 	$salvar_usuario = mysqli_query($conexao, $slq_insert_usuario);
 
-
-
 	mysqli_close($conexao);
-
 ?>
 <script>
- 
-
-alert("Usuario Cadastrado!");
- 
+  alert("Usuario Cadastrado!");
 </script>
 
 <?PHP
- 
-header("Refresh: 0; indexCoordenador.html");
- 
+  header("Refresh: 0; indexCoordenador.html");
 ?>
