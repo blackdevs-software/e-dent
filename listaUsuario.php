@@ -126,9 +126,9 @@
                   <div class="form">
                     <label for="" class="control-label col-lg-2">Pesquise o Usuário: <span class="required">*</span></label>
                       <div class="col-lg-6">
-                        <input type="search" id="" value="" class="form-control" placeholder="Busque pelo RG ou CPF">
+                        <input type="text" class="form-control" placeholder="Busque pelo RG ou CPF" name = "busca_usuario">
                         <br>
-                        <input class="btn btn-primary" type="button" value="Pesquisar">
+                        <input class="btn btn-primary" type="submit" value="Pesquisar">
                       </div>
                   </div>
                   </form>
@@ -147,8 +147,16 @@
                             <th><i class="icon_cogs"></i></th>
                           </tr>
                           <?php
+
+                          include_once("conexao.php");
+
+
+                            $busca_usuario = isset ($_GET['busca_usuario'])?$_GET['busca_usuario']:"";
+
+                            $sql_pesquisa_usuario = "SELECT idUsuario, nome, tipoUsuario, data_nasc, cpf, telefone FROM usuario WHERE  nome LIKE '%$busca_usuario%'";
+
                             $sql_lista_usuario = "SELECT idUsuario, nome, tipoUsuario, data_nasc, cpf, telefone FROM usuario";
-                            $lista_usuarios = mysqli_query ($conexao, $sql_lista_usuario);
+                            $lista_usuarios = mysqli_query ($conexao, $sql_pesquisa_usuario);
                             $registros_usuarios = mysqli_num_rows($lista_usuarios);
 
                             if($lista_usuarios > null){
