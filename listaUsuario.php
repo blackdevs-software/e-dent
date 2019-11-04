@@ -1,67 +1,41 @@
-
 <!DOCTYPE html>
 <html lang="pt-br">
 
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Lista de Pacientes">
-  <meta name="keyword" content="Creative, Dashboard, Admin, Template, Theme, Bootstrap, Responsive, Retina, Minimal">
-
+  <meta name="description" content="Lista de Usuários">
+  <meta name="keyword" content="Web System, Odontologic System, Dentist">
   <title>Lista de Usuários</title>
-
-  <!-- Bootstrap CSS -->
   <link href="css/bootstrap.min.css" rel="stylesheet">
-  <!-- bootstrap theme -->
   <link href="css/bootstrap-theme.css" rel="stylesheet">
-  <!--external css-->
-  <!-- font icon -->
   <link href="css/elegant-icons-style.css" rel="stylesheet" />
-  <link href="css/font-awesome.min.css" rel="stylesheet" />
-  <!-- full calendar css-->
-  <link href="assets/fullcalendar/fullcalendar/bootstrap-fullcalendar.css" rel="stylesheet" />
-  <link href="assets/fullcalendar/fullcalendar/fullcalendar.css" rel="stylesheet" />
-  <!-- easy pie chart-->
-  <link href="assets/jquery-easy-pie-chart/jquery.easy-pie-chart.css" rel="stylesheet" type="text/css" media="screen" />
-  <!-- owl carousel -->
-  <link rel="stylesheet" href="css/owl.carousel.css" type="text/css">
-  <link href="css/jquery-jvectormap-1.2.2.css" rel="stylesheet">
-  <!-- Custom styles -->
-  <link rel="stylesheet" href="css/fullcalendar.css">
-  <link href="css/widgets.css" rel="stylesheet">
   <link href="css/style.css" rel="stylesheet">
   <link href="css/style-responsive.css" rel="stylesheet" />
-  <link href="css/xcharts.min.css" rel=" stylesheet">
-  <link href="css/jquery-ui-1.10.4.min.css" rel="stylesheet">
-  <link rel="icon" type="image/png" href="images/icons/iconEdent.png"/>
-  <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
   <link rel="stylesheet" href="css/main.css">
-  <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
-  <script type="text/javascript" src="js/bootstrap.min.js"></script>
-
+  <link rel="icon" type="image/png" href="images/icons/iconEdent.png"/>
 </head>
 
 <body>
+  <?php
+    include_once('connection.php');
 
-  <?php include_once("conexao.php") ?>
-  <!-- container section start -->
+    $search = isset ($_GET['search']) ? $_GET['search'] : '';
+    // Sanitize query param
+    $search = trim(htmlspecialchars(filter_var($search, FILTER_SANITIZE_STRING)));
+  ?>
   <section id="container" class="">
-
     <header class="header dark-bg">
       <div class="toggle-nav">
         <div class="icon-reorder tooltips" data-original-title="Menu lateral" data-placement="bottom"><i class="icon_menu"></i></div>
       </div>
-
-      <a class="navbar-brand" href="loginEDENT/indexLogin.html">
+      <a class="navbar-brand" href="login.php">
         <img src="images/icons/E-DENT-3.png" class="nav-item " alt="logo" style="width: 90px">
       </a>
     </header>
-    <!--header end-->
 
-    <!--sidebar start-->
     <aside>
       <div id="sidebar" class="nav-collapse ">
-        <!-- sidebar menu start-->
         <ul class="sidebar-menu">
           <li class="active">
             <a class="" href="indexCoordenador.html">
@@ -77,7 +51,7 @@
             </a>
             <ul class="sub">
               <li><a class="" href="listaPaciente.php"> Lista de Pacientes</a></li>
-              <li><a class="" href="index_cadastro_paciente.php"> Cadastrar Paciente</a></li>
+              <li><a class="" href="cadastroPaciente.php"> Cadastrar Paciente</a></li>
             </ul>
           </li>
           <li class="sub-menu">
@@ -88,7 +62,7 @@
             </a>
             <ul class="sub">
               <li><a class="" href="listaUsuario.php"> Lista de Usuários</a></li>
-              <li><a class="" href="index_cadastro_usuario.php"> Cadastrar Usuários</a></li>
+              <li><a class="" href="cadastroUsuario.php"> Cadastrar Usuários</a></li>
             </ul>
           </li>
           <li class="sub-menu">
@@ -105,14 +79,10 @@
           </li>
           <li><a class="" href="agendaConsultas.html"><i class="icon_genius"></i><span>Consultas</span></a></li>
           <li><a class="" href="odontograma.html"><i class="icon_genius"></i><span>Odontograma</span></a></li>
-
         </ul>
-        <!-- sidebar menu end-->
       </div>
     </aside>
-    <!--sidebar end-->
 
-    <!--main content start-->
     <section id="main-content">
       <section class="wrapper">
         <div class="row">
@@ -126,7 +96,7 @@
                   <div class="form">
                     <label for="" class="control-label col-lg-2">Pesquise o Usuário: <span class="required">*</span></label>
                       <div class="col-lg-6">
-                        <input type="text" class="form-control" placeholder="Busque pelo RG ou CPF" name = "busca_usuario">
+                        <input type="text" name="search" class="form-control" placeholder="Busque pelo nome, RG ou CPF" required autofocus value="<?= $search ? $search : ''; ?>">
                         <br>
                         <input class="btn btn-primary" type="submit" value="Pesquisar">
                       </div>
@@ -142,32 +112,45 @@
                             <th><i class="icon_profile"></i> Nome</th>
                             <th><i class="icon_profile"></i> Tipo Usuario</th>
                             <th><i class="icon_calendar"></i> D. Nascimento</th>
+                            <th><i class="icon_pin_alt"></i> RG</th>
                             <th><i class="icon_pin_alt"></i> CPF</th>
                             <th><i class="icon_mobile"></i> Telefone</th>
                             <th><i class="icon_cogs"></i></th>
                           </tr>
+
                           <?php
+                            // Build query
+                            $fields = "idUsuario,
+                                        nome,
+                                        tipoUsuario,
+                                        date_format(data_nasc, '%d/%m/%Y') as data_nasc,
+                                        rg,
+                                        cpf,
+                                        telefone";
 
-                          include_once("conexao.php");
+                            $where_search = "WHERE
+                                              nome LIKE '%{$search}%' OR
+                                              cpf LIKE '%{$search}%' OR
+                                              rg LIKE '%{$search}%'";
 
+                            // If there is a search in query param, use it
+                            $where = $search ? $where_search : '';
 
-                            $busca_usuario = isset ($_GET['busca_usuario'])?$_GET['busca_usuario']:"";
+                            $sql_search = "SELECT {$fields} FROM usuario {$where} LIMIT 50";
 
-                            $sql_pesquisa_usuario = "SELECT idUsuario, nome, tipoUsuario, data_nasc, cpf, telefone FROM usuario WHERE  nome LIKE '%$busca_usuario%'";
+                            $result = mysqli_query($conn, $sql_search);
+                            // $num_registers = mysqli_num_rows($result);
 
-                            $sql_lista_usuario = "SELECT idUsuario, nome, tipoUsuario, data_nasc, cpf, telefone FROM usuario";
-                            $lista_usuarios = mysqli_query ($conexao, $sql_pesquisa_usuario);
-                            $registros_usuarios = mysqli_num_rows($lista_usuarios);
-
-                            if($lista_usuarios > null){
-                              while ($data = mysqli_fetch_array($lista_usuarios)){
+                            if ($result) {
+                              while ($data = mysqli_fetch_array($result)) {
                                 ?>
                                   <tr>
-                                    <td><?= $data ["nome"]; ?></td>
-                                    <td><?= $data ["tipoUsuario"]; ?></td>
-                                    <td><?= $data ["data_nasc"]; ?></td>
-                                    <td><?= $data ["cpf"]; ?></td>
-                                    <td><?= $data ["telefone"]; ?></td>
+                                    <td><?= $data['nome']; ?></td>
+                                    <td><?= $data['tipoUsuario']; ?></td>
+                                    <td><?= $data['data_nasc']; ?></td>
+                                    <td><?= $data['rg']; ?></td>
+                                    <td><?= $data['cpf']; ?></td>
+                                    <td><?= $data['telefone']; ?></td>
                                     <td>
                                       <a class="link_edit" href="editarUsuario.php?id=<?= $data['idUsuario']; ?>">Editar</a>
                                     </td>
@@ -188,51 +171,15 @@
     </section>
   </section>
 
-  <!--main content end-->
-
-  <!-- container section start -->
-
-  <!-- javascripts -->
-  <script src="js/jquery.js"></script>
+  <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
   <script src="js/jquery-ui-1.10.4.min.js"></script>
   <script src="js/jquery-1.8.3.min.js"></script>
-  <script type="text/javascript" src="js/jquery-ui-1.9.2.custom.min.js"></script>
-  <!-- bootstrap -->
-  <script src="js/bootstrap.min.js"></script>
-  <!-- nice scroll -->
   <script src="js/jquery.scrollTo.min.js"></script>
   <script src="js/jquery.nicescroll.js" type="text/javascript"></script>
-  <!-- charts scripts -->
-  <script src="assets/jquery-knob/js/jquery.knob.js"></script>
-  <script src="js/jquery.sparkline.js" type="text/javascript"></script>
-  <script src="assets/jquery-easy-pie-chart/jquery.easy-pie-chart.js"></script>
-  <script src="js/owl.carousel.js"></script>
-  <!-- jQuery full calendar -->
-  <script src="js/fullcalendar.min.js"></script>
-  <!-- Full Google Calendar - Calendar -->
-  <script src="assets/fullcalendar/fullcalendar/fullcalendar.js"></script>
-  <!--script for this page only-->
-  <script src="js/calendar-custom.js"></script>
-  <script src="js/jquery.rateit.min.js"></script>
-  <!-- custom select -->
   <script src="js/jquery.customSelect.min.js"></script>
-  <script src="assets/chart-master/Chart.js"></script>
-
-  <!--custome script for all page-->
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/jquery-ui-1.9.2.custom.min.js"></script>
   <script src="js/scripts.js"></script>
-  <!-- custom script for this page-->
-  <script src="js/sparkline-chart.js"></script>
-  <script src="js/easy-pie-chart.js"></script>
-  <script src="js/jquery-jvectormap-1.2.2.min.js"></script>
-  <script src="js/jquery-jvectormap-world-mill-en.js"></script>
-  <script src="js/xcharts.min.js"></script>
-  <script src="js/jquery.autosize.min.js"></script>
-  <script src="js/jquery.placeholder.min.js"></script>
-  <script src="js/gdp-data.js"></script>
-  <script src="js/morris.min.js"></script>
-  <script src="js/sparklines.js"></script>
-  <script src="js/charts.js"></script>
-  <script src="js/jquery.slimscroll.min.js"></script>
 </body>
 
 </html>

@@ -6,7 +6,7 @@
 
 ```bash
 mysql -u root -p -h 127.0.0.1 -P 3306 -e "CREATE SCHEMA IF NOT EXISTS db_odontologia;"
-mysql -u root -p -h 127.0.0.1 -P 3306 db_odontologia < data.sql
+mysql -u root -p -h 127.0.0.1 -P 3306 db_odontologia < ./migration/data.sql
 ```
 
 * Execution
