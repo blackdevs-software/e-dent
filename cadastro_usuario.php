@@ -12,7 +12,7 @@
         alert("Todos os campos são obrigatorios");
       </script>
     <?php
-      header("Refresh: 0; cadastroPaciente.php");
+      header("Refresh: 0; cadastro_paciente.php");
     } else {
       $nome = $_POST['nome'];
       $tipoUsuario = $_POST['tipoUsuario'];
@@ -40,7 +40,7 @@
             alert("Usuário já cadastrado no sistema, reeveja os dados!");
           </script>
         <?php
-        header("Refresh: 0; cadastroUsuario.php");
+        header("Refresh: 0; cadastro_usuario.php");
       } else {
         $query = "INSERT INTO usuario
         (senha, tipoUsuario, nome, data_nasc, telefone, sexo, estado_civil, rg, cpf, bairro, cep, cidade, enderecoResidencial, email, confirmar_senha)
@@ -55,14 +55,14 @@
               alert("Usuário cadastrado com sucesso no sistema!");
             </script>
           <?php
-          header("Refresh: 0; listaUsuario.php");
+          header("Refresh: 0; lista_usuario.php");
         } else {
           ?>
             <script>
               alert("Erro ao cadastrar usuário!");
             </script>
           <?php
-          header("Refresh: 0; cadastroUsuario.php");
+          header("Refresh: 0; cadastro_usuario.php");
         }
       }
     }
@@ -94,58 +94,13 @@
         <div class="icon-reorder tooltips" data-original-title="Toggle Navigation" data-placement="bottom"><i class="icon_menu"></i></div>
       </div>
       <a class="navbar-brand" href="#">
-          <img src="images/icons/E-DENT-3.png" class="nav-item " alt="logo" style="width: 90px">
+          <img src="images/icons/E-DENT-3.png" class="nav-item" alt="logo" style="width: 90px">
       </a>
     </header>
 
-    <aside>
-      <div id="sidebar" class="nav-collapse ">
-        <ul class="sidebar-menu">
-          <li class="active">
-            <a class="" href="indexCoordenador.html">
-              <i class="icon_house_alt"></i>
-              <span>Home</span>
-            </a>
-          </li>
-          <li class="sub-menu">
-            <a href="javascript:;" class="">
-              <i class="icon_document_alt"></i>
-              <span> Pacientes</span>
-              <span class="menu-arrow arrow_carrot-right"></span>
-            </a>
-            <ul class="sub">
-              <li><a class="" href="listaPaciente.php"> Lista de Pacientes</a></li>
-              <li><a class="" href="cadastroPaciente.php"> Cadastrar Paciente</a></li>
-            </ul>
-          </li>
-          <li class="sub-menu">
-            <a href="javascript:;" class="">
-              <i class="icon_document_alt"></i>
-              <span> Usuários</span>
-              <span class="menu-arrow arrow_carrot-right"></span>
-            </a>
-            <ul class="sub">
-              <li><a class="" href="listaUsuario.php"> Lista Usuarios</a></li>
-              <li><a class="" href="cadastroUsuario.php"> Cadastrar Usuario</a></li>
-            </ul>
-          </li>
-          <li class="sub-menu">
-            <a href="javascript:;" class="">
-              <i class="icon_document_alt"></i>
-              <span> Prontuarios</span>
-              <span class="menu-arrow arrow_carrot-right"></span>
-            </a>
-            <ul class="sub">
-              <li><a class="" href="indexCadastroHistoriaClinica.html"> Historia Clinica</a></li>
-              <li><a class="" href="indexHigieneOral.html"> Higiene Oral</a></li>
-              <li><a class="" href="ProntuarioOdontologico.html"> Odontológico</a></li>
-            </ul>
-          </li>
-          <li><a class="" href="agendaConsultas.html"><i class="icon_genius"></i><span>Consultas</span></a></li>
-          <li><a class="" href="odontograma.html"><i class="icon_genius"></i><span>Odontograma</span></a></li>
-        </ul>
-      </div>
-    </aside>
+    <?php
+      include('aside.php');
+    ?>
 
     <section id="main-content">
       <section class="wrapper">
@@ -157,14 +112,14 @@
               </header>
               <div class="panel-body">
                 <div class="form">
-                  <form class="form-validate form-horizontal " id="register_form" method="post" action="">
-                    <div class="form-group ">
+                  <form class="form-validate form-horizontal" id="register_form" method="post" action="">
+                    <div class="form-group">
                       <label for="nome" class="control-label col-lg-2">Nome Completo<span class="required">*</span></label>
                       <div class="col-lg-10">
                         <input class=" form-control" type="text" name="nome" required="required" placeholder="Digite o Nome"/>
                       </div>
                     </div>
-                    <div class="form-group ">
+                    <div class="form-group">
                       <label for="tipoUsuario" class="control-label col-lg-2">Tipo Usuário<span class="required">*</span></label>
                         <div class="col-lg-10">
                           <select name="tipoUsuario" class="form-control" required="required">
@@ -174,37 +129,37 @@
                           </select>
                         </div>
                     </div>
-                    <div class="form-group ">
+                    <div class="form-group">
                       <label for="data_nasc" class="control-label col-lg-2">Data de Nascimento<span class="required">*</span></label>
                       <div class="col-lg-10">
                         <input class="form-control" type="date" name="data_nasc" required="required"/>
                       </div>
                     </div>
-                    <div class="form-group ">
+                    <div class="form-group">
                       <label for="cpf" class="control-label col-lg-2">CPF<span class="required">*</span></label>
                       <div class="col-lg-10">
                         <input class="form-control" type="text" name="cpf" required="required" placeholder="12345678910"/>
                       </div>
                     </div>
-                    <div class="form-group ">
+                    <div class="form-group">
                       <label for="rg" class="control-label col-lg-2">RG<span class="required">*</span></label>
                       <div class="col-lg-10">
                         <input class="form-control" type="text" name="rg" required="required" placeholder="123456789"/>
                       </div>
                     </div>
-                    <div class="form-group ">
+                    <div class="form-group">
                       <label for="telefone" class="control-label col-lg-2">Telefone<span class="required">*</span></label>
                       <div class="col-lg-10">
-                        <input class="form-control" type="text" name="telefone" required="required" placeholder="(DD)99999-9999"/>
+                        <input class="form-control" type="text" name="telefone" required="required" placeholder="(99)99999-9999"/>
                       </div>
                     </div>
-                    <div class="form-group ">
+                    <div class="form-group">
                       <label for="email" class="control-label col-lg-2">Email<span class="required">*</span></label>
                       <div class="col-lg-10">
-                        <input class="form-control" name="email" type="email" placeholder="seunome@email.com"/>
+                        <input class="form-control" name="email" type="email" placeholder="email@dominio.com"/>
                       </div>
                     </div>
-                    <div class="form-group ">
+                    <div class="form-group">
                       <label for="sexo" class="control-label col-lg-2">Sexo<span class="required">*</span></label>
                         <div class="col-lg-10">
                           <select name="sexo" class="form-control" required="required">
@@ -214,7 +169,7 @@
                           </select>
                         </div>
                     </div>
-                    <div class="form-group ">
+                    <div class="form-group">
                       <label for="estado_civil" class="control-label col-lg-2">Estado Civil<span class="required">*</span></label>
                         <div class="col-lg-10">
                           <select name="estado_civil" class="form-control" required="required">
@@ -237,25 +192,25 @@
                         <input class="form-control"  type="text" name="enderecoResidencial" required="required" placeholder="Digite o Endereço"/>
                       </div>
                     </div>
-                    <div class="form-group ">
+                    <div class="form-group">
                       <label for="bairro" class="control-label col-lg-2">Bairro<span class="required">*</span></label>
                       <div class="col-lg-10">
                         <input class="form-control" type="text" name="bairro" required="required" placeholder="Digite o Bairro"/>
                       </div>
                     </div>
-                    <div class="form-group ">
+                    <div class="form-group">
                       <label for="cidade" class="control-label col-lg-2">Cidade<span class="required">*</span></label>
                       <div class="col-lg-10">
                         <input class="form-control" type="text" name="cidade" required="required" placeholder="Digite a Cidade"/>
                       </div>
                     </div>
-                    <div class="form-group ">
+                    <div class="form-group">
                       <label for="senha" class="control-label col-lg-2">Senha<span class="required">*</span></label>
                       <div class="col-lg-10">
                         <input class="form-control" type="password" name="senha" required="required" placeholder="Digite a Senha"/>
                       </div>
                     </div>
-                    <div class="form-group ">
+                    <div class="form-group">
                       <label for="confirmar_senha" class="control-label col-lg-2">Confirme a Senha<span class="required">*</span></label>
                       <div class="col-lg-10">
                         <input class="form-control" type="password"name="confirmar_senha" required="required" placeholder="Confirme a senha"/>

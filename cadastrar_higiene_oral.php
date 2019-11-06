@@ -6,9 +6,9 @@
 	$palito = $_POST['palito'];
 	$higiene_lingua = $_POST['higiene_lingua'];
 	$fio_dental = $_POST['fio_dental'];
-	$observacaoH0 = $_POST['observacaoH0'];
+	$observacao = $_POST['observacao'];
 
-	$slq_insert_higieneO = "insert into prontuario_higiene_oral (bochecho, creme_dental, palito, higiene_lingua, fio_dental, observacaoH0 ) values ('$bochecho','$creme_dental', '$palito', '$higiene_lingua', '$fio_dental', '$observacaoH0')";
+	$slq_insert_higieneO = "insert into prontuario_higiene_oral (bochecho, creme_dental, palito, higiene_lingua, fio_dental, observacao) values ('$bochecho','$creme_dental', '$palito', '$higiene_lingua', '$fio_dental', '$observacao')";
 
 	$salvar_higieneO = mysqli_query($conn, $slq_insert_higieneO);
 

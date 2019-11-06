@@ -30,47 +30,13 @@
         <div class="icon-reorder tooltips" data-original-title="Menu lateral" data-placement="bottom"><i class="icon_menu"></i></div>
       </div>
       <a class="navbar-brand" href="login.php">
-        <img src="images/icons/E-DENT-3.png" class="nav-item " alt="logo" style="width: 90px">
+        <img src="images/icons/E-DENT-3.png" class="nav-item" alt="logo" style="width: 90px">
       </a>
     </header>
 
-    <aside>
-      <div id="sidebar" class="nav-collapse ">
-        <ul class="sidebar-menu">
-          <li class="active">
-            <a class="" href="index.php">
-              <i class="icon_house_alt"></i>
-              <span>Home</span>
-            </a>
-          </li>
-          <li class="sub-menu">
-            <a href="javascript:;" class="">
-              <i class="icon_document_alt"></i>
-              <span> Pacientes</span>
-              <span class="menu-arrow arrow_carrot-right"></span>
-            </a>
-            <ul class="sub">
-              <li><a class="" href="listaPaciente.php"> Lista de Pacientes</a></li>
-              <li><a class="" href="cadastroPaciente.php"> Cadastrar Paciente</a></li>
-            </ul>
-          </li>
-          <li class="sub-menu">
-            <a href="javascript:;" class="">
-              <i class="icon_document_alt"></i>
-              <span> Prontuarios</span>
-              <span class="menu-arrow arrow_carrot-right"></span>
-            </a>
-            <ul class="sub">
-              <li><a class="" href="indexCadastroHistoriaMedica.html"> Historia Clinica</a></li>
-              <li><a class="" href="indexHigieneOral.html"> Higiene Oral</a></li>
-              <li><a class="" href="ProntuarioOdontologico.html"> Odontológico</a></li>
-            </ul>
-          </li>
-          <li><a class="" href="agendaConsultas.html"><i class="icon_genius"></i><span>Consultas</span></a></li>
-          <li><a class="" href="odontograma.html"><i class="icon_genius"></i><span>Odontograma</span></a></li>
-        </ul>
-      </div>
-    </aside>
+    <?php
+      include('aside.php');
+    ?>
 
     <section id="main-content">
       <section class="wrapper">
@@ -104,32 +70,46 @@
                           <th><i class="icon_pin_alt"></i> RG</th>
                           <th><i class="icon_pin_alt"></i> CPF</th>
                           <th><i class="icon_mobile"></i> Telefone</th>
+                          <th><i class="icon_document_alt"></i> Prontuários</th>
                           <th><i class="icon_cogs"></i></th>
                         </tr>
                         <?php
                           // Build query
-                          $fields = "idPaciente,
-                                      nome,
-                                      date_format(data_nasc, '%d/%m/%Y') as data_nasc,
-                                      email,
-                                      rg,
-                                      cpf,
-                                      telefone";
+                          $fields = "pac.idPaciente,
+                                      pac.nome,
+                                      date_format(pac.data_nasc, '%d/%m/%Y') as data_nasc,
+                                      pac.email,
+                                      pac.rg,
+                                      pac.cpf,
+                                      pac.telefone";
 
                           $where_search = "WHERE
-                                            nome LIKE '%{$search}%' OR
-                                            cpf LIKE '%{$search}%' OR
-                                            rg LIKE '%{$search}%'";
+                                            pac.nome LIKE '%{$search}%' OR
+                                            pac.cpf LIKE '%{$search}%' OR
+                                            pac.rg LIKE '%{$search}%'";
 
                           // If there is a search in query param, use it
                           $where = $search ? $where_search : '';
 
-                          $query = "SELECT {$fields} FROM paciente {$where} LIMIT 50";
+                          $query = "SELECT
+                                    {$fields},
+                                    group_concat(ppo.fk_idProntuarioOdontologico) as idsProntuarios
+                                  FROM
+                                    paciente pac
+                                  LEFT JOIN
+                                    paciente_prontuario_odontologico ppo on ppo.fk_idPaciente = pac.idPaciente
+                                  {$where}
+                                  GROUP BY pac.idPaciente
+                                  LIMIT 50";
 
                           $result = mysqli_query($conn, $query);
 
                           if ($result) {
                             while ($data = mysqli_fetch_array($result)) {
+                              $prontuarios = explode(',', $data['idsProntuarios']);
+                              $prontuarios_str = implode(' ', array_map(function($p) {
+                                return "<a href=\"editar_prontuario_odontologico.php?id={$p}\">{$p}</a>";
+                              }, $prontuarios));
                               ?>
                                 <tr>
                                   <td><?= $data['nome']; ?></td>
@@ -138,8 +118,9 @@
                                   <td><?= $data['rg']; ?></td>
                                   <td><?= $data['cpf']; ?></td>
                                   <td><?= $data['telefone']; ?></td>
+                                  <td><?= $prontuarios_str; ?></td>
                                   <td>
-                                    <a class="link_edit" href="editarPaciente.php?id=<?= $data['idPaciente']; ?>">Editar</a>
+                                    <a class="link_edit" href="editar_paciente.php?id=<?= $data['idPaciente']; ?>">Editar</a>
                                   </td>
                                 </tr>
                               <?php

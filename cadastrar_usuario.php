@@ -28,5 +28,5 @@
 </script>
 
 <?PHP
-  header("Refresh: 0; indexCoordenador.html");
+  header("Refresh: 0; index_coordenador.php");
 ?>

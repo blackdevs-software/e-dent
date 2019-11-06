@@ -55,61 +55,61 @@
             alert("Cadasto do usuario alterado com sucesso no sistema!");
           </script>
         <?php
-        header("Refresh: 0; listaUsuario.php");
+        header("Refresh: 0; lista_usuario.php");
       } else {
         ?>
           <script>
             alert("Erro ao alterar o cadastro do usuario!");
           </script>
         <?php
-        header("Refresh: 0; listaUsuario.php");
+        header("Refresh: 0; lista_usuario.php");
       }
     }
   }
 
   //Retornar dados do usuário:
-    if (empty($_GET['id'])) {
-      header('Location: listaUsuario.php');
+  if (empty($_GET['id'])) {
+    header('Location: lista_usuario.php');
+  }
+  $idU = $_GET['id'];
+
+  $sql = mysqli_query($conn, "SELECT idUsuario, senha, tipoUsuario, nome, data_nasc, telefone, sexo, estado_civil, rg, cpf, bairro, cep, cidade, enderecoResidencial, email, confirmar_senha FROM usuario WHERE idUsuario = $idU");
+
+  $result = mysqli_num_rows($sql);
+
+  if ($result == 0) {
+    header('Location: lista_usuario.php');
+  } else {
+    while ($data = mysqli_fetch_array($sql)) {
+      $idUsuario = $data['idUsuario'];
+      $senha = $data['senha'];
+      $tipoUsuario = $data['tipoUsuario'];
+      $nome = $data['nome'];
+      $data_nasc = $data['data_nasc'];
+      $telefone = $data['telefone'];
+      $sexo = $data['sexo'];
+      $estado_civil = $data['estado_civil'];
+      $rg = $data['rg'];
+      $cpf = $data['cpf'];
+      $bairro = $data['bairro'];
+      $cep = $data['cep'];
+      $cidade = $data['cidade'];
+      $enderecoResidencial = $data['enderecoResidencial'];
+      $email = $data['email'];
+      $confirmar_senha = $data['confirmar_senha'];
     }
-    $idU = $_GET['id'];
+  }
 
-    $sql = mysqli_query($conn, "SELECT idUsuario, senha, tipoUsuario, nome, data_nasc, telefone, sexo, estado_civil, rg, cpf, bairro, cep, cidade, enderecoResidencial, email, confirmar_senha FROM usuario WHERE idUsuario = $idU");
+  $genre_options = [
+    [ 'name' => 'Feminino', 'value' => 'f' ],
+    [ 'name' => 'Masculino', 'value' => 'm' ],
+  ];
 
-    $result = mysqli_num_rows($sql);
-
-    if ($result == 0) {
-      header('Location: listaUsuario.php');
-    } else {
-      while ($data = mysqli_fetch_array($sql)) {
-        $idUsuario = $data['idUsuario'];
-        $senha = $data['senha'];
-        $tipoUsuario = $data['tipoUsuario'];
-        $nome = $data['nome'];
-        $data_nasc = $data['data_nasc'];
-        $telefone = $data['telefone'];
-        $sexo = $data['sexo'];
-        $estado_civil = $data['estado_civil'];
-        $rg = $data['rg'];
-        $cpf = $data['cpf'];
-        $bairro = $data['bairro'];
-        $cep = $data['cep'];
-        $cidade = $data['cidade'];
-        $enderecoResidencial = $data['enderecoResidencial'];
-        $email = $data['email'];
-        $confirmar_senha = $data['confirmar_senha'];
-      }
-    }
-
-    $genre_options = [
-      [ 'name' => 'Feminino', 'value' => 'f' ],
-      [ 'name' => 'Masculino', 'value' => 'm' ],
-    ];
-
-    $marital_state_options = [
-      [ 'name' => 'Casado', 'value' => 'c' ],
-      [ 'name' => 'Solteiro', 'value' => 's' ],
-      [ 'name' => 'Divorciado', 'value' => 'd' ],
-    ];
+  $marital_state_options = [
+    [ 'name' => 'Casado', 'value' => 'c' ],
+    [ 'name' => 'Solteiro', 'value' => 's' ],
+    [ 'name' => 'Divorciado', 'value' => 'd' ],
+  ];
 ?>
 
 <!DOCTYPE html>
@@ -137,58 +137,13 @@
         <div class="icon-reorder tooltips" data-original-title="Toggle Navigation" data-placement="bottom"><i class="icon_menu"></i></div>
       </div>
       <a class="navbar-brand" href="#">
-        <img src="images/icons/E-DENT-3.png" class="nav-item " alt="logo" style="width: 90px">
+        <img src="images/icons/E-DENT-3.png" class="nav-item" alt="logo" style="width: 90px">
       </a>
     </header>
 
-    <aside>
-      <div id="sidebar" class="nav-collapse ">
-        <ul class="sidebar-menu">
-          <li class="active">
-            <a class="" href="indexCoordenador.html">
-              <i class="icon_house_alt"></i>
-              <span>Home</span>
-            </a>
-          </li>
-          <li class="sub-menu">
-            <a href="javascript:;" class="">
-              <i class="icon_document_alt"></i>
-              <span> Pacientes</span>
-              <span class="menu-arrow arrow_carrot-right"></span>
-            </a>
-            <ul class="sub">
-              <li><a class="" href="listaPaciente.php"> Lista de Pacientes</a></li>
-              <li><a class="" href="cadastroPaciente.php"> Cadastrar Paciente</a></li>
-            </ul>
-          </li>
-          <li class="sub-menu">
-            <a href="javascript:;" class="">
-              <i class="icon_document_alt"></i>
-              <span> Usuários</span>
-              <span class="menu-arrow arrow_carrot-right"></span>
-            </a>
-            <ul class="sub">
-              <li><a class="" href="listaUsuario.php"> Lista Usuarios</a></li>
-              <li><a class="" href="cadastroUsuario.php"> Cadastrar Usuario</a></li>
-            </ul>
-          </li>
-          <li class="sub-menu">
-            <a href="javascript:;" class="">
-              <i class="icon_document_alt"></i>
-              <span> Prontuarios</span>
-              <span class="menu-arrow arrow_carrot-right"></span>
-            </a>
-            <ul class="sub">
-              <li><a class="" href="indexCadastroHistoriaClinica.html"> Historia Clinica</a></li>
-              <li><a class="" href="indexHigieneOral.html"> Higiene Oral</a></li>
-              <li><a class="" href="ProntuarioOdontologico.html"> Odontológico</a></li>
-            </ul>
-          </li>
-          <li><a class="" href="agendaConsultas.html"><i class="icon_genius"></i><span>Consultas</span></a></li>
-          <li><a class="" href="odontograma.html"><i class="icon_genius"></i><span>Odontograma</span></a></li>
-        </ul>
-      </div>
-    </aside>
+    <?php
+      include('aside.php');
+    ?>
 
     <section id="main-content">
       <section class="wrapper">
@@ -200,15 +155,15 @@
               </header>
               <div class="panel-body">
                 <div class="form">
-                  <form class="form-validate form-horizontal " id="register_form" method="post" action="">
-                    <input type = "hidden" name="idUsuario" value="<?= $idU; ?>">
-                    <div class="form-group ">
+                  <form class="form-validate form-horizontal" id="register_form" method="post" action="">
+                    <input type="hidden" name="idUsuario" value="<?= $idU; ?>">
+                    <div class="form-group">
                       <label for="nome" class="control-label col-lg-2">Nome Completo<span class="required">*</span></label>
                       <div class="col-lg-10">
                         <input class=" form-control" type="text" name="nome" required="required" placeholder="Digite o Nome" value="<?php echo $nome; ?>"/>
                       </div>
                     </div>
-                    <div class="form-group ">
+                    <div class="form-group">
                       <label for="tipoUsuario" class="control-label col-lg-2">Tipo Usuário<span class="required">*</span></label>
                         <div class="col-lg-10">
                           <select name="tipoUsuario" class="form-control" required="required">
@@ -218,37 +173,37 @@
                           </select>
                         </div>
                     </div>
-                    <div class="form-group ">
+                    <div class="form-group">
                       <label for="data_nasc" class="control-label col-lg-2">Data de Nascimento<span class="required">*</span></label>
                       <div class="col-lg-10">
                         <input class="form-control" type="date" name="data_nasc" required="required" value="<?php echo $data_nasc; ?>"/>
                       </div>
                     </div>
-                    <div class="form-group ">
+                    <div class="form-group">
                       <label for="cpf" class="control-label col-lg-2">CPF<span class="required">*</span></label>
                       <div class="col-lg-10">
                         <input class="form-control" type="text" name="cpf" required="required" placeholder="12345678910" value="<?php echo $cpf; ?>"/>
                       </div>
                     </div>
-                    <div class="form-group ">
+                    <div class="form-group">
                       <label for="rg" class="control-label col-lg-2">RG<span class="required">*</span></label>
                       <div class="col-lg-10">
                         <input class="form-control" type="text" name="rg" required="required" placeholder="123456789" value="<?php echo $rg; ?>"/>
                       </div>
                     </div>
-                    <div class="form-group ">
+                    <div class="form-group">
                       <label for="telefone" class="control-label col-lg-2">Telefone<span class="required">*</span></label>
                       <div class="col-lg-10">
-                        <input class="form-control" type="text" name="telefone" required="required" placeholder="(DD)99999-9999" value="<?php echo $telefone; ?>"/>
+                        <input class="form-control" type="text" name="telefone" required="required" placeholder="(99)99999-9999" value="<?php echo $telefone; ?>"/>
                       </div>
                     </div>
-                    <div class="form-group ">
+                    <div class="form-group">
                       <label for="email" class="control-label col-lg-2">Email<span class="required">*</span></label>
                       <div class="col-lg-10">
-                        <input class="form-control" name="email" type="email" placeholder="seunome@email.com" value="<?php echo $email; ?>"/>
+                        <input class="form-control" name="email" type="email" placeholder="email@dominio.com" value="<?php echo $email; ?>"/>
                       </div>
                     </div>
-                    <div class="form-group ">
+                    <div class="form-group">
                       <label for="sexo" class="control-label col-lg-2">Sexo<span class="required">*</span></label>
                         <div class="col-lg-10">
                           <select name="sexo" class="form-control" required="required">
@@ -272,7 +227,7 @@
                           </select>
                         </div>
                     </div>
-                    <div class="form-group ">
+                    <div class="form-group">
                       <label for="estado_civil" class="control-label col-lg-2">Estado Civil<span class="required">*</span></label>
                         <div class="col-lg-10">
                           <select name="estado_civil" class="form-control" required="required">
@@ -308,25 +263,25 @@
                         <input class="form-control"  type="text" name="enderecoResidencial" required="required" placeholder="Digite o Endereço" value="<?php echo $enderecoResidencial; ?>"/>
                       </div>
                     </div>
-                    <div class="form-group ">
+                    <div class="form-group">
                       <label for="bairro" class="control-label col-lg-2">Bairro<span class="required">*</span></label>
                       <div class="col-lg-10">
                         <input class="form-control" type="text" name="bairro" required="required" placeholder="Digite o Bairro" value="<?php echo $bairro; ?>" />
                       </div>
                     </div>
-                    <div class="form-group ">
+                    <div class="form-group">
                       <label for="cidade" class="control-label col-lg-2">Cidade<span class="required">*</span></label>
                       <div class="col-lg-10">
                         <input class="form-control" type="text" name="cidade" required="required" placeholder="Digite a Cidade" value="<?php echo $cidade; ?>"/>
                       </div>
                     </div>
-                    <div class="form-group ">
+                    <div class="form-group">
                       <label for="senha" class="control-label col-lg-2">Senha<span class="required">*</span></label>
                       <div class="col-lg-10">
                         <input class="form-control" type="password" name="senha" required="required" placeholder="Digite a Senha" value="<?php echo $senha; ?>"/>
                       </div>
                     </div>
-                    <div class="form-group ">
+                    <div class="form-group">
                       <label for="confirmar_senha" class="control-label col-lg-2">Confirme a Senha<span class="required">*</span></label>
                       <div class="col-lg-10">
                         <input class="form-control" type="password"name="confirmar_senha" required="required" placeholder="Confirme a senha" value="<?php echo $confirmar_senha; ?>"/>

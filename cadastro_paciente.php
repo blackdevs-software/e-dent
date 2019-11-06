@@ -11,7 +11,7 @@
         alert("Todos os campos são obrigatorios");
       </script>
     <?php
-      header("Refresh: 0; cadastroPaciente.php");
+      header("Refresh: 0; cadastro_paciente.php");
     } else {
       $nome = $_POST['nome'];
       $data_nasc = $_POST['data_nasc'];
@@ -37,7 +37,7 @@
         </script>
       <?php
 
-      header("Refresh: 0; cadastroPaciente.php");
+      header("Refresh: 0; cadastro_paciente.php");
 
       } else {
         $query = "INSERT INTO paciente
@@ -53,7 +53,7 @@
               alert("Paciente cadastrado com sucesso no sistema!");
             </script>
           <?php
-          header("Refresh: 0; listaPaciente.php");
+          header("Refresh: 0; lista_paciente.php");
         } else {
           ?>
             <script>
@@ -92,47 +92,13 @@
         <div class="icon-reorder tooltips" data-original-title="Toggle Navigation" data-placement="bottom"><i class="icon_menu"></i></div>
       </div>
       <a class="navbar-brand" href="#">
-        <img src="images/icons/E-DENT-3.png" class="nav-item " alt="logo" style="width: 90px">
+        <img src="images/icons/E-DENT-3.png" class="nav-item" alt="logo" style="width: 90px">
       </a>
     </header>
 
-    <aside>
-      <div id="sidebar" class="nav-collapse ">
-        <ul class="sidebar-menu">
-          <li class="active">
-            <a class="" href="index.php">
-              <i class="icon_house_alt"></i>
-              <span>Home</span>
-            </a>
-          </li>
-          <li class="sub-menu">
-            <a href="javascript:;" class="">
-              <i class="icon_document_alt"></i>
-              <span>Pacientes</span>
-              <span class="menu-arrow arrow_carrot-right"></span>
-            </a>
-            <ul class="sub">
-              <li><a class="" href="listaPaciente.php"> Lista de Pacientes</a></li>
-              <li><a class="" href="cadastroPaciente.php"> Cadastrar Paciente</a></li>
-            </ul>
-          </li>
-          <li class="sub-menu">
-            <a href="javascript:;" class="">
-              <i class="icon_document_alt"></i>
-              <span> Prontuarios</span>
-              <span class="menu-arrow arrow_carrot-right"></span>
-            </a>
-            <ul class="sub">
-              <li><a class="" href="indexCadastroHistoriaMedica.html"> Historia Clinica</a></li>
-              <li><a class="" href="indexHigieneOral.html"> Higiene Oral</a></li>
-              <li><a class="" href="ProntuarioOdontologico.html"> Odontológico</a></li>
-            </ul>
-          </li>
-          <li><a class="" href="agendaConsultas.html"><i class="icon_genius"></i><span>Consultas</span></a></li>
-          <li><a class="" href="odontograma.html"><i class="icon_genius"></i><span>Odontograma</span></a></li>
-        </ul>
-      </div>
-    </aside>
+    <?php
+      include('aside.php');
+    ?>
 
     <section id="main-content">
       <section class="wrapper">
@@ -144,44 +110,44 @@
               </header>
               <div class="panel-body">
                 <div class="form">
-                  <form class="form-validate form-horizontal " id="register_form" method="post" action="">
-                    <div class="form-group ">
+                  <form class="form-validate form-horizontal" id="register_form" method="post" action="">
+                    <div class="form-group">
                       <label for="nome" class="control-label col-lg-2">Nome Completo<span class="required">*</span></label>
                       <div class="col-lg-10">
                         <input class=" form-control" id="nome" name="nome" type="text" placeholder="Digite o Nome" required="required"/>
                       </div>
                     </div>
-                    <div class="form-group ">
+                    <div class="form-group">
                       <label for="data_nasc" class="control-label col-lg-2">Data de Nascimento<span class="required">*</span></label>
                       <div class="col-lg-10">
                         <input class=" form-control" id="data_nasc" name="data_nasc" type="date" required="required" />
                       </div>
                     </div>
-                    <div class="form-group ">
+                    <div class="form-group">
                       <label for="rg" class="control-label col-lg-2">RG<span class="required">*</span></label>
                       <div class="col-lg-10">
-                        <input class="form-control " id="rg" name="rg" type="text" placeholder="123456789" required="required"/>
+                        <input class="form-control" id="rg" name="rg" type="text" placeholder="123456789" required="required"/>
                       </div>
                     </div>
-                    <div class="form-group ">
+                    <div class="form-group">
                       <label for="cpf" class="control-label col-lg-2">CPF<span class="required">*</span></label>
                       <div class="col-lg-10">
-                        <input class="form-control " id="cpf" name="cpf" placeholder="12345678910" type="text" required="required"/>
+                        <input class="form-control" id="cpf" name="cpf" placeholder="12345678910" type="text" required="required"/>
                       </div>
                     </div>
-                    <div class="form-group ">
+                    <div class="form-group">
                       <label for="telefone" class="control-label col-lg-2">Telefone<span class="required">*</span></label>
                       <div class="col-lg-10">
-                        <input class="form-control " id="telefone" name="telefone" type="text" placeholder="(DD)99999-9999" required="required"/>
+                        <input class="form-control" id="telefone" name="telefone" type="text" placeholder="(99)99999-9999" required="required"/>
                       </div>
                     </div>
-                    <div class="form-group ">
+                    <div class="form-group">
                       <label for="email" class="control-label col-lg-2">Email<span class="required">*</span></label>
                       <div class="col-lg-10">
-                        <input class="form-control" name="email" type="email" placeholder="seunome@email.com"/>
+                        <input class="form-control" name="email" type="email" placeholder="email@dominio.com"/>
                       </div>
                     </div>
-                    <div class="form-group ">
+                    <div class="form-group">
                       <label for="sexo" class="control-label col-lg-2">Sexo<span class="required">*</span></label>
                         <div class="col-lg-10">
                               <select name = "sexo" class="form-control" required="required">
@@ -191,7 +157,7 @@
                               </select>
                         </div>
                     </div>
-                    <div class="form-group ">
+                    <div class="form-group">
                       <label for="estado_civil" class="control-label col-lg-2">Estado Civil<span class="required">*</span></label>
                         <div class="col-lg-10">
                               <select required="required" name ="estado_civil" class="form-control">
@@ -202,25 +168,25 @@
                               </select>
                         </div>
                     </div>
-                    <div class="form-group ">
+                    <div class="form-group">
                       <label for="cep" class="control-label col-lg-2">CEP<span class="required">*</span></label>
                       <div class="col-lg-10">
                         <input class="form-control" id="cep" name="cep" placeholder="Digite o CEP" type="text" required="required"/>
                       </div>
                     </div>
-                    <div class="form-group ">
+                    <div class="form-group">
                       <label for="endereco" class="control-label col-lg-2">Endereço Residencial<span class="required">*</span></label>
                       <div class="col-lg-10">
                         <input class="form-control" id="endereco" name="endereco" class="form-control" id="endereco" placeholder="Digite o Endereço" type="text" required="required" />
                       </div>
                     </div>
-                    <div class="form-group ">
+                    <div class="form-group">
                       <label for="bairro" class="control-label col-lg-2">Bairro<span class="required">*</span></label>
                       <div class="col-lg-10">
                         <input class="form-control" id="bairro" name="bairro" class="form-control" id="" placeholder="Digite o Bairro" type="text" required="required" />
                       </div>
                     </div>
-                    <div class="form-group ">
+                    <div class="form-group">
                       <label for="cidade" class="control-label col-lg-2">Cidade<span class="required">*</span></label>
                       <div class="col-lg-10">
                         <input class="form-control" id="cidade" name="cidade" class="form-control" id="" placeholder="Digite a Cidade" type="text" required="required" />
