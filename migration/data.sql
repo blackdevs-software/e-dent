@@ -2,6 +2,7 @@ DROP SCHEMA IF EXISTS db_odontologia;
 CREATE SCHEMA IF NOT EXISTS db_odontologia;
 USE db_odontologia;
 
+/* Patient */
 DROP TABLE IF EXISTS `paciente`;
 CREATE TABLE `paciente` (
   `idPaciente` int(11) NOT NULL AUTO_INCREMENT,
@@ -20,6 +21,7 @@ CREATE TABLE `paciente` (
   PRIMARY KEY (`idPaciente`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
+/* Medical records */
 DROP TABLE IF EXISTS `prontuario_higiene_oral`;
 CREATE TABLE `prontuario_higiene_oral` (
   `idHigieneOral` int(11) NOT NULL AUTO_INCREMENT,
@@ -35,7 +37,7 @@ CREATE TABLE `prontuario_higiene_oral` (
 DROP TABLE IF EXISTS `prontuario_historia_medica`;
 CREATE TABLE `prontuario_historia_medica` (
   `idHistoriaMedica` int(11) NOT NULL AUTO_INCREMENT,
-  `queixaPrincipal` TEXT NOT NULL,
+  `queixa_principal` TEXT NOT NULL,
   `historia_doenca_atual` TEXT NOT NULL,
   `historia_progressa` TEXT NOT NULL,
   `historia_familiar` TEXT NOT NULL,
@@ -59,6 +61,7 @@ CREATE TABLE `prontuario_odontologico` (
   PRIMARY KEY (`idProntuarioOdontologico`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
+/* User */
 DROP TABLE IF EXISTS `usuario`;
 CREATE TABLE `usuario` (
   `idUsuario` int(11) NOT NULL AUTO_INCREMENT,
@@ -80,42 +83,46 @@ CREATE TABLE `usuario` (
   PRIMARY KEY (`idUsuario`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
+/* Appointment */
 DROP TABLE IF EXISTS `consulta`;
 CREATE TABLE `consulta` (
   `idConsulta` int(11) NOT NULL AUTO_INCREMENT,
   `fk_idUsuario` int(11) NOT NULL,
   `fk_idPaciente` int(11) NOT NULL,
   `observacao` TEXT NOT NULL,
+  `data_hora` DATETIME NOT NULL,
+  `created_at` DATETIME DEFAULT current_timestamp,
+  `updated_at` DATETIME NULL,
+  `deleted_at` DATETIME NULL,
   PRIMARY KEY (`idConsulta`),
   FOREIGN KEY (`fk_idUsuario`) REFERENCES `usuario` (`idUsuario`),
   FOREIGN KEY (`fk_idPaciente`) REFERENCES `paciente` (`idPaciente`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-DROP TABLE IF EXISTS `paciente_higiene_oral`;
-CREATE TABLE `paciente_higiene_oral` (
+/* Relationship pacient with medical records */
+DROP TABLE IF EXISTS `paciente_prontuario_higiene_oral`;
+CREATE TABLE `paciente_prontuario_higiene_oral` (
   `idPacienteHigieneOral` int(11) NOT NULL AUTO_INCREMENT,
   `fk_idUsuario` int(11) NOT NULL,
   `fk_idPaciente` int(11) NOT NULL,
-  `fk_idConsulta` int(11) NOT NULL,
+  `fk_idConsulta` int(11) NULL,
   `fk_idHigieneOral` int(11) NOT NULL,
   PRIMARY KEY (`idPacienteHigieneOral`),
   FOREIGN KEY (`fk_idUsuario`) REFERENCES `usuario` (`idUsuario`),
   FOREIGN KEY (`fk_idPaciente`) REFERENCES `paciente` (`idPaciente`),
-  FOREIGN KEY (`fk_idConsulta`) REFERENCES `consulta` (`idConsulta`),
   FOREIGN KEY (`fk_idHigieneOral`) REFERENCES `prontuario_higiene_oral` (`idHigieneOral`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-DROP TABLE IF EXISTS `paciente_historia_medica`;
-CREATE TABLE `paciente_historia_medica` (
+DROP TABLE IF EXISTS `paciente_prontuario_historia_medica`;
+CREATE TABLE `paciente_prontuario_historia_medica` (
   `idPacienteHistoriaMedica` int(11) NOT NULL AUTO_INCREMENT,
   `fk_idUsuario` int(11) NOT NULL,
   `fk_idPaciente` int(11) NOT NULL,
-  `fk_idConsulta` int(11) NOT NULL,
+  `fk_idConsulta` int(11) NULL,
   `fk_idHistoriaMedica` int(11) NOT NULL,
   PRIMARY KEY (`idPacienteHistoriaMedica`),
   FOREIGN KEY (`fk_idUsuario`) REFERENCES `usuario` (`idUsuario`),
   FOREIGN KEY (`fk_idPaciente`) REFERENCES `paciente` (`idPaciente`),
-  FOREIGN KEY (`fk_idConsulta`) REFERENCES `consulta` (`idConsulta`),
   FOREIGN KEY (`fk_idHistoriaMedica`) REFERENCES `prontuario_historia_medica` (`idHistoriaMedica`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 

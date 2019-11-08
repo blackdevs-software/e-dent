@@ -9,10 +9,10 @@
       || empty($_POST['cidade']) || empty($_POST['senha']) || empty($_POST['confirmar_senha'])) {
     ?>
       <script>
-        alert("Todos os campos são obrigatorios");
+        alert('Todos os campos são obrigatorios');
       </script>
     <?php
-      header("Refresh: 0; cadastro_paciente.php");
+      header('Refresh: 0; cadastro_paciente.php');
     } else {
       $nome = $_POST['nome'];
       $tipoUsuario = $_POST['tipoUsuario'];
@@ -37,10 +37,10 @@
       if ($result > null) {
         ?>
           <script>
-            alert("Usuário já cadastrado no sistema, reeveja os dados!");
+            alert('Usuário já cadastrado no sistema, reeveja os dados!');
           </script>
         <?php
-        header("Refresh: 0; cadastro_usuario.php");
+        header('Refresh: 0; cadastro_usuario.php');
       } else {
         $query = "INSERT INTO usuario
         (senha, tipoUsuario, nome, data_nasc, telefone, sexo, estado_civil, rg, cpf, bairro, cep, cidade, enderecoResidencial, email, confirmar_senha)
@@ -52,17 +52,19 @@
         if ($result) {
           ?>
             <script>
-              alert("Usuário cadastrado com sucesso no sistema!");
+              alert('Usuário cadastrado com sucesso no sistema!');
             </script>
           <?php
-          header("Refresh: 0; lista_usuario.php");
+          header('Refresh: 0; lista_usuario.php');
+          return;
         } else {
           ?>
             <script>
-              alert("Erro ao cadastrar usuário!");
+              alert('Erro ao cadastrar usuário!');
             </script>
           <?php
-          header("Refresh: 0; cadastro_usuario.php");
+          header('Refresh: 0; cadastro_usuario.php');
+          return;
         }
       }
     }
@@ -80,7 +82,7 @@
   <title>Cadastro de Usuários</title>
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/bootstrap-theme.css" rel="stylesheet">
-  <link href="css/elegant-icons-style.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
   <link href="css/style.css" rel="stylesheet">
   <link href="css/style-responsive.css" rel="stylesheet" />
   <link rel="stylesheet" href="css/main.css">
@@ -88,13 +90,15 @@
 </head>
 
 <body>
-  <section id="container" class="">
-    <header class="header dark-bg">
-      <div class="toggle-nav">
-        <div class="icon-reorder tooltips" data-original-title="Toggle Navigation" data-placement="bottom"><i class="icon_menu"></i></div>
+  <section id="container">
+    <header class="header" style="background-color: #111; border-bottom: #fff 1px solid;">
+      <div class="toggle-nav" style="margin-top: 15px;">
+        <div class="icon-reorder tooltips" data-original-title="Menu lateral" data-placement="bottom">
+        <i class="fas fa-bars" style="color: #fff;"></i>
       </div>
-      <a class="navbar-brand" href="#">
-          <img src="images/icons/E-DENT-3.png" class="nav-item" alt="logo" style="width: 90px">
+      </div>
+      <a class="navbar-brand" href="login.php">
+        <img src="images/icons/E-DENT-3.png" class="nav-item" alt="logo" style="width: 90px">
       </a>
     </header>
 
@@ -224,7 +228,7 @@
                       </div>
                       <div class="form-group">
                         <div class="col-lg-offset-2 col-lg-10">
-                          <button class="btn btn-primary" type="submit" value="">Salvar</button>
+                          <button class="btn btn-primary" type="submit">Salvar</button>
                           <button class="btn btn-default" type="button">Cancelar</button>
                         </div>
                       </div>

@@ -24,9 +24,9 @@
 	mysqli_close($conn);
 ?>
 <script>
-  alert("Usuario Cadastrado!");
+  alert('Usuario Cadastrado!');
 </script>
 
 <?PHP
-  header("Refresh: 0; index_coordenador.php");
+  header('Refresh: 0; index_coordenador.php');
 ?>

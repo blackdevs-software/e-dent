@@ -21,9 +21,9 @@
 	mysqli_close($conn);
 ?>
 <script>
-  alert("Paciente Cadastrado");
+  alert('Paciente Cadastrado');
 </script>
 
 <?PHP
-  header("Refresh: 0; index.php");
+  header('Refresh: 0; index.php');
 ?>

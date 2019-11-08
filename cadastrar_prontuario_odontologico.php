@@ -23,9 +23,11 @@
   if (empty($inserted_id)) {
     ?>
       <script>
-        alert("Houve um erro ao cadastrar!");
+        alert('Houve um erro ao cadastrar!');
       </script>
     <?php
+    header('Refresh: 0; prontuario_odontologico.php');
+    return;
   }
 
   $query = "insert into paciente_prontuario_odontologico (fk_idUsuario, fk_idPaciente, fk_idProntuarioOdontologico)
@@ -34,13 +36,25 @@
 
   $salvar_relacao = mysqli_query($conn, $query);
 
+  $inserted_id = mysqli_insert_id($conn);
+
+  if (empty($inserted_id)) {
+    ?>
+      <script>
+        alert('Houve um erro ao cadastrar!');
+      </script>
+    <?php
+    header('Refresh: 0; prontuario_odontologico.php');
+    return;
+  }
+
   mysqli_close($conn);
 ?>
 
 <script>
-  alert("Prontuario odontológico cadastrado!");
+  alert('Prontuario odontológico cadastrado!');
 </script>
 
 <?PHP
-  header("Refresh: 0; index.php");
+  header('Refresh: 0; prontuario_odontologico.php');
 ?>

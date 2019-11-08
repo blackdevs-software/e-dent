@@ -9,7 +9,7 @@
   <title>Prontuário Odontológico</title>
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/bootstrap-theme.css" rel="stylesheet">
-  <link href="css/elegant-icons-style.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
   <link href="css/style.css" rel="stylesheet">
   <link href="css/style-responsive.css" rel="stylesheet" />
   <link rel="stylesheet" href="css/main.css">
@@ -17,14 +17,15 @@
 </head>
 
 <body>
-  <section id="container" class="">
-    <header class="header dark-bg">
-      <div class="toggle-nav">
-        <div class="icon-reorder tooltips" data-original-title="Menu lateral" data-placement="bottom"><i class="icon_menu"></i></div>
+  <section id="container">
+    <header class="header" style="background-color: #111; border-bottom: #fff 1px solid;">
+      <div class="toggle-nav" style="margin-top: 15px;">
+        <div class="icon-reorder tooltips" data-original-title="Menu lateral" data-placement="bottom">
+        <i class="fas fa-bars" style="color: #fff;"></i>
       </div>
-
-      <a class="navbar-brand" href="#">
-          <img src="images/icons/E-DENT-3.png" class="nav-item" alt="logo" style="width: 90px">
+      </div>
+      <a class="navbar-brand" href="login.php">
+        <img src="images/icons/E-DENT-3.png" class="nav-item" alt="logo" style="width: 90px">
       </a>
     </header>
 
@@ -34,6 +35,8 @@
 
     <section id="main-content">
       <?php
+        include_once('connection.php');
+
         if (!empty($_POST)) {
           if (empty($_POST['dificuldade_engolir_alimentos']) || empty($_POST['protese_dentadura']) || empty($_POST['quanto_tempo_perdeu_dentes'])
             || empty($_POST['adaptado_protese']) || empty($_POST['dentes_sensiveis']) || empty($_POST['gengiva_sangra'])
@@ -53,7 +56,42 @@
               'observacao' => $_POST['observacao'],
             ];
 
-            // TODO: Edit prontuario
+            $update_fields = [];
+
+            $update_fields = array_map(function($key, $value) {
+              $value = trim(htmlspecialchars(filter_var($value, FILTER_SANITIZE_STRING)));
+              if (preg_match("/[^0-9]+/", $value)) {
+                $value="'{$value}'";
+              }
+              return "{$key} = {$value}";
+            }, array_keys($data), $data);
+
+            $update_fields = implode(', ', $update_fields);
+
+            $query = "UPDATE
+                        prontuario_odontologico
+                      SET
+                        {$update_fields}
+                      WHERE
+                        idProntuarioOdontologico = {$id}";
+
+            $result = mysqli_query($conn, $query);
+
+            if ($result) {
+              ?>
+                <script>
+                  alert('Cadasto alterado com sucesso no sistema!');
+                </script>
+              <?php
+            } else {
+              ?>
+                <script>
+                  alert('Erro ao alterar o cadastro do paciente!');
+                </script>
+              <?php
+            }
+            header('Refresh: 0; lista_paciente.php');
+            return;
           }
         }
 
@@ -230,24 +268,16 @@
                     <div class="form-group">
                       <label for="observacao" class="control-label col-lg-2">Observações <span class="required">*</span></label>
                       <div class="col-lg-10">
-                        <textarea class="form-control" name="observacao" style="width:100%; height:100px;" required="required" placeholder="Se não tiver observações escreva que nenhuma.">
-                          <?= $observacao; ?>
-                        </textarea>
+                        <textarea class="form-control" name="observacao" style="width:100%; height:100px;" required="required" placeholder="Se não tiver observações escreva que não possui."><?= $observacao; ?></textarea>
                       </div>
                     </div>
                     <center>
-                    <div>
-                      <small id="" class="form-text text">
-                        OBS: Antes de encerrar o cadastro verificar e com o auxilio do paciente verificar se todos os dados estão corretos.
-                      </small>
-                    </div>
-                    <br>
-                    <div class="form-group">
-                      <div class="col-lg-offset-2 col-lg-10">
-                        <button class="btn btn-primary" type="submit" value="salvar_prontuarioO">Salvar</button>
-                        <button class="btn btn-default" type="button">Cancelar</button>
+                      <div class="form-group">
+                        <div class="col-lg-offset-2 col-lg-10">
+                          <button class="btn btn-primary" type="submit">Salvar</button>
+                          <button class="btn btn-default" type="button">Cancelar</button>
+                        </div>
                       </div>
-                    </div>
                     </center>
                   </form>
                 </div>
