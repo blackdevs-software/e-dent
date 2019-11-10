@@ -80,7 +80,7 @@
             if ($result) {
               ?>
                 <script>
-                  alert('Cadasto alterado com sucesso no sistema!');
+                  alert('Cadastro alterado com sucesso no sistema!');
                 </script>
               <?php
             } else {

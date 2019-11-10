@@ -27,7 +27,7 @@
     return;
   }
 
-  $query = "insert into paciente_prontuario_higiene_oral (fk_idUsuario, fk_idPaciente, fk_idHigieneOral)
+  $query = "insert into paciente_prontuario_higiene_oral (fk_idUsuario, fk_idPaciente, fk_idProntuarioHigieneOral)
   values
   (1, {$paciente}, {$inserted_id});";
 

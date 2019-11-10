@@ -95,8 +95,8 @@
 
                           $query = "SELECT
                                     {$fields},
-                                    group_concat(distinct ppho.fk_idHigieneOral) as idsProntuariosPPHO,
-                                    group_concat(distinct pphm.fk_idHistoriaMedica) as idsProntuariosPPHM,
+                                    group_concat(distinct ppho.fk_idProntuarioHigieneOral) as idsProntuariosPPHO,
+                                    group_concat(distinct pphm.fk_idProntuarioHistoriaMedica) as idsProntuariosPPHM,
                                     group_concat(distinct ppo.fk_idProntuarioOdontologico) as idsProntuariosPPO
                                   FROM
                                     paciente pac
@@ -186,7 +186,7 @@
                                                 ?>
                                                   <a
                                                     style="display: block; margin: 10px auto;"
-                                                    href="editar_prontuario_higiene_oral.php?id=<?= $prontuarioHM; ?>"
+                                                    href="editar_prontuario_historia_medica.php?id=<?= $prontuarioHM; ?>"
                                                   >
                                                     Prontuario História Médica <?= $prontuarioHM ?>
                                                     <i class="fas fa-edit"></i>

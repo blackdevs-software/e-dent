@@ -37,7 +37,7 @@ services:
       - netlocal
     volumes:
       - mysql-db:/var/lib/mysql
-      - ./migration/data.sql:/docker-entrypoint-initdb.d/data.sql
+      - ./migrations/data.sql:/docker-entrypoint-initdb.d/data.sql
 
 volumes:
   mysql-db:

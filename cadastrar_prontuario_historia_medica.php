@@ -27,7 +27,7 @@
     return;
   }
 
-  $query = "insert into paciente_prontuario_historia_medica (fk_idUsuario, fk_idPaciente, fk_idHistoriaMedica)
+  $query = "insert into paciente_prontuario_historia_medica (fk_idUsuario, fk_idPaciente, fk_idProntuarioHistoriaMedica)
   values
   (1, {$paciente}, {$inserted_id});";
 

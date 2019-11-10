@@ -34,6 +34,88 @@
     ?>
 
     <section id="main-content">
+    <?php
+        include_once('connection.php');
+
+        if (!empty($_POST)) {
+          if (empty($_POST['queixa_principal']) || empty($_POST['historia_doenca_atual']) || empty($_POST['historia_progressa'])
+            || empty($_POST['historia_familiar']) || empty($_POST['historia_pessoal_social']) || empty($_POST['observacao'])) {
+            echo 'Todos os campos são obrigatorios';
+          } else {
+            $id = $_POST['idProntuarioHistoriaMedica'];
+            $data = [
+              'queixa_principal' => $_POST['queixa_principal'],
+              'historia_doenca_atual' => $_POST['historia_doenca_atual'],
+              'historia_progressa' => $_POST['historia_progressa'],
+              'historia_familiar' => $_POST['historia_familiar'],
+              'historia_pessoal_social' => $_POST['historia_pessoal_social'],
+              'observacao' => $_POST['observacao'],
+            ];
+
+            $update_fields = [];
+
+            $update_fields = array_map(function($key, $value) {
+              $value = trim(htmlspecialchars(filter_var($value, FILTER_SANITIZE_STRING)));
+              if (preg_match("/[^0-9]+/", $value)) {
+                $value="'{$value}'";
+              }
+              return "{$key} = {$value}";
+            }, array_keys($data), $data);
+
+            $update_fields = implode(', ', $update_fields);
+
+            $query = "UPDATE
+                        prontuario_historia_medica
+                      SET
+                        {$update_fields}
+                      WHERE
+                        idProntuarioHistoriaMedica = {$id}";
+
+            $result = mysqli_query($conn, $query);
+
+            if ($result) {
+              ?>
+                <script>
+                  alert('Cadastro alterado com sucesso no sistema!');
+                </script>
+              <?php
+            } else {
+              ?>
+                <script>
+                  alert('Erro ao alterar o cadastro do paciente!');
+                </script>
+              <?php
+            }
+            header('Refresh: 0; lista_paciente.php');
+            return;
+          }
+        }
+
+        if (empty($_GET['id'])) {
+          header('Location: prontuario_historia_medica.php');
+        }
+
+        include_once('connection.php');
+
+        $id = $_GET['id'];
+
+        $query = "SELECT * FROM prontuario_historia_medica WHERE idProntuarioHistoriaMedica = {$id}";
+
+        $result = mysqli_query($conn, $query);
+
+        if ($result) {
+          while ($data = mysqli_fetch_array($result)) {
+            $idProntuarioHistoriaMedica = $data['idProntuarioHistoriaMedica'];
+            $queixa_principal = $data['queixa_principal'];
+            $historia_doenca_atual = $data['historia_doenca_atual'];
+            $historia_progressa = $data['historia_progressa'];
+            $historia_familiar = $data['historia_familiar'];
+            $historia_pessoal_social = $data['historia_pessoal_social'];
+            $observacao = $data['observacao'];
+          }
+        }
+      ?>
+
       <section class="wrapper">
         <div class="row">
           <div class="col-lg-12">
@@ -43,69 +125,42 @@
               </header>
               <div class="panel-body">
                 <div class="form">
-                  <form class="form-validate form-horizontal" id="register_form" method="POST" action="cadastrar_prontuario_historia_medica.php">
-
-                    <div class="form-group">
-                      <label for="paciente" class="control-label col-lg-2">Paciente<span class="required">*</span></label>
-                      <div class="col-lg-10">
-                        <select name="paciente" class="form-control" required="required">
-                          <option value="" selected>Selecione</option>
-                          <?php
-                            include_once('connection.php');
-
-                            $query = "SELECT idPaciente, nome FROM paciente LIMIT 50";
-
-                            $result = mysqli_query($conn, $query);
-
-                            if ($result) {
-                              while ($data = mysqli_fetch_array($result)) {
-                                ?>
-                                  <option value="<?= $data['idPaciente']; ?>">
-                                    <?= $data['nome']; ?>
-                                  </option>
-                                <?php
-                              }
-                            }
-                          ?>
-                        </select>
-                        <br>
-                      </div>
-                    </div>
-
+                  <form class="form-validate form-horizontal" id="register_form" method="POST" action="editar_prontuario_historia_medica.php">
+                    <input type="hidden" name="idProntuarioHistoriaMedica" value="<?= $idProntuarioHistoriaMedica; ?>">
                     <div class="form-group">
                       <label for="queixa_principal" class="control-label col-lg-2">Queixa Principal <span class="required">*</span></label>
                       <div class="col-lg-10">
-                        <textarea class="form-control" name="queixa_principal" style="width:100%; height:80px;" required="required"></textarea>
+                        <textarea class="form-control" name="queixa_principal" style="width:100%; height:80px;" required="required"><?= $queixa_principal; ?></textarea>
                       </div>
                     </div>
                     <div class="form-group">
                       <label for="historia_doenca_atual" class="control-label col-lg-2">Historia da doença atual <span class="required">*</span></label>
                       <div class="col-lg-10">
-                        <textarea class="form-control" name="historia_doenca_atual" style="width:100%; height:80px;" required="required"></textarea>
+                        <textarea class="form-control" name="historia_doenca_atual" style="width:100%; height:80px;" required="required"><?= $historia_doenca_atual; ?></textarea>
                       </div>
                     </div>
                     <div class="form-group">
                       <label for="historia_progressa" class="control-label col-lg-2">Historia Progresssa <span class="required">*</span></label>
                       <div class="col-lg-10">
-                        <textarea class="form-control" name="historia_progressa" style="width:100%; height:80px;" required="required"></textarea>
+                        <textarea class="form-control" name="historia_progressa" style="width:100%; height:80px;" required="required"><?= $historia_progressa; ?></textarea>
                       </div>
                     </div>
                     <div class="form-group">
                       <label for="historia_familiar" class="control-label col-lg-2">Historia Familiar <span class="required">*</span></label>
                       <div class="col-lg-10">
-                        <textarea class="form-control" name="historia_familiar" style="width:100%; height:100px;" required="required"></textarea>
+                        <textarea class="form-control" name="historia_familiar" style="width:100%; height:100px;" required="required"><?= $historia_familiar; ?></textarea>
                       </div>
                     </div>
                     <div class="form-group">
                       <label for="historia_pessoal_social" class="control-label col-lg-2">Historia Pessoal e Social <span class="required">*</span></label>
                       <div class="col-lg-10">
-                        <textarea class="form-control" name="historia_pessoal_social" style="width:100%; height:100px;" required="required"></textarea>
+                        <textarea class="form-control" name="historia_pessoal_social" style="width:100%; height:100px;" required="required"><?= $historia_pessoal_social; ?></textarea>
                       </div>
                     </div>
                     <div class="form-group">
                       <label for="observacao" class="control-label col-lg-2">Observações <span class="required">*</span></label>
                       <div class="col-lg-10">
-                        <textarea class="form-control" name="observacao" style="width:100%; height:100px;" required="required" placeholder="Se não tiver observações escreva que não possui."></textarea>
+                        <textarea class="form-control" name="observacao" style="width:100%; height:100px;" required="required" placeholder="Se não tiver observações escreva que não possui."><?= $observacao; ?></textarea>
                       </div>
                     </div>
                     <center>

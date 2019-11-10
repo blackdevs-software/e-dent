@@ -49,7 +49,7 @@
       if ($result) {
         ?>
           <script>
-            alert('Cadasto alterado com sucesso!');
+            alert('Cadastro alterado com sucesso!');
           </script>
         <?php
       } else {

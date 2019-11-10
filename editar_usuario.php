@@ -53,7 +53,7 @@
       if ($result) {
         ?>
           <script>
-            alert('Cadasto do usuario alterado com sucesso no sistema!');
+            alert('Cadastro do usuario alterado com sucesso no sistema!');
           </script>
         <?php
       } else {

@@ -93,8 +93,8 @@
                     <div class="form-group">
                       <label for="palito" class="control-label col-lg-2">Palito de Dente<span class="required">*</span></label>
                       <div class="col-lg-10">
-                        <input type="radio" name="palito" value="1"> Sim <br>
-                        <input type="radio" name="palito" value="0"> Não <br>
+                        <input type="radio" name="palito" value="sim"> Sim <br>
+                        <input type="radio" name="palito" value="nao"> Não <br>
                       </div>
                     </div>
                     <div class="form-group">
@@ -118,7 +118,7 @@
                     <div class="form-group">
                       <label for="observacao" class="control-label col-lg-2">Observações <span class="required">*</span></label>
                       <div class="col-lg-10">
-                        <textarea class="form-control" name="observacao" style="width:100%; height:100px;"></textarea>
+                        <textarea class="form-control" name="observacao" style="width:100%; height:100px;" required="required" placeholder="Se não tiver observações escreva que não possui."></textarea>
                       </div>
                     </div>
                     <center>
