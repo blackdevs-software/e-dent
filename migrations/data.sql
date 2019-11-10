@@ -6,19 +6,22 @@ USE db_odontologia;
 DROP TABLE IF EXISTS `paciente`;
 CREATE TABLE `paciente` (
   `idPaciente` int(11) NOT NULL AUTO_INCREMENT,
-  `nome` varchar(100) NOT NULL,
+  `nome` varchar(255) NOT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `rg` varchar(20) DEFAULT NULL,
+  `cpf` varchar(20) NOT NULL,
   `data_nasc` date DEFAULT NULL,
   `telefone` varchar(20) NOT NULL,
   `sexo` enum('m', 'f') DEFAULT NULL,
   `estado_civil` enum('c', 's', 'd') DEFAULT NULL,
-  `rg` varchar(20) DEFAULT NULL,
-  `cpf` varchar(20) NOT NULL,
   `endereco` varchar(100) DEFAULT NULL,
   `bairro` varchar(50) DEFAULT NULL,
   `cep` varchar(20) DEFAULT NULL,
   `cidade` varchar(50) DEFAULT NULL,
-  `email` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`idPaciente`)
+  PRIMARY KEY (`idPaciente`),
+  UNIQUE KEY `email` (`email`),
+  UNIQUE KEY `rg` (`rg`),
+  UNIQUE KEY `cpf` (`cpf`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
 /* Medical records */
@@ -65,22 +68,25 @@ CREATE TABLE `prontuario_odontologico` (
 DROP TABLE IF EXISTS `usuario`;
 CREATE TABLE `usuario` (
   `idUsuario` int(11) NOT NULL AUTO_INCREMENT,
-  `senha` varchar(30) NOT NULL,
-  `tipoUsuario` enum('profissional', 'coordenador') NOT NULL,
   `nome` varchar(100) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `senha` varchar(255) NOT NULL,
+  `rg` varchar(20) DEFAULT NULL,
+  `cpf` varchar(20) NOT NULL,
+  `tipo_usuario` enum('profissional', 'coordenador') NOT NULL,
   `data_nasc` date NOT NULL,
   `telefone` varchar(20) NOT NULL,
   `sexo` enum('m', 'f') NOT NULL,
   `estado_civil` enum('c', 's', 'd') NOT NULL,
-  `rg` varchar(20) NOT NULL,
-  `cpf` varchar(20) NOT NULL,
   `bairro` varchar(30) NOT NULL,
   `cep` varchar(20) NOT NULL,
   `cidade` varchar(50) NOT NULL,
-  `enderecoResidencial` varchar(50) NOT NULL,
-  `email` varchar(30) NOT NULL,
-  `confirmar_senha` varchar(30) NOT NULL,
-  PRIMARY KEY (`idUsuario`)
+  `endereco_residencial` varchar(50) NOT NULL,
+  `hash` varchar(255) NULL,
+  PRIMARY KEY (`idUsuario`),
+  UNIQUE KEY `email` (`email`),
+  UNIQUE KEY `rg` (`rg`),
+  UNIQUE KEY `cpf` (`cpf`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
 /* Appointment */
@@ -138,3 +144,10 @@ CREATE TABLE `paciente_prontuario_odontologico` (
   FOREIGN KEY (`fk_idPaciente`) REFERENCES `paciente` (`idPaciente`),
   FOREIGN KEY (`fk_idProntuarioOdontologico`) REFERENCES `prontuario_odontologico` (`idProntuarioOdontologico`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+/* Seed */
+INSERT INTO usuario
+  (nome, email, senha, rg, cpf, tipo_usuario, data_nasc, telefone, sexo, estado_civil, bairro, cep, cidade, endereco_residencial)
+VALUES
+  ('admin', 'admin@edent.com', '21232f297a57a5a743894a0e4a801fc3', '00000000-0', '000000000-00', 'coordenador', '2000-01-01', '99999-9999', 'm', 's', 'Centro', '81000-000', 'Curitiba', 'Rua Teste')
+;

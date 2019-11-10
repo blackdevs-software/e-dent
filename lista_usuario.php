@@ -1,3 +1,12 @@
+<?php
+include_once('check_session.php');
+
+if (!isset($usuario_tipo) || $usuario_tipo !== 'coordenador') {
+  header('HTTP/1.1 302 Found');
+  header('Location: index.php');
+  return;
+}
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -79,7 +88,7 @@
                             // Build query
                             $fields = "idUsuario,
                                         nome,
-                                        tipoUsuario,
+                                        tipo_usuario,
                                         date_format(data_nasc, '%d/%m/%Y') as data_nasc,
                                         rg,
                                         cpf,
@@ -102,7 +111,7 @@
                                 ?>
                                   <tr>
                                     <td style="text-align: center;"><?= $data['nome']; ?></td>
-                                    <td style="text-align: center;"><?= $data['tipoUsuario']; ?></td>
+                                    <td style="text-align: center;"><?= $data['tipo_usuario']; ?></td>
                                     <td style="text-align: center;"><?= $data['data_nasc']; ?></td>
                                     <td style="text-align: center;"><?= $data['rg']; ?></td>
                                     <td style="text-align: center;"><?= $data['cpf']; ?></td>

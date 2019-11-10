@@ -1,3 +1,6 @@
+<?php
+include_once('check_session.php');
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -32,6 +35,12 @@
     <?php
       include('aside.php');
     ?>
+
+    <section id="main-content">
+      <section class="wrapper">
+        <h2 style="text-align: center;">Bem Vindo <?= ucfirst($usuario_nome); ?></h2>
+      </section>
+    </section>
   </section>
 
   <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>

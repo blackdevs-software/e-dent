@@ -1,3 +1,6 @@
+<?php
+include_once('check_session.php');
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -43,7 +46,7 @@
               </header>
               <div class="panel-body">
                 <div class="form">
-                  <form class="form-validate form-horizontal" id="register_form" method="post" action="cadastrar_prontuario_odontologico.php">
+                  <form class="form-validate form-horizontal" id="register_form" method="POST" action="cadastrar_prontuario_odontologico.php">
 
                     <div class="form-group">
                       <label for="paciente" class="control-label col-lg-2">Paciente<span class="required">*</span></label>

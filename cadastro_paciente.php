@@ -1,4 +1,5 @@
 <?php
+  include_once('check_session.php');
   include_once('connection.php');
 
   if (!empty($_POST)) {
@@ -12,21 +13,22 @@
       </script>
     <?php
       header('Refresh: 0; cadastro_paciente.php');
+      return;
     } else {
-      $nome = $_POST['nome'];
+      $nome = trim(htmlspecialchars(filter_var($_POST['nome'], FILTER_SANITIZE_STRING)));
+      $email = trim(htmlspecialchars(filter_var($_POST['email'], FILTER_SANITIZE_STRING)));
+      $rg = trim(htmlspecialchars(filter_var($_POST['rg'], FILTER_SANITIZE_STRING)));
+      $cpf = trim(htmlspecialchars(filter_var($_POST['cpf'], FILTER_SANITIZE_STRING)));
       $data_nasc = $_POST['data_nasc'];
       $telefone = $_POST['telefone'];
       $sexo = $_POST['sexo'];
       $estado_civil = $_POST['estado_civil'];
-      $rg = $_POST['rg'];
-      $cpf_paciente = $_POST['cpf'];
       $endereco = $_POST['endereco'];
       $bairro = $_POST['bairro'];
       $cep = $_POST['cep'];
       $cidade = $_POST['cidade'];
-      $email = $_POST['email'];
 
-      $query = mysqli_query($conn, "SELECT * FROM paciente WHERE cpf = '{$cpf_paciente}' ");
+      $query = mysqli_query($conn, "SELECT * FROM paciente WHERE email = '{$email}' OR rg = '{$rg}' OR cpf = '{$cpf}'");
 
       $result = mysqli_fetch_array ($query);
 
@@ -38,11 +40,12 @@
         <?php
 
         header('Refresh: 0; cadastro_paciente.php');
+        return;
       } else {
         $query = "INSERT INTO paciente
-        (nome, data_nasc, telefone, sexo, estado_civil, rg, cpf, endereco, bairro, cep, cidade, email)
+        (nome, email, rg, cpf, data_nasc, telefone, sexo, estado_civil, endereco, bairro, cep, cidade)
         VALUES
-        ('{$nome}', '{$data_nasc}', '{$telefone}', '{$sexo}', '{$estado_civil}', '{$rg}', '{$cpf_paciente}', '{$endereco}', '{$bairro}', '{$cep}','{$cidade}','{$email}')";
+        ('{$nome}', '{$email}', '{$rg}', '{$cpf}', '{$data_nasc}', '{$telefone}', '{$sexo}', '{$estado_civil}', '{$endereco}', '{$bairro}', '{$cep}', '{$cidade}')";
 
         $result = mysqli_query($conn, $query);
 
@@ -113,93 +116,104 @@
               </header>
               <div class="panel-body">
                 <div class="form">
-                  <form class="form-validate form-horizontal" id="register_form" method="post" action="">
+                  <form class="form-validate form-horizontal" id="register_form" method="POST" action="">
                     <div class="form-group">
                       <label for="nome" class="control-label col-lg-2">Nome Completo<span class="required">*</span></label>
                       <div class="col-lg-10">
                         <input class=" form-control" id="nome" name="nome" type="text" placeholder="Digite o Nome" required="required"/>
                       </div>
                     </div>
-                    <div class="form-group">
-                      <label for="data_nasc" class="control-label col-lg-2">Data de Nascimento<span class="required">*</span></label>
-                      <div class="col-lg-10">
-                        <input class=" form-control" id="data_nasc" name="data_nasc" type="date" required="required" />
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label for="rg" class="control-label col-lg-2">RG<span class="required">*</span></label>
-                      <div class="col-lg-10">
-                        <input class="form-control" id="rg" name="rg" type="text" placeholder="123456789" required="required"/>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label for="cpf" class="control-label col-lg-2">CPF<span class="required">*</span></label>
-                      <div class="col-lg-10">
-                        <input class="form-control" id="cpf" name="cpf" placeholder="12345678910" type="text" required="required"/>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label for="telefone" class="control-label col-lg-2">Telefone<span class="required">*</span></label>
-                      <div class="col-lg-10">
-                        <input class="form-control" id="telefone" name="telefone" type="text" placeholder="(99)99999-9999" required="required"/>
-                      </div>
-                    </div>
+
                     <div class="form-group">
                       <label for="email" class="control-label col-lg-2">Email<span class="required">*</span></label>
                       <div class="col-lg-10">
                         <input class="form-control" name="email" type="email" placeholder="email@dominio.com"/>
                       </div>
                     </div>
+
+                    <div class="form-group">
+                      <label for="rg" class="control-label col-lg-2">RG<span class="required">*</span></label>
+                      <div class="col-lg-10">
+                        <input class="form-control" id="rg" name="rg" type="text" placeholder="123456789" required="required"/>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="cpf" class="control-label col-lg-2">CPF<span class="required">*</span></label>
+                      <div class="col-lg-10">
+                        <input class="form-control" id="cpf" name="cpf" placeholder="12345678910" type="text" required="required"/>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="data_nasc" class="control-label col-lg-2">Data de Nascimento<span class="required">*</span></label>
+                      <div class="col-lg-10">
+                        <input class=" form-control" id="data_nasc" name="data_nasc" type="date" required="required" />
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="telefone" class="control-label col-lg-2">Telefone<span class="required">*</span></label>
+                      <div class="col-lg-10">
+                        <input class="form-control" id="telefone" name="telefone" type="text" placeholder="(99)99999-9999" required="required"/>
+                      </div>
+                    </div>
+
                     <div class="form-group">
                       <label for="sexo" class="control-label col-lg-2">Sexo<span class="required">*</span></label>
                         <div class="col-lg-10">
-                              <select name = "sexo" class="form-control" required="required">
-                                <option value="" selected>Selecionar</option>
-                                <option value="f">Feminino</option>
-                                <option value ="m">Masculino</option>
-                              </select>
+                          <select name = "sexo" class="form-control" required="required">
+                            <option value="" selected>Selecionar</option>
+                            <option value="f">Feminino</option>
+                            <option value ="m">Masculino</option>
+                          </select>
                         </div>
                     </div>
+
                     <div class="form-group">
                       <label for="estado_civil" class="control-label col-lg-2">Estado Civil<span class="required">*</span></label>
                         <div class="col-lg-10">
-                              <select required="required" name ="estado_civil" class="form-control">
-                                <option value="" selected>Selecionar</option>
-                                <option value="s">Solteiro</option>
-                                <option value="c">Casado</option>
-                                <option value="d">Divorciado</option>
-                              </select>
+                          <select required="required" name ="estado_civil" class="form-control">
+                            <option value="" selected>Selecionar</option>
+                            <option value="s">Solteiro</option>
+                            <option value="c">Casado</option>
+                            <option value="d">Divorciado</option>
+                          </select>
                         </div>
                     </div>
+
                     <div class="form-group">
                       <label for="cep" class="control-label col-lg-2">CEP<span class="required">*</span></label>
                       <div class="col-lg-10">
                         <input class="form-control" id="cep" name="cep" placeholder="Digite o CEP" type="text" required="required"/>
                       </div>
                     </div>
+
                     <div class="form-group">
                       <label for="endereco" class="control-label col-lg-2">Endereço Residencial<span class="required">*</span></label>
                       <div class="col-lg-10">
                         <input class="form-control" id="endereco" name="endereco" class="form-control" id="endereco" placeholder="Digite o Endereço" type="text" required="required" />
                       </div>
                     </div>
+
                     <div class="form-group">
                       <label for="bairro" class="control-label col-lg-2">Bairro<span class="required">*</span></label>
                       <div class="col-lg-10">
-                        <input class="form-control" id="bairro" name="bairro" class="form-control" id="" placeholder="Digite o Bairro" type="text" required="required" />
+                        <input class="form-control" id="bairro" name="bairro" class="form-control" placeholder="Digite o Bairro" type="text" required="required" />
                       </div>
                     </div>
+
                     <div class="form-group">
                       <label for="cidade" class="control-label col-lg-2">Cidade<span class="required">*</span></label>
                       <div class="col-lg-10">
-                        <input class="form-control" id="cidade" name="cidade" class="form-control" id="" placeholder="Digite a Cidade" type="text" required="required" />
+                        <input class="form-control" id="cidade" name="cidade" class="form-control" placeholder="Digite a Cidade" type="text" required="required" />
                       </div>
                     </div>
+
                     <center>
                       <div class="form-group">
                         <div class="col-lg-offset-2 col-lg-10">
                           <button class="btn btn-primary" type="submit">Salvar</button>
-                          <button class="btn btn-default" type="button">Cancelar</button>
                         </div>
                       </div>
                     </center>

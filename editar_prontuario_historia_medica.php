@@ -1,3 +1,6 @@
+<?php
+include_once('check_session.php');
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -40,7 +43,13 @@
         if (!empty($_POST)) {
           if (empty($_POST['queixa_principal']) || empty($_POST['historia_doenca_atual']) || empty($_POST['historia_progressa'])
             || empty($_POST['historia_familiar']) || empty($_POST['historia_pessoal_social']) || empty($_POST['observacao'])) {
-            echo 'Todos os campos são obrigatorios';
+            ?>
+              <script>
+                alert('Todos os campos são obrigatorios!');
+              </script>
+            <?php
+            header('Refresh: 0; prontuario_historia_medica.php');
+            return;
           } else {
             $id = $_POST['idProntuarioHistoriaMedica'];
             $data = [
@@ -86,16 +95,15 @@
                 </script>
               <?php
             }
-            header('Refresh: 0; lista_paciente.php');
+            header('Refresh: 0; prontuario_historia_medica.php');
             return;
           }
         }
 
         if (empty($_GET['id'])) {
           header('Location: prontuario_historia_medica.php');
+          return;
         }
-
-        include_once('connection.php');
 
         $id = $_GET['id'];
 

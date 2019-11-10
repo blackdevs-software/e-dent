@@ -1,3 +1,6 @@
+<?php
+include_once('check_session.php');
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -42,7 +45,13 @@
         if (!empty($_POST)) {
           if (empty($_POST['bochecho']) || empty($_POST['creme_dental']) || empty($_POST['palito'])
             || empty($_POST['higiene_lingua']) || empty($_POST['fio_dental']) || empty($_POST['observacao'])) {
-            echo 'Todos os campos são obrigatorios';
+            ?>
+              <script>
+                alert('Todos os campos são obrigatorios!');
+              </script>
+            <?php
+            header('Refresh: 0; prontuario_higiene_oral.php');
+            return;
           } else {
             $id = $_POST['idProntuarioHigieneOral'];
             $data = [
@@ -88,16 +97,15 @@
                 </script>
               <?php
             }
-            header('Refresh: 0; lista_paciente.php');
+            header('Refresh: 0; prontuario_higiene_oral.php');
             return;
           }
         }
 
         if (empty($_GET['id'])) {
           header('Location: prontuario_higiene_oral.php');
+          return;
         }
-
-        include_once('connection.php');
 
         $id = $_GET['id'];
 

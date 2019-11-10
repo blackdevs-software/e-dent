@@ -1,28 +1,35 @@
 <?php
+  include_once('check_session.php');
   include_once('connection.php');
 
 	if (!empty($_POST)) {
-    if (empty($_POST['idPaciente']) || empty($_POST['nome']) || empty($_POST['data_nasc'])
+    if (empty($_POST['idPaciente']) || empty($_POST['nome']) || empty($_POST['email'])
+      || empty($_POST['rg']) || empty($_POST['cpf']) || empty($_POST['data_nasc'])
       || empty($_POST['telefone']) || empty($_POST['sexo']) || empty($_POST['estado_civil'])
-      || empty($_POST['rg']) || empty($_POST['cpf']) || empty($_POST['endereco'])
-      || empty($_POST['bairro']) || empty($_POST['cep']) || empty($_POST['cidade'])
-      || empty($_POST['email'])) {
-      echo 'Todos os campos são obrigatorios';
+      || empty($_POST['endereco']) || empty($_POST['bairro']) || empty($_POST['cep'])
+      || empty($_POST['cidade'])) {
+      ?>
+        <script>
+          alert('Todos os campos são obrigatorios!');
+        </script>
+      <?php
+      header('Refresh: 0; lista_paciente.php');
+      return;
 		} else {
       $id = $_POST['idPaciente'];
       $data = [
         'nome' => $_POST['nome'],
+        'email' => $_POST['email'],
+        'rg' => $_POST['rg'],
+        'cpf' => $_POST['cpf'],
         'data_nasc' => $_POST['data_nasc'],
         'telefone' => $_POST['telefone'],
         'sexo' => $_POST['sexo'],
         'estado_civil' => $_POST['estado_civil'],
-        'rg' => $_POST['rg'],
-        'cpf' => $_POST['cpf'],
         'endereco' => $_POST['endereco'],
         'bairro' => $_POST['bairro'],
         'cep' => $_POST['cep'],
         'cidade' => $_POST['cidade'],
-        'email' => $_POST['email'],
       ];
 
       $update_fields = [];
@@ -69,27 +76,28 @@
   }
   $idP = $_GET['id'];
 
-  $sql = mysqli_query($conn, "SELECT idPaciente, nome, data_nasc, telefone, sexo, estado_civil, rg, cpf, endereco, bairro, cep, cidade, email FROM paciente WHERE idPaciente = {$idP} ");
+  $sql = mysqli_query($conn, "SELECT idPaciente, email, nome, rg, cpf, data_nasc, telefone, sexo, estado_civil, endereco, bairro, cep, cidade FROM paciente WHERE idPaciente = {$idP} ");
 
   $result_sql = mysqli_num_rows($sql);
 
   if ($result_sql == 0) {
     header('Location: lista_usuario.php');
+    return;
   } else {
     while ($data = mysqli_fetch_array($sql)) {
       $idPaciente = $data['idPaciente'];
       $nome = $data['nome'];
+      $email = $data['email'];
+      $rg = $data['rg'];
+      $cpf = $data['cpf'];
       $data_nasc = $data['data_nasc'];
       $telefone = $data['telefone'];
       $sexo = $data['sexo'];
       $estado_civil = $data['estado_civil'];
-      $rg = $data['rg'];
-      $cpf = $data['cpf'];
       $endereco = $data['endereco'];
       $bairro = $data['bairro'];
       $cep = $data['cep'];
       $cidade = $data['cidade'];
-      $email = $data['email'];
     }
   }
 
@@ -150,44 +158,51 @@
               </header>
               <div class="panel-body">
                 <div class="form">
-                  <form class="form-validate form-horizontal" id="register_form" method="post" action="">
+                  <form class="form-validate form-horizontal" id="register_form" method="POST" action="">
                     <input type="hidden" name="idPaciente" value="<?= $idP; ?>">
+
                     <div class="form-group">
                       <label for="nome" class="control-label col-lg-2">Nome Completo<span class="required">*</span></label>
                       <div class="col-lg-10">
                         <input class="form-control" type="text" name="nome" placeholder="Digite o Nome" required="required" value="<?= $nome; ?>"/>
                       </div>
                     </div>
-                    <div class="form-group">
-                      <label for="data_nasc" class="control-label col-lg-2">Data de Nascimento<span class="required">*</span></label>
-                      <div class="col-lg-10">
-                        <input class=" form-control"  type="date"  name="data_nasc"required="required" value="<?= $data_nasc; ?>" />
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label for="cpf" class="control-label col-lg-2">CPF<span class="required">*</span></label>
-                      <div class="col-lg-10">
-                        <input class="form-control" type="text" name="cpf" placeholder="12345678910" value="<?= $cpf; ?>" />
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label for="rg" class="control-label col-lg-2">RG<span class="required">*</span></label>
-                      <div class="col-lg-10">
-                        <input class="form-control" name="rg" type="text" placeholder="123456789" value="<?= $rg; ?>" />
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label for="telefone" class="control-label col-lg-2">Telefone<span class="required">*</span></label>
-                      <div class="col-lg-10">
-                        <input class="form-control" name="telefone" type="text" placeholder="(99)99999-9999" value="<?= $telefone; ?>" />
-                      </div>
-                    </div>
+
                     <div class="form-group">
                       <label for="email" class="control-label col-lg-2">Email<span class="required">*</span></label>
                       <div class="col-lg-10">
                         <input class="form-control" name="email" type="email" placeholder="email@dominio.com" value="<?= $email; ?>" />
                       </div>
                     </div>
+
+                    <div class="form-group">
+                      <label for="rg" class="control-label col-lg-2">RG<span class="required">*</span></label>
+                      <div class="col-lg-10">
+                        <input class="form-control" name="rg" type="text" placeholder="123456789" value="<?= $rg; ?>" />
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="cpf" class="control-label col-lg-2">CPF<span class="required">*</span></label>
+                      <div class="col-lg-10">
+                        <input class="form-control" type="text" name="cpf" placeholder="12345678910" value="<?= $cpf; ?>" />
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="data_nasc" class="control-label col-lg-2">Data de Nascimento<span class="required">*</span></label>
+                      <div class="col-lg-10">
+                        <input class=" form-control"  type="date"  name="data_nasc"required="required" value="<?= $data_nasc; ?>" />
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="telefone" class="control-label col-lg-2">Telefone<span class="required">*</span></label>
+                      <div class="col-lg-10">
+                        <input class="form-control" name="telefone" type="text" placeholder="(99)99999-9999" value="<?= $telefone; ?>" />
+                      </div>
+                    </div>
+
                     <div class="form-group">
                       <label for="sexo" class="control-label col-lg-2">Sexo<span class="required">*</span></label>
                         <div class="col-lg-10">
@@ -212,6 +227,7 @@
                           </select>
                         </div>
                     </div>
+
                     <div class="form-group">
                       <label for="estado_civil" class="control-label col-lg-2">Estado Civil<span class="required">*</span></label>
                         <div class="col-lg-10">
@@ -236,30 +252,35 @@
                           </select>
                         </div>
                     </div>
+
                     <div class="form-group">
                       <label for="cep" class="control-label col-lg-2">CEP<span class="required">*</span></label>
                       <div class="col-lg-10">
                         <input class="form-control"  type="text" name="cep" placeholder="Digite o CEP" value="<?= $cep; ?>" />
                       </div>
                     </div>
+
                     <div class="form-group">
                       <label for="endereco" class="control-label col-lg-2">Endereço Residencial<span class="required">*</span></label>
                       <div class="col-lg-10">
                         <input class="form-control" type="text" name="endereco" placeholder="Digite o Endereço" value="<?= $endereco; ?>" />
                       </div>
                     </div>
+
                     <div class="form-group">
                       <label for="bairro" class="control-label col-lg-2">Bairro<span class="required">*</span></label>
                       <div class="col-lg-10">
                         <input class="form-control" type="text" name="bairro" placeholder="Digite o Bairro" value="<?= $bairro; ?>"/>
                       </div>
                     </div>
+
                     <div class="form-group">
                       <label for="cidade" class="control-label col-lg-2">Cidade<span class="required">*</span></label>
                       <div class="col-lg-10">
                         <input class="form-control" type="text" name="cidade" placeholder="Digite a Cidade" value="<?= $cidade; ?>"/>
                       </div>
                     </div>
+
                     <center>
                       <div class="form-group">
                         <div class="col-lg-offset-2 col-lg-10">

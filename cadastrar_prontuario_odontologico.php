@@ -1,4 +1,5 @@
 <?php
+  include_once('check_session.php');
   include_once('connection.php');
 
   $paciente = $_POST['paciente'];
@@ -32,7 +33,7 @@
 
   $query = "insert into paciente_prontuario_odontologico (fk_idUsuario, fk_idPaciente, fk_idProntuarioOdontologico)
   values
-  (1, {$paciente}, {$inserted_id});";
+  ({$usuario_id}, {$paciente}, {$inserted_id});";
 
   $salvar_relacao = mysqli_query($conn, $query);
 

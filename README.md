@@ -1,12 +1,19 @@
 # E-dent
 
-* Instructions
+## Instructions
+
+### Running with Docker
+
+```bash
+docker-compose up -d
+```
+
+### Running appart (requires a web server and MySQL)
 
 > To import data run the following command in terminal/shell;
 
 ```bash
-mysql -u root -p -h 127.0.0.1 -P 3306 -e "CREATE SCHEMA IF NOT EXISTS db_odontologia;"
-mysql -u root -p -h 127.0.0.1 -P 3306 db_odontologia < ./migration/data.sql
+mysql -u root -p -h 127.0.0.1 -P 3306 < ./migrations/data.sql
 ```
 
 * Execution

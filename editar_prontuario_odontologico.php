@@ -1,3 +1,6 @@
+<?php
+include_once('check_session.php');
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -41,7 +44,13 @@
           if (empty($_POST['dificuldade_engolir_alimentos']) || empty($_POST['protese_dentadura']) || empty($_POST['quanto_tempo_perdeu_dentes'])
             || empty($_POST['adaptado_protese']) || empty($_POST['dentes_sensiveis']) || empty($_POST['gengiva_sangra'])
             || empty($_POST['mau_halito']) || empty($_POST['toma_cafe_refrigerante']) || empty($_POST['observacao'])) {
-            echo 'Todos os campos são obrigatorios';
+            ?>
+              <script>
+                alert('Todos os campos são obrigatorios!');
+              </script>
+            <?php
+            header('Refresh: 0; prontuario_odontologico.php');
+            return;
           } else {
             $id = $_POST['idProntuarioOdontologico'];
             $data = [
@@ -90,16 +99,15 @@
                 </script>
               <?php
             }
-            header('Refresh: 0; lista_paciente.php');
+            header('Refresh: 0; prontuario_odontologico.php');
             return;
           }
         }
 
         if (empty($_GET['id'])) {
           header('Location: prontuario_odontologico.php');
+          return;
         }
-
-        include_once('connection.php');
 
         $id = $_GET['id'];
 
@@ -131,7 +139,7 @@
               </header>
               <div class="panel-body">
                 <div class="form">
-                  <form class="form-validate form-horizontal" id="register_form" method="post" action="editar_prontuario_odontologico.php">
+                  <form class="form-validate form-horizontal" id="register_form" method="POST" action="editar_prontuario_odontologico.php">
                     <input type="hidden" name="idProntuarioOdontologico" value="<?= $idProntuarioOdontologico; ?>">
                     <div class="form-group">
                       <label for="dificuldade_engolir_alimentos" class="control-label col-lg-2">Dificuldade em engolir alimentos?<span class="required">*</span></label>

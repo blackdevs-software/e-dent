@@ -1,3 +1,6 @@
+<?php
+include_once('check_session.php');
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -67,10 +70,10 @@
                       <tbody>
                         <tr>
                           <th style="text-align: center;">Nome</th>
-                          <th style="text-align: center;">Nascimento</th>
                           <th style="text-align: center;">Email</th>
                           <th style="text-align: center;">RG</th>
                           <th style="text-align: center;">CPF</th>
+                          <th style="text-align: center;">Nascimento</th>
                           <th style="text-align: center;">Telefone</th>
                           <th style="text-align: center;">Prontuários</th>
                           <th style="text-align: center;">Ações</th>
@@ -130,10 +133,10 @@
                               ?>
                                 <tr>
                                   <td style="text-align: center;"><?= $data['nome']; ?></td>
-                                  <td style="text-align: center;"><?= $data['data_nasc']; ?></td>
                                   <td style="text-align: center;"><?= $data['email']; ?></td>
                                   <td style="text-align: center;"><?= $data['rg']; ?></td>
                                   <td style="text-align: center;"><?= $data['cpf']; ?></td>
+                                  <td style="text-align: center;"><?= $data['data_nasc']; ?></td>
                                   <td style="text-align: center;"><?= $data['telefone']; ?></td>
                                   <td style="text-align: center;">
                                     <span
@@ -171,7 +174,7 @@
                                                     style="display: block; margin: 10px auto;"
                                                     href="editar_prontuario_higiene_oral.php?id=<?= $prontuarioHO; ?>"
                                                   >
-                                                    Prontuario Higiente Oral <?= $prontuarioHO ?>
+                                                    Prontuario Higiente Oral - <?= $prontuarioHO ?>
                                                     <i class="fas fa-edit"></i>
                                                   </a>
                                                 <?php
@@ -188,7 +191,7 @@
                                                     style="display: block; margin: 10px auto;"
                                                     href="editar_prontuario_historia_medica.php?id=<?= $prontuarioHM; ?>"
                                                   >
-                                                    Prontuario História Médica <?= $prontuarioHM ?>
+                                                    Prontuario História Médica - <?= $prontuarioHM ?>
                                                     <i class="fas fa-edit"></i>
                                                   </a>
                                                 <?php
@@ -205,7 +208,7 @@
                                                     style="display: block; margin: 10px auto;"
                                                     href="editar_prontuario_odontologico.php?id=<?= $prontuarioO; ?>"
                                                   >
-                                                    Prontuario Odontologico <?= $prontuarioO ?>
+                                                    Prontuario Odontologico - <?= $prontuarioO ?>
                                                     <i class="fas fa-edit"></i>
                                                   </a>
                                                 <?php

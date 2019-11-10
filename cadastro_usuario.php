@@ -1,51 +1,72 @@
 <?php
+  include_once('check_session.php');
   include_once('connection.php');
 
+  // only coordinator is allowed to access this page
+  if (!isset($usuario_tipo) || $usuario_tipo !== 'coordenador') {
+    header('HTTP/1.1 302 Found');
+    header('Location: index.php');
+    return;
+  }
+
   if (!empty($_POST)) {
-    if (empty($_POST['nome']) || empty($_POST['tipoUsuario']) || empty($_POST['data_nasc'])
-      || empty($_POST['cpf']) || empty($_POST['rg']) || empty($_POST['telefone'])
-      || empty($_POST['email']) || empty($_POST['sexo']) || empty($_POST['estado_civil'])
-      || empty($_POST['cep']) || empty($_POST['enderecoResidencial']) || empty($_POST['bairro'])
-      || empty($_POST['cidade']) || empty($_POST['senha']) || empty($_POST['confirmar_senha'])) {
+    if (empty($_POST['nome']) || empty($_POST['email']) || empty($_POST['senha'])
+      || empty($_POST['confirmar_senha']) || empty($_POST['rg']) || empty($_POST['cpf'])
+      || empty($_POST['tipo_usuario']) || empty($_POST['data_nasc']) || empty($_POST['telefone'])
+      || empty($_POST['sexo']) || empty($_POST['estado_civil']) || empty($_POST['cep'])
+      || empty($_POST['endereco_residencial']) || empty($_POST['bairro']) || empty($_POST['cidade'])) {
     ?>
       <script>
         alert('Todos os campos são obrigatorios');
       </script>
     <?php
       header('Refresh: 0; cadastro_paciente.php');
+      return;
     } else {
-      $nome = $_POST['nome'];
-      $tipoUsuario = $_POST['tipoUsuario'];
-      $data_nasc = $_POST['data_nasc'];
-      $cpf_usuario = $_POST['cpf'];
-      $rg = $_POST['rg'];
-      $telefone = $_POST['telefone'];
-      $email = $_POST['email'];
-      $sexo = $_POST['sexo'];
-      $estado_civil = $_POST['estado_civil'];
-      $cep = $_POST['cep'];
-      $enderecoResidencial = $_POST['enderecoResidencial'];
-      $bairro = $_POST['bairro'];
-      $cidade = $_POST['cidade'];
-      $senha = $_POST['senha'];
-      $confirmar_senha = $_POST['confirmar_senha'];
-
-      $query = mysqli_query($conn, "SELECT * FROM usuario WHERE cpf = '{$cpf_usuario}' ");
-
-      $result = mysqli_fetch_array ($query);
-
-      if ($result > null) {
+      if ($_POST['senha'] !== $_POST['confirmar_senha']) {
         ?>
           <script>
-            alert('Usuário já cadastrado no sistema, reeveja os dados!');
+            alert('Senhas não coincidem!');
           </script>
         <?php
         header('Refresh: 0; cadastro_usuario.php');
+        return;
+      }
+
+      $nome = trim(htmlspecialchars(filter_var($_POST['nome'], FILTER_SANITIZE_STRING)));
+      $email = trim(htmlspecialchars(filter_var($_POST['email'], FILTER_SANITIZE_STRING)));
+      $senha = trim(htmlspecialchars(filter_var($_POST['senha'], FILTER_SANITIZE_STRING)));
+      $rg = trim(htmlspecialchars(filter_var($_POST['rg'], FILTER_SANITIZE_STRING)));
+      $cpf = trim(htmlspecialchars(filter_var($_POST['cpf'], FILTER_SANITIZE_STRING)));
+      $tipo_usuario = $_POST['tipo_usuario'];
+      $data_nasc = $_POST['data_nasc'];
+      $telefone = $_POST['telefone'];
+      $sexo = $_POST['sexo'];
+      $estado_civil = $_POST['estado_civil'];
+      $cep = $_POST['cep'];
+      $endereco_residencial = $_POST['endereco_residencial'];
+      $bairro = $_POST['bairro'];
+      $cidade = $_POST['cidade'];
+
+      $senha = md5($senha);
+
+      $query = mysqli_query($conn, "SELECT * FROM usuario WHERE email = '{$email}' OR rg = '{$rg}' OR cpf = '{$cpf}'");
+
+      $result = mysqli_fetch_array ($query);
+
+      if ($result) {
+        ?>
+          <script>
+            alert('Usuário já cadastrado no sistema, reveja os dados!');
+          </script>
+        <?php
+        header('Refresh: 0; cadastro_usuario.php');
+        return;
       } else {
         $query = "INSERT INTO usuario
-        (senha, tipoUsuario, nome, data_nasc, telefone, sexo, estado_civil, rg, cpf, bairro, cep, cidade, enderecoResidencial, email, confirmar_senha)
+        (nome, email, senha, rg, cpf, tipo_usuario, data_nasc, telefone, sexo, estado_civil, bairro, cep, cidade, endereco_residencial)
         VALUES
-        ('{$senha}', '{$tipoUsuario}', '{$nome}', '{$data_nasc}', '{$telefone}', '{$sexo}', '{$estado_civil}', '{$rg}', '{$cpf_usuario}', '{$bairro}', '{$cep}', '{$cidade}', '{$enderecoResidencial}', '{$email}', '{$confirmar_senha}')";
+        ('{$nome}', '{$email}', '{$senha}', '{$rg}', '{$cpf}', '{$tipo_usuario}', '{$data_nasc}', '{$telefone}', '{$sexo}', '{$estado_civil}', '{$bairro}', '{$cep}', '{$cidade}', '{$endereco_residencial}')";
 
         $result = mysqli_query($conn, $query);
 
@@ -116,53 +137,61 @@
               </header>
               <div class="panel-body">
                 <div class="form">
-                  <form class="form-validate form-horizontal" id="register_form" method="post" action="">
+                  <form class="form-validate form-horizontal" id="register_form" method="POST" action="">
+
                     <div class="form-group">
                       <label for="nome" class="control-label col-lg-2">Nome Completo<span class="required">*</span></label>
                       <div class="col-lg-10">
                         <input class=" form-control" type="text" name="nome" required="required" placeholder="Digite o Nome"/>
                       </div>
                     </div>
-                    <div class="form-group">
-                      <label for="tipoUsuario" class="control-label col-lg-2">Tipo Usuário<span class="required">*</span></label>
-                        <div class="col-lg-10">
-                          <select name="tipoUsuario" class="form-control" required="required">
-                            <option value="" selected>Selecionar</option>
-                            <option value="Profissional">Profissional</option>
-                            <option value="Coordenador">Coordenador</option>
-                          </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                      <label for="data_nasc" class="control-label col-lg-2">Data de Nascimento<span class="required">*</span></label>
-                      <div class="col-lg-10">
-                        <input class="form-control" type="date" name="data_nasc" required="required"/>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label for="cpf" class="control-label col-lg-2">CPF<span class="required">*</span></label>
-                      <div class="col-lg-10">
-                        <input class="form-control" type="text" name="cpf" required="required" placeholder="12345678910"/>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label for="rg" class="control-label col-lg-2">RG<span class="required">*</span></label>
-                      <div class="col-lg-10">
-                        <input class="form-control" type="text" name="rg" required="required" placeholder="123456789"/>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label for="telefone" class="control-label col-lg-2">Telefone<span class="required">*</span></label>
-                      <div class="col-lg-10">
-                        <input class="form-control" type="text" name="telefone" required="required" placeholder="(99)99999-9999"/>
-                      </div>
-                    </div>
+
                     <div class="form-group">
                       <label for="email" class="control-label col-lg-2">Email<span class="required">*</span></label>
                       <div class="col-lg-10">
                         <input class="form-control" name="email" type="email" placeholder="email@dominio.com"/>
                       </div>
                     </div>
+
+                    <div class="form-group">
+                      <label for="rg" class="control-label col-lg-2">RG<span class="required">*</span></label>
+                      <div class="col-lg-10">
+                        <input class="form-control" type="text" name="rg" required="required" placeholder="123456789"/>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="cpf" class="control-label col-lg-2">CPF<span class="required">*</span></label>
+                      <div class="col-lg-10">
+                        <input class="form-control" type="text" name="cpf" required="required" placeholder="12345678910"/>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="tipo_usuario" class="control-label col-lg-2">Tipo Usuário<span class="required">*</span></label>
+                        <div class="col-lg-10">
+                          <select name="tipo_usuario" class="form-control" required="required">
+                            <option value="" selected>Selecionar</option>
+                            <option value="Profissional">Profissional</option>
+                            <option value="Coordenador">Coordenador</option>
+                          </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="data_nasc" class="control-label col-lg-2">Data de Nascimento<span class="required">*</span></label>
+                      <div class="col-lg-10">
+                        <input class="form-control" type="date" name="data_nasc" required="required"/>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="telefone" class="control-label col-lg-2">Telefone<span class="required">*</span></label>
+                      <div class="col-lg-10">
+                        <input class="form-control" type="text" name="telefone" required="required" placeholder="(99)99999-9999"/>
+                      </div>
+                    </div>
+
                     <div class="form-group">
                       <label for="sexo" class="control-label col-lg-2">Sexo<span class="required">*</span></label>
                         <div class="col-lg-10">
@@ -173,6 +202,7 @@
                           </select>
                         </div>
                     </div>
+
                     <div class="form-group">
                       <label for="estado_civil" class="control-label col-lg-2">Estado Civil<span class="required">*</span></label>
                         <div class="col-lg-10">
@@ -184,52 +214,58 @@
                           </select>
                         </div>
                     </div>
+
                     <div class="form-group">
                       <label for="cep" class="control-label col-lg-2">CEP<span class="required">*</span></label>
                       <div class="col-lg-10">
                         <input class="form-control" type="text" name="cep" required="required" placeholder="Digite o CEP"/>
                       </div>
                     </div>
+
                     <div class="form-group">
-                      <label for="enderecoResidencial" class="control-label col-lg-2">Endereço Residencial<span class="required">*</span></label>
+                      <label for="endereco_residencial" class="control-label col-lg-2">Endereço Residencial<span class="required">*</span></label>
                       <div class="col-lg-10">
-                        <input class="form-control"  type="text" name="enderecoResidencial" required="required" placeholder="Digite o Endereço"/>
+                        <input class="form-control"  type="text" name="endereco_residencial" required="required" placeholder="Digite o Endereço"/>
                       </div>
                     </div>
+
                     <div class="form-group">
                       <label for="bairro" class="control-label col-lg-2">Bairro<span class="required">*</span></label>
                       <div class="col-lg-10">
                         <input class="form-control" type="text" name="bairro" required="required" placeholder="Digite o Bairro"/>
                       </div>
                     </div>
+
                     <div class="form-group">
                       <label for="cidade" class="control-label col-lg-2">Cidade<span class="required">*</span></label>
                       <div class="col-lg-10">
                         <input class="form-control" type="text" name="cidade" required="required" placeholder="Digite a Cidade"/>
                       </div>
                     </div>
+
                     <div class="form-group">
                       <label for="senha" class="control-label col-lg-2">Senha<span class="required">*</span></label>
                       <div class="col-lg-10">
                         <input class="form-control" type="password" name="senha" required="required" placeholder="Digite a Senha"/>
                       </div>
                     </div>
+
                     <div class="form-group">
                       <label for="confirmar_senha" class="control-label col-lg-2">Confirme a Senha<span class="required">*</span></label>
                       <div class="col-lg-10">
-                        <input class="form-control" type="password"name="confirmar_senha" required="required" placeholder="Confirme a senha"/>
+                        <input class="form-control" type="password" name="confirmar_senha" required="required" placeholder="Confirme a senha"/>
                       </div>
                     </div>
+
                     <center>
                       <div>
-                        <small id="" class="form-text text">
+                        <small class="form-text text">
                           OBS: Antes de encerrar o cadastro verificar com o auxilio do profissional se todos os dados estão corretos.
                         </small>
                       </div>
                       <div class="form-group">
                         <div class="col-lg-offset-2 col-lg-10">
                           <button class="btn btn-primary" type="submit">Salvar</button>
-                          <button class="btn btn-default" type="button">Cancelar</button>
                         </div>
                       </div>
                     </center>
