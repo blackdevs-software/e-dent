@@ -8,8 +8,12 @@ if ($_POST && $_POST['email'] && $_POST['password']) {
   $remember = isset($_POST['remember']) && $_POST['remember'] === '1' ? 1 : 0;
 
   if (preg_match('/[^(a-z0-9_-@\.)]+/i', $email)) {
-    header('HTTP/1.1 401 Unauthorized');
-    header('Location: login.php');
+    ?>
+      <script>
+        alert('E-mail inválido');
+      </script>
+    <?php
+    header('Refresh: 0; login.php');
     return;
   } else {
     $email = $email;
@@ -26,16 +30,24 @@ if ($_POST && $_POST['email'] && $_POST['password']) {
     $result = mysqli_query($conn, $query);
 
     if ($result->num_rows <> 1) {
-      header('HTTP/1.1 401 Unauthorized');
-      header('Location: login.php');
+      ?>
+        <script>
+          alert('Usuário ou senha inválida');
+        </script>
+      <?php
+      header('Refresh: 0; login.php');
       return;
     }
 
     if ($result) {
       while ($data = mysqli_fetch_array($result)) {
         if ($data['senha'] !== $password) {
-          header('HTTP/1.1 401 Unauthorized');
-          header('Location: login.php');
+          ?>
+            <script>
+              alert('Senha inválida');
+            </script>
+          <?php
+          header('Refresh: 0; login.php');
           return;
         }
 
@@ -53,19 +65,22 @@ if ($_POST && $_POST['email'] && $_POST['password']) {
         $result = mysqli_query($conn, $query);
 
         if (!$result) {
-          header('HTTP/1.1 500 Internal Server Error');
-          header('Location: login.php');
+          ?>
+            <script>
+              alert('Ocorreu um erro');
+            </script>
+          <?php
+          header('Refresh: 0; login.php');
           return;
         }
 
         if ($remember === 1) {
-          setcookie('edent-session', $token, time() + (24 * 3600)); // 24 hours of validity (24 * 3600)
+          setcookie('edent-session', urlencode($token), time() + (24 * 3600)); // 24 hours of validity (24 * 3600)
         } else {
-          setcookie('edent-session', $token); // until the end of session
+          setcookie('edent-session', urlencode($token)); // until the end of session
         }
 
-        header('HTTP/1.1 302 Found');
-        header('Location: index.php');
+        header('Refresh: 0; index.php');
         return;
       }
     }
