@@ -106,7 +106,6 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
   <link href="css/style.css" rel="stylesheet">
   <link href="css/style-responsive.css" rel="stylesheet" />
-  <link rel="stylesheet" href="css/main.css">
   <link rel="icon" type="image/png" href="images/icons/iconEdent.png"/>
 </head>
 
@@ -139,36 +138,41 @@
                 <div class="form">
                   <form class="form-validate form-horizontal" id="register_form" method="POST" action="">
 
-                    <div class="form-group">
-                      <label for="nome" class="control-label col-lg-2">Nome Completo<span class="required">*</span></label>
-                      <div class="col-lg-10">
-                        <input class=" form-control" type="text" name="nome" required="required" placeholder="Digite o Nome"/>
+                    <div class="row">
+                      <div class="col-lg-6 form-group">
+                        <label for="nome" class="control-label col-lg-2">Nome Completo<span class="required">*</span></label>
+                        <div class="col-lg-10">
+                          <input class=" form-control" type="text" name="nome" required="required" placeholder="Digite o Nome"/>
+                        </div>
+                      </div>
+
+                      <div class="col-lg-6 form-group">
+                        <label for="email" class="control-label col-lg-2">Email<span class="required">*</span></label>
+                        <div class="col-lg-10">
+                          <input class="form-control" name="email" type="email" placeholder="email@dominio.com"/>
+                        </div>
                       </div>
                     </div>
 
-                    <div class="form-group">
-                      <label for="email" class="control-label col-lg-2">Email<span class="required">*</span></label>
-                      <div class="col-lg-10">
-                        <input class="form-control" name="email" type="email" placeholder="email@dominio.com"/>
+                    <div class="row">
+                      <div class="col-lg-6 form-group">
+                        <label for="rg" class="control-label col-lg-2">RG<span class="required">*</span></label>
+                        <div class="col-lg-10">
+                          <input class="form-control" type="text" name="rg" required="required" placeholder="123456789"/>
+                        </div>
+                      </div>
+
+                      <div class="col-lg-6 form-group">
+                        <label for="cpf" class="control-label col-lg-2">CPF<span class="required">*</span></label>
+                        <div class="col-lg-10">
+                          <input class="form-control" type="text" name="cpf" required="required" placeholder="12345678910"/>
+                        </div>
                       </div>
                     </div>
 
-                    <div class="form-group">
-                      <label for="rg" class="control-label col-lg-2">RG<span class="required">*</span></label>
-                      <div class="col-lg-10">
-                        <input class="form-control" type="text" name="rg" required="required" placeholder="123456789"/>
-                      </div>
-                    </div>
-
-                    <div class="form-group">
-                      <label for="cpf" class="control-label col-lg-2">CPF<span class="required">*</span></label>
-                      <div class="col-lg-10">
-                        <input class="form-control" type="text" name="cpf" required="required" placeholder="12345678910"/>
-                      </div>
-                    </div>
-
-                    <div class="form-group">
-                      <label for="tipo_usuario" class="control-label col-lg-2">Tipo Usuário<span class="required">*</span></label>
+                    <div class="row">
+                      <div class="col-lg-6 form-group">
+                        <label for="tipo_usuario" class="control-label col-lg-2">Tipo Usuário<span class="required">*</span></label>
                         <div class="col-lg-10">
                           <select name="tipo_usuario" class="form-control" required="required">
                             <option value="" selected>Selecionar</option>
@@ -176,24 +180,26 @@
                             <option value="Coordenador">Coordenador</option>
                           </select>
                         </div>
-                    </div>
+                      </div>
 
-                    <div class="form-group">
-                      <label for="data_nasc" class="control-label col-lg-2">Data de Nascimento<span class="required">*</span></label>
-                      <div class="col-lg-10">
-                        <input class="form-control" type="date" name="data_nasc" required="required"/>
+                      <div class="col-lg-6 form-group">
+                        <label for="data_nasc" class="control-label col-lg-2">Data de Nascimento<span class="required">*</span></label>
+                        <div class="col-lg-10">
+                          <input class="form-control" type="date" name="data_nasc" required="required"/>
+                        </div>
                       </div>
                     </div>
 
-                    <div class="form-group">
-                      <label for="telefone" class="control-label col-lg-2">Telefone<span class="required">*</span></label>
-                      <div class="col-lg-10">
-                        <input class="form-control" type="text" name="telefone" required="required" placeholder="(99)99999-9999"/>
+                    <div class="row">
+                      <div class="col-lg-6 form-group">
+                        <label for="telefone" class="control-label col-lg-2">Telefone<span class="required">*</span></label>
+                        <div class="col-lg-10">
+                          <input class="form-control" type="text" name="telefone" required="required" placeholder="(99)99999-9999"/>
+                        </div>
                       </div>
-                    </div>
 
-                    <div class="form-group">
-                      <label for="sexo" class="control-label col-lg-2">Sexo<span class="required">*</span></label>
+                      <div class="col-lg-6 form-group">
+                        <label for="sexo" class="control-label col-lg-2">Sexo<span class="required">*</span></label>
                         <div class="col-lg-10">
                           <select name="sexo" class="form-control" required="required">
                             <option value="" selected>Selecionar</option>
@@ -201,10 +207,12 @@
                             <option value="m">Masculino</option>
                           </select>
                         </div>
+                      </div>
                     </div>
 
-                    <div class="form-group">
-                      <label for="estado_civil" class="control-label col-lg-2">Estado Civil<span class="required">*</span></label>
+                    <div class="row">
+                      <div class="col-lg-6 form-groupcol-lg-6 form-group">
+                        <label for="estado_civil" class="control-label col-lg-2">Estado Civil<span class="required">*</span></label>
                         <div class="col-lg-10">
                           <select name="estado_civil" class="form-control" required="required">
                             <option value="" selected>Selecionar</option>
@@ -213,62 +221,66 @@
                             <option value="d">Divorciado</option>
                           </select>
                         </div>
-                    </div>
-
-                    <div class="form-group">
-                      <label for="cep" class="control-label col-lg-2">CEP<span class="required">*</span></label>
-                      <div class="col-lg-10">
-                        <input class="form-control" type="text" name="cep" required="required" placeholder="Digite o CEP"/>
                       </div>
-                    </div>
 
-                    <div class="form-group">
-                      <label for="endereco_residencial" class="control-label col-lg-2">Endereço Residencial<span class="required">*</span></label>
-                      <div class="col-lg-10">
-                        <input class="form-control"  type="text" name="endereco_residencial" required="required" placeholder="Digite o Endereço"/>
-                      </div>
-                    </div>
-
-                    <div class="form-group">
-                      <label for="bairro" class="control-label col-lg-2">Bairro<span class="required">*</span></label>
-                      <div class="col-lg-10">
-                        <input class="form-control" type="text" name="bairro" required="required" placeholder="Digite o Bairro"/>
-                      </div>
-                    </div>
-
-                    <div class="form-group">
-                      <label for="cidade" class="control-label col-lg-2">Cidade<span class="required">*</span></label>
-                      <div class="col-lg-10">
-                        <input class="form-control" type="text" name="cidade" required="required" placeholder="Digite a Cidade"/>
-                      </div>
-                    </div>
-
-                    <div class="form-group">
-                      <label for="senha" class="control-label col-lg-2">Senha<span class="required">*</span></label>
-                      <div class="col-lg-10">
-                        <input class="form-control" type="password" name="senha" required="required" placeholder="Digite a Senha"/>
-                      </div>
-                    </div>
-
-                    <div class="form-group">
-                      <label for="confirmar_senha" class="control-label col-lg-2">Confirme a Senha<span class="required">*</span></label>
-                      <div class="col-lg-10">
-                        <input class="form-control" type="password" name="confirmar_senha" required="required" placeholder="Confirme a senha"/>
-                      </div>
-                    </div>
-
-                    <center>
-                      <div>
-                        <small class="form-text text">
-                          OBS: Antes de encerrar o cadastro verificar com o auxilio do profissional se todos os dados estão corretos.
-                        </small>
-                      </div>
-                      <div class="form-group">
-                        <div class="col-lg-offset-2 col-lg-10">
-                          <button class="btn btn-primary" type="submit">Salvar</button>
+                      <div class="col-lg-6 form-groupcol-lg-6 form-group">
+                        <label for="cep" class="control-label col-lg-2">CEP<span class="required">*</span></label>
+                        <div class="col-lg-10">
+                          <input class="form-control" type="text" id="cep" name="cep" required="required" placeholder="Digite o CEP"/>
                         </div>
                       </div>
-                    </center>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-lg-6 form-group">
+                        <label for="endereco_residencial" class="control-label col-lg-2">Endereço Residencial<span class="required">*</span></label>
+                        <div class="col-lg-10">
+                          <input class="form-control"  type="text" id="endereco_residencial" name="endereco_residencial" required="required" placeholder="Digite o Endereço"/>
+                        </div>
+                      </div>
+
+                      <div class="col-lg-6 form-group">
+                        <label for="bairro" class="control-label col-lg-2">Bairro<span class="required">*</span></label>
+                        <div class="col-lg-10">
+                          <input class="form-control" type="text" id="bairro" name="bairro" required="required" placeholder="Digite o Bairro"/>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-lg-6 form-group">
+                        <label for="cidade" class="control-label col-lg-2">Cidade<span class="required">*</span></label>
+                        <div class="col-lg-10">
+                          <input class="form-control" type="text" id="cidade" name="cidade" required="required" placeholder="Digite a Cidade"/>
+                        </div>
+                      </div>
+                      <div class="col-lg-6 form-group"></div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-lg-6 form-group">
+                        <label for="senha" class="control-label col-lg-2">Senha<span class="required">*</span></label>
+                        <div class="col-lg-10">
+                          <input class="form-control" type="password" name="senha" required="required" placeholder="Digite a Senha"/>
+                        </div>
+                      </div>
+
+                      <div class="col-lg-6 form-group">
+                        <label for="confirmar_senha" class="control-label col-lg-2">Confirme a Senha<span class="required">*</span></label>
+                        <div class="col-lg-10">
+                          <input class="form-control" type="password" name="confirmar_senha" required="required" placeholder="Confirme a senha"/>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                      <div>
+                        <small class="form-text text">
+                          OBS: Antes de encerrar verificar se todos os dados estão corretos.
+                        </small>
+                      </div>
+                      <button class="btn btn-primary" type="submit">Salvar</button>
+                    </div>
                   </form>
                 </div>
             </section>
@@ -287,6 +299,35 @@
   <script type="text/javascript" src="js/bootstrap.min.js"></script>
   <script type="text/javascript" src="js/jquery-ui-1.9.2.custom.min.js"></script>
   <script src="js/scripts.js"></script>
+
+  <script>
+    const cepField = $('#cep');
+    cepField.keyup(function(e) {
+      let value = e.target.value;
+      if (!value) {
+        return;
+      }
+      value = value.toString().replace(/[^\d]+/g, '');
+      if (value.length > 5) {
+        value = `${value.substring(0, 5)}-${value.substring(5,)}`;
+      }
+      if (value.length === 9 && value.match(/[\d]{5}-[\d]{3}/g)) {
+        $.get(`http://viacep.com.br/ws/${value.toString().replace(/[^\d]+/g, '')}/json`, function(data) {
+          let body = typeof data === 'string' ? JSON.parse(data) : data;
+          if (body.logradouro) {
+            $('#endereco_residencial').val(body.logradouro);
+          }
+          if (body.bairro) {
+            $('#bairro').val(body.bairro);
+          }
+          if (body.localidade) {
+            $('#cidade').val(body.localidade);
+          }
+        });
+      }
+      e.target.value = value;
+    });
+  </script>
 </body>
 
 </html>

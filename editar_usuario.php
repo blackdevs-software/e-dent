@@ -152,7 +152,6 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
   <link href="css/style.css" rel="stylesheet">
   <link href="css/style-responsive.css" rel="stylesheet" />
-  <link rel="stylesheet" href="css/main.css">
   <link rel="icon" type="image/png" href="images/icons/iconEdent.png"/>
 </head>
 
@@ -186,36 +185,41 @@
                   <form class="form-validate form-horizontal" id="register_form" method="POST" action="">
                     <input type="hidden" name="idUsuario" value="<?= $idU; ?>">
 
-                    <div class="form-group">
-                      <label for="nome" class="control-label col-lg-2">Nome Completo<span class="required">*</span></label>
-                      <div class="col-lg-10">
-                        <input class=" form-control" type="text" name="nome" required="required" placeholder="Digite o Nome" value="<?= $nome; ?>"/>
+                    <div class="row">
+                      <div class="col-lg-6 form-group">
+                        <label for="nome" class="control-label col-lg-2">Nome Completo<span class="required">*</span></label>
+                        <div class="col-lg-10">
+                          <input class=" form-control" type="text" name="nome" required="required" placeholder="Digite o Nome" value="<?= $nome; ?>"/>
+                        </div>
+                      </div>
+
+                      <div class="col-lg-6 form-group">
+                        <label for="email" class="control-label col-lg-2">Email<span class="required">*</span></label>
+                        <div class="col-lg-10">
+                          <input class="form-control" name="email" type="email" placeholder="email@dominio.com" value="<?= $email; ?>"/>
+                        </div>
                       </div>
                     </div>
 
-                    <div class="form-group">
-                      <label for="email" class="control-label col-lg-2">Email<span class="required">*</span></label>
-                      <div class="col-lg-10">
-                        <input class="form-control" name="email" type="email" placeholder="email@dominio.com" value="<?= $email; ?>"/>
+                    <div class="row">
+                      <div class="col-lg-6 form-group">
+                        <label for="rg" class="control-label col-lg-2">RG<span class="required">*</span></label>
+                        <div class="col-lg-10">
+                          <input class="form-control" type="text" name="rg" required="required" placeholder="123456789" value="<?= $rg; ?>"/>
+                        </div>
+                      </div>
+
+                      <div class="col-lg-6 form-group">
+                        <label for="cpf" class="control-label col-lg-2">CPF<span class="required">*</span></label>
+                        <div class="col-lg-10">
+                          <input class="form-control" type="text" name="cpf" required="required" placeholder="12345678910" value="<?= $cpf; ?>"/>
+                        </div>
                       </div>
                     </div>
 
-                    <div class="form-group">
-                      <label for="rg" class="control-label col-lg-2">RG<span class="required">*</span></label>
-                      <div class="col-lg-10">
-                        <input class="form-control" type="text" name="rg" required="required" placeholder="123456789" value="<?= $rg; ?>"/>
-                      </div>
-                    </div>
-
-                    <div class="form-group">
-                      <label for="cpf" class="control-label col-lg-2">CPF<span class="required">*</span></label>
-                      <div class="col-lg-10">
-                        <input class="form-control" type="text" name="cpf" required="required" placeholder="12345678910" value="<?= $cpf; ?>"/>
-                      </div>
-                    </div>
-
-                    <div class="form-group">
-                      <label for="tipo_usuario" class="control-label col-lg-2">Tipo Usuário<span class="required">*</span></label>
+                    <div class="row">
+                      <div class="col-lg-6 form-group">
+                        <label for="tipo_usuario" class="control-label col-lg-2">Tipo Usuário<span class="required">*</span></label>
                         <div class="col-lg-10">
                           <select name="tipo_usuario" class="form-control" required="required">
                             <?php
@@ -233,24 +237,26 @@
                             ?>
                           </select>
                         </div>
-                    </div>
+                      </div>
 
-                    <div class="form-group">
-                      <label for="data_nasc" class="control-label col-lg-2">Data de Nascimento<span class="required">*</span></label>
-                      <div class="col-lg-10">
-                        <input class="form-control" type="date" name="data_nasc" required="required" value="<?= $data_nasc; ?>"/>
+                      <div class="col-lg-6 form-group">
+                        <label for="data_nasc" class="control-label col-lg-2">Data de Nascimento<span class="required">*</span></label>
+                        <div class="col-lg-10">
+                          <input class="form-control" type="date" name="data_nasc" required="required" value="<?= $data_nasc; ?>"/>
+                        </div>
                       </div>
                     </div>
 
-                    <div class="form-group">
-                      <label for="telefone" class="control-label col-lg-2">Telefone<span class="required">*</span></label>
-                      <div class="col-lg-10">
-                        <input class="form-control" type="text" name="telefone" required="required" placeholder="(99)99999-9999" value="<?= $telefone; ?>"/>
+                    <div class="row">
+                      <div class="col-lg-6 form-group">
+                        <label for="telefone" class="control-label col-lg-2">Telefone<span class="required">*</span></label>
+                        <div class="col-lg-10">
+                          <input class="form-control" type="text" name="telefone" required="required" placeholder="(99)99999-9999" value="<?= $telefone; ?>"/>
+                        </div>
                       </div>
-                    </div>
 
-                    <div class="form-group">
-                      <label for="sexo" class="control-label col-lg-2">Sexo<span class="required">*</span></label>
+                      <div class="col-lg-6 form-group">
+                        <label for="sexo" class="control-label col-lg-2">Sexo<span class="required">*</span></label>
                         <div class="col-lg-10">
                           <select name="sexo" class="form-control" required="required">
                             <?php
@@ -272,89 +278,93 @@
                             ?>
                           </select>
                         </div>
+                      </div>
                     </div>
 
-                    <div class="form-group">
-                      <label for="estado_civil" class="control-label col-lg-2">Estado Civil<span class="required">*</span></label>
-                      <div class="col-lg-10">
-                        <select name="estado_civil" class="form-control" required="required">
-                          <?php
-                            foreach ($marital_state_options as $option) {
-                              if ($estado_civil === $option['value']) {
-                                ?>
-                                  <option selected value="<?= $option['value']; ?>">
-                                    <?= $option['name']; ?>
-                                  </option>
-                                <?php
-                              } else {
-                                ?>
-                                  <option value="<?= $option['value']; ?>">
-                                    <?= $option['name']; ?>
-                                  </option>
-                                <?php
+                    <div class="row">
+                      <div class="col-lg-6 form-group">
+                        <label for="estado_civil" class="control-label col-lg-2">Estado Civil<span class="required">*</span></label>
+                        <div class="col-lg-10">
+                          <select name="estado_civil" class="form-control" required="required">
+                            <?php
+                              foreach ($marital_state_options as $option) {
+                                if ($estado_civil === $option['value']) {
+                                  ?>
+                                    <option selected value="<?= $option['value']; ?>">
+                                      <?= $option['name']; ?>
+                                    </option>
+                                  <?php
+                                } else {
+                                  ?>
+                                    <option value="<?= $option['value']; ?>">
+                                      <?= $option['name']; ?>
+                                    </option>
+                                  <?php
+                                }
                               }
-                            }
-                          ?>
-                        </select>
-                      </div>
-                    </div>
-
-                    <div class="form-group">
-                      <label for="cep" class="control-label col-lg-2">CEP<span class="required">*</span></label>
-                      <div class="col-lg-10">
-                        <input class="form-control" type="text" name="cep" required="required" placeholder="Digite o CEP" value="<?= $cep; ?>"/>
-                      </div>
-                    </div>
-
-                    <div class="form-group">
-                      <label for="endereco_residencial" class="control-label col-lg-2">Endereço Residencial<span class="required">*</span></label>
-                      <div class="col-lg-10">
-                        <input class="form-control"  type="text" name="endereco_residencial" required="required" placeholder="Digite o Endereço" value="<?= $endereco_residencial; ?>"/>
-                      </div>
-                    </div>
-
-                    <div class="form-group">
-                      <label for="bairro" class="control-label col-lg-2">Bairro<span class="required">*</span></label>
-                      <div class="col-lg-10">
-                        <input class="form-control" type="text" name="bairro" required="required" placeholder="Digite o Bairro" value="<?= $bairro; ?>" />
-                      </div>
-                    </div>
-
-                    <div class="form-group">
-                      <label for="cidade" class="control-label col-lg-2">Cidade<span class="required">*</span></label>
-                      <div class="col-lg-10">
-                        <input class="form-control" type="text" name="cidade" required="required" placeholder="Digite a Cidade" value="<?= $cidade; ?>"/>
-                      </div>
-                    </div>
-
-                    <div class="form-group">
-                      <label for="senha" class="control-label col-lg-2">Senha<span class="required">*</span></label>
-                      <div class="col-lg-10">
-                        <input class="form-control" type="password" name="senha" required="required" placeholder="Digite a nova senha" value=""/>
-                      </div>
-                    </div>
-
-                    <div class="form-group">
-                      <label for="confirmar_senha" class="control-label col-lg-2">Confirme a Senha<span class="required">*</span></label>
-                      <div class="col-lg-10">
-                        <input class="form-control" type="password"name="confirmar_senha" required="required" placeholder="Confirme a nova senha" value=""/>
-                      </div>
-                    </div>
-
-                    <center>
-                      <div>
-                        <small  class="form-text text">
-                          OBS: Antes de encerrar o cadastro verificar com o auxilio do profissional se todos os dados estão corretos.
-                        </small>
-                      </div>
-                      <br>
-                      <div class="form-group">
-                        <div class="col-lg-offset-2 col-lg-10">
-                          <button class="btn btn-primary" type="submit">Salvar</button>
-                          <button class="btn btn-default" type="button">Cancelar</button>
+                            ?>
+                          </select>
                         </div>
                       </div>
-                    </center>
+
+                      <div class="col-lg-6 form-group">
+                        <label for="cep" class="control-label col-lg-2">CEP<span class="required">*</span></label>
+                        <div class="col-lg-10">
+                          <input class="form-control" type="text" name="cep" required="required" placeholder="Digite o CEP" value="<?= $cep; ?>"/>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-lg-6 form-group">
+                        <label for="endereco_residencial" class="control-label col-lg-2">Endereço Residencial<span class="required">*</span></label>
+                        <div class="col-lg-10">
+                          <input class="form-control"  type="text" name="endereco_residencial" required="required" placeholder="Digite o Endereço" value="<?= $endereco_residencial; ?>"/>
+                        </div>
+                      </div>
+
+                      <div class="col-lg-6 form-group">
+                        <label for="bairro" class="control-label col-lg-2">Bairro<span class="required">*</span></label>
+                        <div class="col-lg-10">
+                          <input class="form-control" type="text" name="bairro" required="required" placeholder="Digite o Bairro" value="<?= $bairro; ?>" />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-lg-6 form-group">
+                        <label for="cidade" class="control-label col-lg-2">Cidade<span class="required">*</span></label>
+                        <div class="col-lg-10">
+                          <input class="form-control" type="text" name="cidade" required="required" placeholder="Digite a Cidade" value="<?= $cidade; ?>"/>
+                        </div>
+                      </div>
+                      <div class="col-lg-6 form-group"></div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-lg-6 form-group">
+                        <label for="senha" class="control-label col-lg-2">Senha<span class="required">*</span></label>
+                        <div class="col-lg-10">
+                          <input class="form-control" type="password" name="senha" required="required" placeholder="Digite a Senha"/>
+                        </div>
+                      </div>
+
+                      <div class="col-lg-6 form-group">
+                        <label for="confirmar_senha" class="control-label col-lg-2">Confirme a Senha<span class="required">*</span></label>
+                        <div class="col-lg-10">
+                          <input class="form-control" type="password" name="confirmar_senha" required="required" placeholder="Confirme a senha"/>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                      <div>
+                        <small class="form-text text">
+                          OBS: Antes de encerrar verificar se todos os dados estão corretos.
+                        </small>
+                      </div>
+                      <button class="btn btn-primary" type="submit">Salvar</button>
+                    </div>
                   </form>
                 </div>
             </section>
