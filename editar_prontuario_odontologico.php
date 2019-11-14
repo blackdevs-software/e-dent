@@ -61,7 +61,7 @@ include_once('check_session.php');
               'gengiva_sangra' => $_POST['gengiva_sangra'],
               'mau_halito' => $_POST['mau_halito'],
               'toma_cafe_refrigerante' => $_POST['toma_cafe_refrigerante'],
-              'observacao' => $_POST['observacao'],
+              'observacao' => trim(htmlspecialchars(filter_var($_POST['observacao'], FILTER_SANITIZE_STRING))),
             ];
 
             $update_fields = [];

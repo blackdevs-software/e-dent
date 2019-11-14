@@ -8,7 +8,7 @@
   $palito = $_POST['palito'];
   $higiene_lingua = $_POST['higiene_lingua'];
   $fio_dental = $_POST['fio_dental'];
-  $observacao = $_POST['observacao'];
+  $observacao = trim(htmlspecialchars(filter_var($_POST['observacao'], FILTER_SANITIZE_STRING)));
 
   $query = "insert into prontuario_higiene_oral (bochecho, creme_dental, palito, higiene_lingua, fio_dental, observacao)
   values

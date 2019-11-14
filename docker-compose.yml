@@ -18,7 +18,7 @@ services:
     networks:
       - netlocal
     healthcheck:
-      test: ["CMD", "curl http://app:80"]
+      test: ["CMD", "curl", "-I", "http://app:80"]
       interval: 30s
       timeout: 10s
       retries: 3

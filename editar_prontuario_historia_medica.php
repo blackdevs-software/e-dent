@@ -57,7 +57,7 @@ include_once('check_session.php');
               'historia_progressa' => $_POST['historia_progressa'],
               'historia_familiar' => $_POST['historia_familiar'],
               'historia_pessoal_social' => $_POST['historia_pessoal_social'],
-              'observacao' => $_POST['observacao'],
+              'observacao' => trim(htmlspecialchars(filter_var($_POST['observacao'], FILTER_SANITIZE_STRING))),
             ];
 
             $update_fields = [];
