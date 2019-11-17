@@ -50,7 +50,7 @@ include_once('check_session.php');
                 </div>
                 <br>
                 <br>
-                <div id='calendar' style="width: 40%; max-height: 40%; height: auto; margin-bottom: 50px;"></div>
+                <div id='calendar' style="max-width: 800px; max-height: 800px; width: 60%; height: auto; margin-bottom: 50px;"></div>
               </div>
             </section>
           </div>

@@ -26,7 +26,7 @@ if (!isset($usuario_tipo) || $usuario_tipo !== 'coordenador') {
 
 <body>
   <?php
-    include_once('connection.php');
+    include_once($_SERVER['DOCUMENT_ROOT'] . '/db/connection.php');
 
     $search = isset ($_GET['search']) ? $_GET['search'] : '';
     // Sanitize query param

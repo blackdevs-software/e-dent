@@ -1,11 +1,5 @@
 <?php
 include_once('check_session.php');
-
-if (!isset($usuario_tipo) || $usuario_tipo !== 'coordenador') {
-  header('HTTP/1.1 302 Found');
-  header('Location: index.php');
-  return;
-}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -117,9 +111,9 @@ if (!isset($usuario_tipo) || $usuario_tipo !== 'coordenador') {
                                     <td style="text-align: center;"><?= $data['dataHora']; ?></td>
                                     <td style="text-align: center;"><?= $data['pacienteNome']; ?></td>
                                     <td style="text-align: center;">
-                                      <!-- <a class="btn btn-sm btn-primary" href="editar_consulta.php?id=<?= $data['idConsulta']; ?>">
+                                      <a class="btn btn-sm btn-primary" href="editar_consulta.php?id=<?= $data['idConsulta']; ?>">
                                         <i class="fas fa-edit"></i>
-                                      </a> -->
+                                      </a>
                                       <a class="btn btn-sm btn-danger" href="deletar_consulta.php?id=<?= $data['idConsulta']; ?>">
                                         <i class="fas fa-trash"></i>
                                       </a>
