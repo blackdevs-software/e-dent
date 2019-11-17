@@ -1,5 +1,5 @@
 <?php
-include_once('connection.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/db/connection.php');
 include_once('utils.php');
 
 if (empty($_COOKIE['edent-session'])) {

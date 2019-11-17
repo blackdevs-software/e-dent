@@ -1,6 +1,6 @@
 <?php
   include_once('check_session.php');
-  include_once('connection.php');
+  include_once($_SERVER['DOCUMENT_ROOT'] . '/db/connection.php');
 
   $paciente = $_POST['paciente'];
   $dificuldade_engolir_alimentos = $_POST['dificuldade_engolir_alimentos'];
@@ -13,7 +13,7 @@
   $toma_cafe_refrigerante = $_POST['toma_cafe_refrigerante'];
   $observacao = trim(htmlspecialchars(filter_var($_POST['observacao'], FILTER_SANITIZE_STRING)));
 
-  $query = "insert into prontuario_odontologico (dificuldade_engolir_alimentos, protese_dentadura, quanto_tempo_perdeu_dentes, adaptado_protese, dentes_sensiveis, gengiva_sangra, mau_halito,toma_cafe_refrigerante, observacao)
+  $query = "INSERT INTO prontuario_odontologico (dificuldade_engolir_alimentos, protese_dentadura, quanto_tempo_perdeu_dentes, adaptado_protese, dentes_sensiveis, gengiva_sangra, mau_halito,toma_cafe_refrigerante, observacao)
   values
   ('{$dificuldade_engolir_alimentos}', '{$protese_dentadura}', '{$quanto_tempo_perdeu_dentes}', '{$adaptado_protese}', '{$dentes_sensiveis}', '{$gengiva_sangra}', '{$mau_halito}', '{$toma_cafe_refrigerante}', '{$observacao}')";
 
@@ -31,7 +31,7 @@
     return;
   }
 
-  $query = "insert into paciente_prontuario_odontologico (fk_idUsuario, fk_idPaciente, fk_idProntuarioOdontologico)
+  $query = "INSERT INTO paciente_prontuario_odontologico (fk_idUsuario, fk_idPaciente, fk_idProntuarioOdontologico)
   values
   ({$usuario_id}, {$paciente}, {$inserted_id});";
 

@@ -140,17 +140,19 @@ include_once('check_session.php');
                                   <td style="text-align: center;">
                                     <span
                                       style="cursor: pointer; color: #007aff;"
-                                      onclick="document.querySelector('#tr-prontuario-paciente-<?= $data['idPaciente']; ?>').style.display = 'contents';"
+                                      onclick="document.querySelector('#tr-prontuario-paciente-<?= $data['idPaciente']; ?>').style.display =
+                                        document.querySelector('#tr-prontuario-paciente-<?= $data['idPaciente']; ?>').style.display == 'contents' ?
+                                        'none' : 'contents' ;"
                                     >
-                                      Ver prontuários
+                                      Ver prontuários <i class="fas fa-eye"></i>
                                     </span>
                                   </td>
                                   <td style="text-align: center;">
-                                    <a
-                                      class="link_edit"
-                                      href="editar_paciente.php?id=<?= $data['idPaciente']; ?>"
-                                    >
+                                    <a class="btn btn-sm btn-primary" href="editar_paciente.php?id=<?= $data['idPaciente']; ?>">
                                       <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a class="btn btn-sm btn-danger" href="deletar_paciente.php?id=<?= $data['idPaciente']; ?>">
+                                      <i class="fas fa-trash"></i>
                                     </a>
                                   </td>
                                 </tr>

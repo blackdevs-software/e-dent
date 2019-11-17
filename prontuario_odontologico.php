@@ -50,10 +50,10 @@ include_once('check_session.php');
                     <div class="form-group">
                       <label for="paciente" class="control-label col-lg-2">Paciente<span class="required">*</span></label>
                       <div class="col-lg-10">
-                        <select name="paciente" class="form-control" required="required">
+                        <select id="paciente" name="paciente" class="form-control" required="required">
                           <option value="" selected>Selecione</option>
                           <?php
-                            include_once('connection.php');
+                            include_once($_SERVER['DOCUMENT_ROOT'] . '/db/connection.php');
 
                             $query = "SELECT idPaciente, nome FROM paciente LIMIT 50";
 
@@ -133,7 +133,7 @@ include_once('check_session.php');
                     <div class="form-group">
                       <label for="observacao" class="control-label col-lg-2">Observações <span class="required">*</span></label>
                       <div class="col-lg-10">
-                        <textarea class="form-control" name="observacao" style="width:100%; height:100px;" required="required" placeholder="Se não tiver observações escreva que não possui."></textarea>
+                        <textarea class="form-control" name="observacao" style="width:100%; height:100px; resize: vertical;" required="required" placeholder="Se não tiver observações escreva que não possui."></textarea>
                       </div>
                     </div>
                     <center>

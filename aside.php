@@ -49,7 +49,7 @@
       </li>
 
       <li>
-        <a href="agenda_consultas.php">
+        <a href="lista_consulta.php">
           <i class="fas fa-calendar-alt"></i>
           <span>Consultas</span>
         </a>

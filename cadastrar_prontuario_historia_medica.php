@@ -1,6 +1,6 @@
 <?php
   include_once('check_session.php');
-  include_once('connection.php');
+  include_once($_SERVER['DOCUMENT_ROOT'] . '/db/connection.php');
 
   $paciente = $_POST['paciente'];
   $queixa_principal = $_POST['queixa_principal'];
@@ -10,7 +10,7 @@
   $historia_pessoal_social = $_POST['historia_pessoal_social'];
   $observacao = trim(htmlspecialchars(filter_var($_POST['observacao'], FILTER_SANITIZE_STRING)));
 
-  $query = "insert into prontuario_historia_medica (queixa_principal, historia_doenca_atual, historia_progressa, historia_familiar, historia_pessoal_social, observacao)
+  $query = "INSERT INTO prontuario_historia_medica (queixa_principal, historia_doenca_atual, historia_progressa, historia_familiar, historia_pessoal_social, observacao)
   values
   ('{$queixa_principal}', '{$historia_doenca_atual}', '{$historia_progressa}', '{$historia_familiar}', '{$historia_pessoal_social}', '{$observacao}')";
 
@@ -28,7 +28,7 @@
     return;
   }
 
-  $query = "insert into paciente_prontuario_historia_medica (fk_idUsuario, fk_idPaciente, fk_idProntuarioHistoriaMedica)
+  $query = "INSERT INTO paciente_prontuario_historia_medica (fk_idUsuario, fk_idPaciente, fk_idProntuarioHistoriaMedica)
   values
   ({$usuario_id}, {$paciente}, {$inserted_id});";
 

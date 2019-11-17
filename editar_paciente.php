@@ -1,6 +1,6 @@
 <?php
   include_once('check_session.php');
-  include_once('connection.php');
+  include_once($_SERVER['DOCUMENT_ROOT'] . '/db/connection.php');
 
 	if (!empty($_POST)) {
     if (empty($_POST['idPaciente']) || empty($_POST['nome']) || empty($_POST['email'])
@@ -78,9 +78,9 @@
 
   $sql = mysqli_query($conn, "SELECT idPaciente, email, nome, rg, cpf, data_nasc, telefone, sexo, estado_civil, endereco, bairro, cep, cidade FROM paciente WHERE idPaciente = {$idP} ");
 
-  $result_sql = mysqli_num_rows($sql);
+  $rows = mysqli_num_rows($sql);
 
-  if ($result_sql == 0) {
+  if ($rows == 0) {
     header('Location: lista_usuario.php');
     return;
   } else {

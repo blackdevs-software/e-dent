@@ -1,6 +1,6 @@
 <?php
   include_once('check_session.php');
-  include_once('connection.php');
+  include_once($_SERVER['DOCUMENT_ROOT'] . '/db/connection.php');
 
   if (!isset($usuario_tipo) || $usuario_tipo !== 'coordenador') {
     header('HTTP/1.1 302 Found');
@@ -101,9 +101,9 @@
 
   $sql = mysqli_query($conn, "SELECT idUsuario, nome, email, senha, rg, cpf, tipo_usuario, data_nasc, telefone, sexo, estado_civil, bairro, cep, cidade, endereco_residencial FROM usuario WHERE idUsuario = $idU");
 
-  $result = mysqli_num_rows($sql);
+  $rows = mysqli_num_rows($sql);
 
-  if ($result == 0) {
+  if ($rows == 0) {
     header('Location: lista_usuario.php');
     return;
   } else {

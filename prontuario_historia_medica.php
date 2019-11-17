@@ -50,10 +50,10 @@ include_once('check_session.php');
                     <div class="form-group">
                       <label for="paciente" class="control-label col-lg-2">Paciente<span class="required">*</span></label>
                       <div class="col-lg-10">
-                        <select name="paciente" class="form-control" required="required">
+                        <select id="paciente" name="paciente" class="form-control" required="required">
                           <option value="" selected>Selecione</option>
                           <?php
-                            include_once('connection.php');
+                            include_once($_SERVER['DOCUMENT_ROOT'] . '/db/connection.php');
 
                             $query = "SELECT idPaciente, nome FROM paciente LIMIT 50";
 
@@ -77,37 +77,37 @@ include_once('check_session.php');
                     <div class="form-group">
                       <label for="queixa_principal" class="control-label col-lg-2">Queixa Principal <span class="required">*</span></label>
                       <div class="col-lg-10">
-                        <textarea class="form-control" name="queixa_principal" style="width:100%; height:80px;" required="required"></textarea>
+                        <textarea class="form-control" name="queixa_principal" style="width:100%; height:80px; resize: vertical;" required="required"></textarea>
                       </div>
                     </div>
                     <div class="form-group">
                       <label for="historia_doenca_atual" class="control-label col-lg-2">Historia da doença atual <span class="required">*</span></label>
                       <div class="col-lg-10">
-                        <textarea class="form-control" name="historia_doenca_atual" style="width:100%; height:80px;" required="required"></textarea>
+                        <textarea class="form-control" name="historia_doenca_atual" style="width:100%; height:80px; resize: vertical;" required="required"></textarea>
                       </div>
                     </div>
                     <div class="form-group">
                       <label for="historia_progressa" class="control-label col-lg-2">Historia Progresssa <span class="required">*</span></label>
                       <div class="col-lg-10">
-                        <textarea class="form-control" name="historia_progressa" style="width:100%; height:80px;" required="required"></textarea>
+                        <textarea class="form-control" name="historia_progressa" style="width:100%; height:80px; resize: vertical;" required="required"></textarea>
                       </div>
                     </div>
                     <div class="form-group">
                       <label for="historia_familiar" class="control-label col-lg-2">Historia Familiar <span class="required">*</span></label>
                       <div class="col-lg-10">
-                        <textarea class="form-control" name="historia_familiar" style="width:100%; height:100px;" required="required"></textarea>
+                        <textarea class="form-control" name="historia_familiar" style="width:100%; height:100px; resize: vertical;" required="required"></textarea>
                       </div>
                     </div>
                     <div class="form-group">
                       <label for="historia_pessoal_social" class="control-label col-lg-2">Historia Pessoal e Social <span class="required">*</span></label>
                       <div class="col-lg-10">
-                        <textarea class="form-control" name="historia_pessoal_social" style="width:100%; height:100px;" required="required"></textarea>
+                        <textarea class="form-control" name="historia_pessoal_social" style="width:100%; height:100px; resize: vertical;" required="required"></textarea>
                       </div>
                     </div>
                     <div class="form-group">
                       <label for="observacao" class="control-label col-lg-2">Observações <span class="required">*</span></label>
                       <div class="col-lg-10">
-                        <textarea class="form-control" name="observacao" style="width:100%; height:100px;" required="required" placeholder="Se não tiver observações escreva que não possui."></textarea>
+                        <textarea class="form-control" name="observacao" style="width:100%; height:100px; resize: vertical;" required="required" placeholder="Se não tiver observações escreva que não possui."></textarea>
                       </div>
                     </div>
                     <center>

@@ -1,6 +1,6 @@
 <?php
   include_once('check_session.php');
-  include_once('connection.php');
+  include_once($_SERVER['DOCUMENT_ROOT'] . '/db/connection.php');
 
   // only coordinator is allowed to access this page
   if (!isset($usuario_tipo) || $usuario_tipo !== 'coordenador') {
@@ -52,7 +52,7 @@
 
       $query = mysqli_query($conn, "SELECT * FROM usuario WHERE email = '{$email}' OR rg = '{$rg}' OR cpf = '{$cpf}'");
 
-      $result = mysqli_fetch_array ($query);
+      $result = mysqli_fetch_array($query);
 
       if ($result) {
         ?>

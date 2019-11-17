@@ -95,6 +95,7 @@ CREATE TABLE `consulta` (
   `idConsulta` int(11) NOT NULL AUTO_INCREMENT,
   `fk_idUsuario` int(11) NOT NULL,
   `fk_idPaciente` int(11) NOT NULL,
+  `titulo` varchar(255) NOT NULL,
   `observacao` TEXT NOT NULL,
   `data_hora` DATETIME NOT NULL,
   `created_at` DATETIME DEFAULT current_timestamp,

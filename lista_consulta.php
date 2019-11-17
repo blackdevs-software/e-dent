@@ -13,9 +13,9 @@ if (!isset($usuario_tipo) || $usuario_tipo !== 'coordenador') {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Lista de Usuários">
+  <meta name="description" content="Lista de Consultas">
   <meta name="keyword" content="Web System, Odontologic System, Dentist">
-  <title>Lista de Usuários</title>
+  <title>Lista de Consultas</title>
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/bootstrap-theme.css" rel="stylesheet">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
@@ -26,7 +26,7 @@ if (!isset($usuario_tipo) || $usuario_tipo !== 'coordenador') {
 
 <body>
   <?php
-    include_once('connection.php');
+    include_once($_SERVER['DOCUMENT_ROOT'] . '/db/connection.php');
 
     $search = isset ($_GET['search']) ? $_GET['search'] : '';
     // Sanitize query param
@@ -59,9 +59,9 @@ if (!isset($usuario_tipo) || $usuario_tipo !== 'coordenador') {
                 <div class="panel-body">
                   <form method="get" action="">
                   <div class="form">
-                    <label for="" class="control-label col-lg-2">Pesquise o Usuário: <span class="required">*</span></label>
+                    <label for="" class="control-label col-lg-2">Pesquise o Consulta: <span class="required">*</span></label>
                       <div class="col-lg-6">
-                        <input type="text" name="search" class="form-control" placeholder="Busque pelo nome, RG ou CPF" required autofocus value="<?= $search ? $search : ''; ?>">
+                        <input type="text" name="search" class="form-control" placeholder="Busque pelo titulo, observação" required autofocus value="<?= $search ? $search : ''; ?>">
                         <br>
                         <input class="btn btn-primary" type="submit">
                       </div>
@@ -74,34 +74,37 @@ if (!isset($usuario_tipo) || $usuario_tipo !== 'coordenador') {
                       <table class="table table-striped table-advance table-hover">
                         <tbody>
                           <tr>
-                            <th style="text-align: center;">Nome</th>
-                            <th style="text-align: center;">Tipo Usuario</th>
-                            <th style="text-align: center;">Nascimento</th>
-                            <th style="text-align: center;">RG</th>
-                            <th style="text-align: center;">CPF</th>
-                            <th style="text-align: center;">Telefone</th>
+                            <th style="text-align: center;">Titulo</th>
+                            <th style="text-align: center;">Observação</th>
+                            <th style="text-align: center;">Data/Hora</th>
+                            <th style="text-align: center;">Paciente</th>
                             <th style="text-align: center;">Ações</th>
                           </tr>
 
                           <?php
                             // Build query
-                            $fields = "idUsuario,
-                                        nome,
-                                        tipo_usuario,
-                                        date_format(data_nasc, '%d/%m/%Y') as data_nasc,
-                                        rg,
-                                        cpf,
-                                        telefone";
+                            $fields = "consulta.idConsulta,
+                                        consulta.titulo,
+                                        consulta.observacao,
+                                        date_format(consulta.data_hora, '%d/%m/%Y %H:%i') as dataHora,
+                                        paciente.nome as pacienteNome";
 
                             $where_search = "WHERE
-                                              nome LIKE '%{$search}%' OR
-                                              cpf LIKE '%{$search}%' OR
-                                              rg LIKE '%{$search}%'";
+                                              consulta.titulo LIKE '%{$search}%' OR
+                                              consulta.observacao LIKE '%{$search}%'";
 
                             // If there is a search in query param, use it
                             $where = $search ? $where_search : '';
 
-                            $sql_search = "SELECT {$fields} FROM usuario {$where} LIMIT 50";
+                            $sql_search = "SELECT
+                                              {$fields}
+                                            FROM
+                                              consulta
+                                            JOIN
+                                              paciente on paciente.idPaciente = consulta.fk_idPaciente
+                                            {$where}
+                                            ORDER BY consulta.data_hora DESC
+                                            LIMIT 50";
 
                             $result = mysqli_query($conn, $sql_search);
 
@@ -109,17 +112,15 @@ if (!isset($usuario_tipo) || $usuario_tipo !== 'coordenador') {
                               while ($data = mysqli_fetch_array($result)) {
                                 ?>
                                   <tr>
-                                    <td style="text-align: center;"><?= $data['nome']; ?></td>
-                                    <td style="text-align: center;"><?= $data['tipo_usuario']; ?></td>
-                                    <td style="text-align: center;"><?= $data['data_nasc']; ?></td>
-                                    <td style="text-align: center;"><?= $data['rg']; ?></td>
-                                    <td style="text-align: center;"><?= $data['cpf']; ?></td>
-                                    <td style="text-align: center;"><?= $data['telefone']; ?></td>
+                                    <td style="text-align: center;"><?= $data['titulo']; ?></td>
+                                    <td style="text-align: center;"><?= $data['observacao']; ?></td>
+                                    <td style="text-align: center;"><?= $data['dataHora']; ?></td>
+                                    <td style="text-align: center;"><?= $data['pacienteNome']; ?></td>
                                     <td style="text-align: center;">
-                                      <a class="btn btn-sm btn-primary" href="editar_usuario.php?id=<?= $data['idUsuario']; ?>">
+                                      <!-- <a class="btn btn-sm btn-primary" href="editar_consulta.php?id=<?= $data['idConsulta']; ?>">
                                         <i class="fas fa-edit"></i>
-                                      </a>
-                                      <a class="btn btn-sm btn-danger" href="deletar_usuario.php?id=<?= $data['idUsuario']; ?>">
+                                      </a> -->
+                                      <a class="btn btn-sm btn-danger" href="deletar_consulta.php?id=<?= $data['idConsulta']; ?>">
                                         <i class="fas fa-trash"></i>
                                       </a>
                                     </td>

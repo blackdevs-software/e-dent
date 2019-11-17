@@ -37,7 +37,7 @@ include_once('check_session.php');
 
     <section id="main-content">
       <?php
-        include_once('connection.php');
+        include_once($_SERVER['DOCUMENT_ROOT'] . '/db/connection.php');
 
         if (!empty($_POST)) {
           if (empty($_POST['dificuldade_engolir_alimentos']) || empty($_POST['protese_dentadura']) || empty($_POST['quanto_tempo_perdeu_dentes'])
@@ -275,7 +275,7 @@ include_once('check_session.php');
                     <div class="form-group">
                       <label for="observacao" class="control-label col-lg-2">Observações <span class="required">*</span></label>
                       <div class="col-lg-10">
-                        <textarea class="form-control" name="observacao" style="width:100%; height:100px;" required="required" placeholder="Se não tiver observações escreva que não possui."><?= $observacao; ?></textarea>
+                        <textarea class="form-control" name="observacao" style="width:100%; height:100px; resize: vertical;" required="required" placeholder="Se não tiver observações escreva que não possui."><?= $observacao; ?></textarea>
                       </div>
                     </div>
                     <center>

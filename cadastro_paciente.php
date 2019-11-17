@@ -1,6 +1,6 @@
 <?php
   include_once('check_session.php');
-  include_once('connection.php');
+  include_once($_SERVER['DOCUMENT_ROOT'] . '/db/connection.php');
 
   if (!empty($_POST)) {
     if (empty($_POST['nome']) || empty($_POST['data_nasc']) || empty($_POST['telefone'])
@@ -30,7 +30,7 @@
 
       $query = mysqli_query($conn, "SELECT * FROM paciente WHERE email = '{$email}' OR rg = '{$rg}' OR cpf = '{$cpf}'");
 
-      $result = mysqli_fetch_array ($query);
+      $result = mysqli_fetch_array($query);
 
       if ($result > 0) {
         ?>
@@ -168,7 +168,7 @@
                       <div class="col-lg-6 form-group">
                         <label for="sexo" class="control-label col-lg-2">Sexo<span class="required">*</span></label>
                         <div class="col-lg-10">
-                          <select name = "sexo" class="form-control" required="required">
+                          <select name="sexo" class="form-control" required="required">
                             <option value="" selected>Selecionar</option>
                             <option value="f">Feminino</option>
                             <option value ="m">Masculino</option>

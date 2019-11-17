@@ -1,6 +1,6 @@
 <?php
   include_once('check_session.php');
-  include_once('connection.php');
+  include_once($_SERVER['DOCUMENT_ROOT'] . '/db/connection.php');
 
   $paciente = $_POST['paciente'];
   $bochecho = $_POST['bochecho'];
@@ -10,7 +10,7 @@
   $fio_dental = $_POST['fio_dental'];
   $observacao = trim(htmlspecialchars(filter_var($_POST['observacao'], FILTER_SANITIZE_STRING)));
 
-  $query = "insert into prontuario_higiene_oral (bochecho, creme_dental, palito, higiene_lingua, fio_dental, observacao)
+  $query = "INSERT INTO prontuario_higiene_oral (bochecho, creme_dental, palito, higiene_lingua, fio_dental, observacao)
   values
   ('{$bochecho}', '{$creme_dental}', '{$palito}', '{$higiene_lingua}', '{$fio_dental}', '{$observacao}')";
 
@@ -28,7 +28,7 @@
     return;
   }
 
-  $query = "insert into paciente_prontuario_higiene_oral (fk_idUsuario, fk_idPaciente, fk_idProntuarioHigieneOral)
+  $query = "INSERT INTO paciente_prontuario_higiene_oral (fk_idUsuario, fk_idPaciente, fk_idProntuarioHigieneOral)
   values
   ({$usuario_id}, {$paciente}, {$inserted_id});";
 
