@@ -7,7 +7,7 @@ if ($_POST && $_POST['email'] && $_POST['password']) {
   $password = trim(htmlspecialchars(filter_var($_POST['password'], FILTER_SANITIZE_STRING)));
   $remember = isset($_POST['remember']) && $_POST['remember'] === '1' ? 1 : 0;
 
-  if (preg_match('/[^(a-z0-9_-@\.)]+/i', $email)) {
+  if (preg_match('/[^(a-z0-9_\-@\.)]+/', $email)) {
     ?>
       <script>
         alert('E-mail inválido');
