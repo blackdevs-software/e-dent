@@ -189,7 +189,7 @@ include_once('check_session.php');
         calendar.unselect();
       },
       events: {
-        url: '/api/v1/lista_consulta.php',
+        url: './api/v1/lista_consulta.php',
         method: 'GET',
       },
       eventTimeFormat: {
@@ -215,7 +215,7 @@ include_once('check_session.php');
       formData.append('observacao', observacao);
       formData.append('data_hora', data_hora);
 
-      const response = await fetch('/api/v1/cadastrar_consulta.php', {
+      const response = await fetch('./api/v1/cadastrar_consulta.php', {
         method: 'POST',
         body: formData,
       });
