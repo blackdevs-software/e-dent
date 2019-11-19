@@ -212,6 +212,13 @@
 
                     <div class="row">
                       <div class="col-lg-6 form-groupcol-lg-6 form-group">
+                        <label for="cep" class="control-label col-lg-2">CEP<span class="required">*</span></label>
+                        <div class="col-lg-10">
+                          <input class="form-control" type="text" id="cep" name="cep" required="required" placeholder="Digite o CEP"/>
+                        </div>
+                      </div>
+
+                      <div class="col-lg-6 form-groupcol-lg-6 form-group">
                         <label for="estado_civil" class="control-label col-lg-2">Estado Civil<span class="required">*</span></label>
                         <div class="col-lg-10">
                           <select name="estado_civil" class="form-control" required="required">
@@ -220,13 +227,6 @@
                             <option value="c">Casado</option>
                             <option value="d">Divorciado</option>
                           </select>
-                        </div>
-                      </div>
-
-                      <div class="col-lg-6 form-groupcol-lg-6 form-group">
-                        <label for="cep" class="control-label col-lg-2">CEP<span class="required">*</span></label>
-                        <div class="col-lg-10">
-                          <input class="form-control" type="text" id="cep" name="cep" required="required" placeholder="Digite o CEP"/>
                         </div>
                       </div>
                     </div>
@@ -239,10 +239,21 @@
                         </div>
                       </div>
 
+                      <div class="col-lg-6 form-group"></div>
+                    </div>
+
+                    <div class="row">
                       <div class="col-lg-6 form-group">
                         <label for="bairro" class="control-label col-lg-2">Bairro<span class="required">*</span></label>
                         <div class="col-lg-10">
                           <input class="form-control" type="text" id="bairro" name="bairro" required="required" placeholder="Digite o Bairro"/>
+                        </div>
+                      </div>
+
+                      <div class="col-lg-6 form-group">
+                        <label for="senha" class="control-label col-lg-2">Senha<span class="required">*</span></label>
+                        <div class="col-lg-10">
+                          <input class="form-control" type="password" name="senha" required="required" placeholder="Digite a Senha"/>
                         </div>
                       </div>
                     </div>
@@ -252,16 +263,6 @@
                         <label for="cidade" class="control-label col-lg-2">Cidade<span class="required">*</span></label>
                         <div class="col-lg-10">
                           <input class="form-control" type="text" id="cidade" name="cidade" required="required" placeholder="Digite a Cidade"/>
-                        </div>
-                      </div>
-                      <div class="col-lg-6 form-group"></div>
-                    </div>
-
-                    <div class="row">
-                      <div class="col-lg-6 form-group">
-                        <label for="senha" class="control-label col-lg-2">Senha<span class="required">*</span></label>
-                        <div class="col-lg-10">
-                          <input class="form-control" type="password" name="senha" required="required" placeholder="Digite a Senha"/>
                         </div>
                       </div>
 

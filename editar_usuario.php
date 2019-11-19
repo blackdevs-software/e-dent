@@ -283,6 +283,13 @@
 
                     <div class="row">
                       <div class="col-lg-6 form-group">
+                        <label for="cep" class="control-label col-lg-2">CEP<span class="required">*</span></label>
+                        <div class="col-lg-10">
+                          <input class="form-control" type="text" name="cep" required="required" placeholder="Digite o CEP" value="<?= $cep; ?>"/>
+                        </div>
+                      </div>
+
+                      <div class="col-lg-6 form-group">
                         <label for="estado_civil" class="control-label col-lg-2">Estado Civil<span class="required">*</span></label>
                         <div class="col-lg-10">
                           <select name="estado_civil" class="form-control" required="required">
@@ -306,13 +313,6 @@
                           </select>
                         </div>
                       </div>
-
-                      <div class="col-lg-6 form-group">
-                        <label for="cep" class="control-label col-lg-2">CEP<span class="required">*</span></label>
-                        <div class="col-lg-10">
-                          <input class="form-control" type="text" name="cep" required="required" placeholder="Digite o CEP" value="<?= $cep; ?>"/>
-                        </div>
-                      </div>
                     </div>
 
                     <div class="row">
@@ -323,10 +323,21 @@
                         </div>
                       </div>
 
+                      <div class="col-lg-6 form-group"></div>
+                    </div>
+
+                    <div class="row">
                       <div class="col-lg-6 form-group">
                         <label for="bairro" class="control-label col-lg-2">Bairro<span class="required">*</span></label>
                         <div class="col-lg-10">
                           <input class="form-control" type="text" name="bairro" required="required" placeholder="Digite o Bairro" value="<?= $bairro; ?>" />
+                        </div>
+                      </div>
+
+                      <div class="col-lg-6 form-group">
+                        <label for="senha" class="control-label col-lg-2">Senha<span class="required">*</span></label>
+                        <div class="col-lg-10">
+                          <input class="form-control" type="password" name="senha" required="required" placeholder="Digite a Senha"/>
                         </div>
                       </div>
                     </div>
@@ -336,16 +347,6 @@
                         <label for="cidade" class="control-label col-lg-2">Cidade<span class="required">*</span></label>
                         <div class="col-lg-10">
                           <input class="form-control" type="text" name="cidade" required="required" placeholder="Digite a Cidade" value="<?= $cidade; ?>"/>
-                        </div>
-                      </div>
-                      <div class="col-lg-6 form-group"></div>
-                    </div>
-
-                    <div class="row">
-                      <div class="col-lg-6 form-group">
-                        <label for="senha" class="control-label col-lg-2">Senha<span class="required">*</span></label>
-                        <div class="col-lg-10">
-                          <input class="form-control" type="password" name="senha" required="required" placeholder="Digite a Senha"/>
                         </div>
                       </div>
 
