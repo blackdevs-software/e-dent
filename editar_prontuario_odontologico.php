@@ -37,7 +37,7 @@ include_once('check_session.php');
 
     <section id="main-content">
       <?php
-        include_once($_SERVER['DOCUMENT_ROOT'] . '/db/connection.php');
+        include_once('connection.php');
 
         if (!empty($_POST)) {
           if (empty($_POST['dificuldade_engolir_alimentos']) || empty($_POST['protese_dentadura']) || empty($_POST['quanto_tempo_perdeu_dentes'])

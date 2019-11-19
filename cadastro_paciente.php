@@ -1,6 +1,6 @@
 <?php
   include_once('check_session.php');
-  include_once($_SERVER['DOCUMENT_ROOT'] . '/db/connection.php');
+  include_once('connection.php');
 
   if (!empty($_POST)) {
     if (empty($_POST['nome']) || empty($_POST['data_nasc']) || empty($_POST['telefone'])

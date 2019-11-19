@@ -1,6 +1,6 @@
 <?php
   include_once('check_session.php');
-  include_once($_SERVER['DOCUMENT_ROOT'] . '/db/connection.php');
+  include_once('connection.php');
 
   $paciente = $_POST['paciente'];
   $dificuldade_engolir_alimentos = $_POST['dificuldade_engolir_alimentos'];

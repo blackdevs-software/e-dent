@@ -53,7 +53,7 @@ include_once('check_session.php');
                         <select id="paciente" name="paciente" class="form-control" required="required">
                           <option value="" selected>Selecione</option>
                           <?php
-                            include_once($_SERVER['DOCUMENT_ROOT'] . '/db/connection.php');
+                            include_once('connection.php');
 
                             $query = "SELECT idPaciente, nome FROM paciente LIMIT 50";
 

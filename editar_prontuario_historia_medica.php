@@ -37,7 +37,7 @@ include_once('check_session.php');
 
     <section id="main-content">
     <?php
-        include_once($_SERVER['DOCUMENT_ROOT'] . '/db/connection.php');
+        include_once('connection.php');
 
         if (!empty($_POST)) {
           if (empty($_POST['queixa_principal']) || empty($_POST['historia_doenca_atual']) || empty($_POST['historia_progressa'])

@@ -1,6 +1,6 @@
 <?php
   include_once('check_session.php');
-  include_once($_SERVER['DOCUMENT_ROOT'] . '/db/connection.php');
+  include_once('connection.php');
 
   if (!empty($_POST)) {
     if (empty($_POST['idConsulta']) || empty($_POST['titulo']) || empty($_POST['observacao'])

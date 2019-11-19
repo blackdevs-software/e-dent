@@ -1,6 +1,6 @@
 <?php
   include_once('check_session.php');
-  include_once($_SERVER['DOCUMENT_ROOT'] . '/db/connection.php');
+  include_once('connection.php');
 
   if (!isset($usuario_tipo) || $usuario_tipo !== 'coordenador') {
     header('HTTP/1.1 302 Found');

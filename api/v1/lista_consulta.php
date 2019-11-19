@@ -4,8 +4,8 @@
   header('Content-Type: application/json');
   header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Access-Control-Allow-Methods, Authorization');
 
-  include_once($_SERVER['DOCUMENT_ROOT'] . '/check_session.php');
-  include_once($_SERVER['DOCUMENT_ROOT'] . '/db/connection.php');
+  include_once('../../check_session.php');
+  include_once('../../connection.php');
 
   $query = mysqli_query($conn, "SELECT * FROM consulta");
   $rows = mysqli_num_rows($query);

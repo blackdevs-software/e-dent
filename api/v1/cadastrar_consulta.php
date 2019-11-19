@@ -4,8 +4,8 @@
   header('Content-Type: application/json');
   header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Access-Control-Allow-Methods, Authorization');
 
-  include_once($_SERVER['DOCUMENT_ROOT'] . '/check_session.php');
-  include_once($_SERVER['DOCUMENT_ROOT'] . '/db/connection.php');
+  include_once('../../check_session.php');
+  include_once('../../connection.php');
 
   if (empty($_POST['paciente']) || empty($_POST['titulo'])
     || empty($_POST['observacao']) || empty($_POST['data_hora'])) {
