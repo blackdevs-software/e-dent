@@ -107,7 +107,13 @@ if ($_POST && $_POST['email'] && $_POST['password']) {
 <body class="login-img3-body">
   <div class="container">
     <form class="login-form" action="login.php" method="POST">
+      
       <div class="login-wrap">
+        <center>
+          <span class="login100-form-title p-b-48">
+            <img src="images/icons/iconEdent2.png"> 
+          </span>
+        </center>
         <p class="login-img"><i class="icon_lock_alt"></i></p>
         <div class="input-group">
           <span class="input-group-addon">

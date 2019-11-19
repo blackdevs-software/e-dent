@@ -158,14 +158,14 @@
                       <div class="col-lg-6 form-group">
                         <label for="rg" class="control-label col-lg-2">RG<span class="required">*</span></label>
                         <div class="col-lg-10">
-                          <input class="form-control" type="text" name="rg" required="required" placeholder="123456789"/>
+                          <input class="form-control" onkeypress="$(this).mask('99.999.999-9')" type="text" name="rg" required="required" placeholder="99.999.999-9"/>
                         </div>
                       </div>
 
                       <div class="col-lg-6 form-group">
                         <label for="cpf" class="control-label col-lg-2">CPF<span class="required">*</span></label>
                         <div class="col-lg-10">
-                          <input class="form-control" type="text" name="cpf" required="required" placeholder="12345678910"/>
+                          <input class="form-control" onkeypress="$(this).mask('000.000.000-00');" type="text" name="cpf" required="required" placeholder="000.000.000-00"/>
                         </div>
                       </div>
                     </div>
@@ -194,7 +194,7 @@
                       <div class="col-lg-6 form-group">
                         <label for="telefone" class="control-label col-lg-2">Telefone<span class="required">*</span></label>
                         <div class="col-lg-10">
-                          <input class="form-control" type="text" name="telefone" required="required" placeholder="(99)99999-9999"/>
+                          <input class="form-control" onkeypress="$(this).mask('(00) 0000-00009')" type="text" name="telefone" required="required" placeholder="(00) 0000-00009"/>
                         </div>
                       </div>
 
@@ -214,7 +214,7 @@
                       <div class="col-lg-6 form-groupcol-lg-6 form-group">
                         <label for="cep" class="control-label col-lg-2">CEP<span class="required">*</span></label>
                         <div class="col-lg-10">
-                          <input class="form-control" type="text" id="cep" name="cep" required="required" placeholder="Digite o CEP"/>
+                          <input class="form-control" onkeypress="$(this).mask('00.000-000')" type="text" id="cep" name="cep" required="required" placeholder="00.000-000"/>
                         </div>
                       </div>
 
