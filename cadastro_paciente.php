@@ -84,7 +84,7 @@
   <link href="css/bootstrap-theme.css" rel="stylesheet">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
   <link href="css/style.css" rel="stylesheet">
-  <link href="css/style-responsive.css" rel="stylesheet" />
+  <link href="css/style-responsive.css" rel="stylesheet"/>
   <link rel="icon" type="image/png" href="images/icons/iconEdent.png"/>
 </head>
 
@@ -120,7 +120,7 @@
                       <div class="col-lg-6 form-group">
                         <label for="nome" class="control-label col-lg-2">Nome Completo<span class="required">*</span></label>
                         <div class="col-lg-10">
-                          <input class=" form-control" id="nome" name="nome" type="text" placeholder="Digite o Nome" required="required"/>
+                          <input class="form-control" id="nome" name="nome" type="text" placeholder="Digite o Nome" required="required"/>
                         </div>
                       </div>
 
@@ -152,12 +152,12 @@
                       <div class="col-lg-6 form-group">
                         <label for="data_nasc" class="control-label col-lg-2">Data de Nascimento<span class="required">*</span></label>
                         <div class="col-lg-10">
-                          <input class=" form-control" id="data_nasc" name="data_nasc" type="date" required="required" />
+                          <input class="form-control" id="data_nasc" name="data_nasc" type="date" required="required"/>
                         </div>
                       </div>
 
                       <div class="col-lg-6 form-group">
-                        <label for="telefone" class="control-label col-lg-2" >Telefone<span class="required">*</span></label>
+                        <label for="telefone" class="control-label col-lg-2">Telefone<span class="required">*</span></label>
                         <div class="col-lg-10">
                           <input class="form-control" onkeypress="$(this).mask('(00) 0000-00009')" id="telefone" name="telefone" type="text" placeholder="(99)99999-9999" required="required"/>
                         </div>
@@ -193,14 +193,14 @@
                       <div class="col-lg-6 form-group">
                         <label for="cep" class="control-label col-lg-2">CEP<span class="required">*</span></label>
                         <div class="col-lg-10">
-                          <input class="form-control" onkeypress="$(this).mask('00.000-000')" id="cep" name="cep" placeholder="Digite o CEP" type="text" required="required" maxlength="9"/>
+                          <input class="form-control" type="text" id="cep" name="cep" placeholder="00.000-000" required="required" maxlength="10" value=""/>
                         </div>
                       </div>
 
                       <div class="col-lg-6 form-group">
                         <label for="endereco" class="control-label col-lg-2">Endereço Residencial<span class="required">*</span></label>
                         <div class="col-lg-10">
-                          <input class="form-control" id="endereco" name="endereco" class="form-control" id="endereco" placeholder="Digite o Endereço" type="text" required="required" />
+                          <input class="form-control" type="text" id="endereco" name="endereco" class="form-control" placeholder="Digite o Endereço" required="required" value=""/>
                         </div>
                       </div>
                     </div>
@@ -209,14 +209,14 @@
                       <div class="col-lg-6 form-group">
                         <label for="bairro" class="control-label col-lg-2">Bairro<span class="required">*</span></label>
                         <div class="col-lg-10">
-                          <input class="form-control" id="bairro" name="bairro" class="form-control" placeholder="Digite o Bairro" type="text" required="required" />
+                          <input class="form-control" type="text" id="bairro" name="bairro" class="form-control" placeholder="Digite o Bairro" required="required" value=""/>
                         </div>
                       </div>
 
                       <div class="col-lg-6 form-group">
                         <label for="cidade" class="control-label col-lg-2">Cidade<span class="required">*</span></label>
                         <div class="col-lg-10">
-                          <input class="form-control" id="cidade" name="cidade" class="form-control" placeholder="Digite a Cidade" type="text" required="required" />
+                          <input class="form-control" type="text" id="cidade" name="cidade" class="form-control" placeholder="Digite a Cidade" required="required" value=""/>
                         </div>
                       </div>
                     </div>
@@ -240,17 +240,15 @@
   </section>
 
   <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
-  <script src="js/jquery-ui-1.10.4.min.js"></script>
-  <script src="js/jquery-1.8.3.min.js"></script>
-  <script src="js/jquery.scrollTo.min.js"></script>
-  <script src="js/jquery.nicescroll.js" type="text/javascript"></script>
-  <script src="js/jquery.customSelect.min.js"></script>
+  <script type="text/javascript" src="js/jquery-ui-1.10.4.min.js"></script>
+  <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+  <script type="text/javascript" src="js/jquery.scrollTo.min.js"></script>
+  <script type="text/javascript" src="js/jquery.nicescroll.js"></script>
+  <script type="text/javascript" src="js/jquery.customSelect.min.js"></script>
   <script type="text/javascript" src="js/bootstrap.min.js"></script>
   <script type="text/javascript" src="js/jquery-ui-1.9.2.custom.min.js"></script>
-  <script src="js/scripts.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
-
-
+  <script type="text/javascript" src="js/jquery.mask.min.js"></script>
+  <script type="text/javascript" src="js/scripts.js"></script>
   <script>
     const cepField = $('#cep');
     cepField.keyup(function(e) {
@@ -259,10 +257,13 @@
         return;
       }
       value = value.toString().replace(/[^\d]+/g, '');
-      if (value.length > 5) {
-        value = `${value.substring(0, 5)}-${value.substring(5,)}`;
+      if (value.length > 2) {
+        value = `${value.substring(0, 2)}.${value.substring(2,)}`;
       }
-      if (value.length === 9 && value.match(/[\d]{5}-[\d]{3}/g)) {
+      if (value.length > 6) {
+        value = `${value.substring(0, 6)}-${value.substring(6,)}`;
+      }
+      if (value.length === 10 && value.match(/[\d]{2}\.[\d]{3}-[\d]{3}/g)) {
         $.get(`http://viacep.com.br/ws/${value.toString().replace(/[^\d]+/g, '')}/json`, function(data) {
           let body = typeof data === 'string' ? JSON.parse(data) : data;
           if (body.logradouro) {

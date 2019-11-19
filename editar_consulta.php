@@ -99,7 +99,7 @@
   <link href="css/bootstrap-theme.css" rel="stylesheet">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
   <link href="css/style.css" rel="stylesheet">
-  <link href="css/style-responsive.css" rel="stylesheet" />
+  <link href="css/style-responsive.css" rel="stylesheet"/>
   <link rel="icon" type="image/png" href="images/icons/iconEdent.png"/>
 </head>
 
@@ -155,14 +155,14 @@
                       <div class="col-lg-6 form-group">
                         <label for="data" class="control-label col-lg-2">Data<span class="required">*</span></label>
                         <div class="col-lg-10">
-                          <input class="form-control" name="data" type="date" placeholder="Digite a data da consulta" value="<?= $data_valor; ?>" />
+                          <input class="form-control" name="data" type="date" placeholder="Digite a data da consulta" value="<?= $data_valor; ?>"/>
                         </div>
                       </div>
 
                       <div class="col-lg-6 form-group">
                         <label for="hora" class="control-label col-lg-2">Hora<span class="required">*</span></label>
                         <div class="col-lg-10">
-                          <input class="form-control" name="hora" type="time" placeholder="Digite a hora da consulta" value="<?= $hora_valor; ?>" />
+                          <input class="form-control" name="hora" type="time" placeholder="Digite a hora da consulta" value="<?= $hora_valor; ?>"/>
                         </div>
                       </div>
                     </div>

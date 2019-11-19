@@ -14,7 +14,7 @@ include_once('check_session.php');
   <link href="css/bootstrap-theme.css" rel="stylesheet">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
   <link href="css/style.css" rel="stylesheet">
-  <link href="css/style-responsive.css" rel="stylesheet" />
+  <link href="css/style-responsive.css" rel="stylesheet"/>
   <link rel="icon" type="image/png" href="images/icons/iconEdent.png"/>
 </head>
 
@@ -51,16 +51,17 @@ include_once('check_session.php');
                 LISTA PACIENTES
               </header>
               <div class="panel-body">
-                  <form method="get" action="">
-                  <div>
-                    <label for="" class="control-label col-lg-2">Pesquise o Paciente: <span class="required">*</span></label>
-                      <div class="col-lg-6">
-                        <input type="text" name="search" class="form-control" placeholder="Busque pelo nome, RG ou CPF" required autofocus value="<?= $search ? $search : ''; ?>">
-                        <br>
-                        <input class="btn btn-primary" type="submit">
-                      </div>
+                <form method="get" action="">
+                  <div class="form">
+                    <label for="search" class="control-label col-lg-2">Pesquise o paciente: <span class="required">*</span></label>
+                    <div class="col-lg-6">
+                      <input type="text" name="search" class="form-control" placeholder="Busque pelo titulo, observação" required autofocus value="<?= $search ? $search : ''; ?>">
+                    </div>
+                    <div class="col-lg-2">
+                      <input class="btn btn-primary" type="submit">
+                    </div>
                   </div>
-                  </form>
+                </form>
               </div>
               <div class="panel-body">
                 <div class="col-lg-12">

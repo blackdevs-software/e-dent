@@ -100,36 +100,35 @@ if ($_POST && $_POST['email'] && $_POST['password']) {
   <link href="css/bootstrap-theme.css" rel="stylesheet">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
   <link href="css/style.css" rel="stylesheet">
-  <link href="css/style-responsive.css" rel="stylesheet" />
+  <link href="css/style-responsive.css" rel="stylesheet"/>
   <link rel="icon" type="image/png" href="images/icons/iconEdent.png"/>
 </head>
 
-<body class="login-img3-body">
+<body clsas="">
   <div class="container">
     <form class="login-form" action="login.php" method="POST">
-      
+
       <div class="login-wrap">
-        <center>
-          <span class="login100-form-title p-b-48">
-            <img src="images/icons/iconEdent2.png"> 
-          </span>
-        </center>
-        <p class="login-img"><i class="icon_lock_alt"></i></p>
         <div class="input-group">
-          <span class="input-group-addon">
-            <i class="fas fa-user-alt"></i>
-          </span>
+          <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+            <img src="images/icons/iconEdent2.png">
+          </div>
+        </div>
+
+        <div class="input-group">
           <input type="email" class="form-control" name="email" value="" placeholder="E-mail" autofocus>
         </div>
+
         <div class="input-group">
-          <span class="input-group-addon">
-            <i class="fas fa-lock"></i>
-          </span>
           <input type="password" class="form-control" name="password" value="" placeholder="Senha">
         </div>
-        <label class="checkbox">
-          <input type="checkbox" name="remember" value="1" checked> Lembrar
-        </label>
+
+        <div class="input-group">
+          <label style="font-size: 14px; font-weight: bold; cursor: pointer;">
+            <input type="checkbox" name="remember" value="1" checked> Lembrar
+          </label>
+        </div>
+
         <button class="btn btn-primary btn-lg btn-block" type="submit">
           Login <i class="fas fa-sign-in-alt"></i>
         </button>

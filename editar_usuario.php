@@ -151,7 +151,7 @@
   <link href="css/bootstrap-theme.css" rel="stylesheet">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
   <link href="css/style.css" rel="stylesheet">
-  <link href="css/style-responsive.css" rel="stylesheet" />
+  <link href="css/style-responsive.css" rel="stylesheet"/>
   <link rel="icon" type="image/png" href="images/icons/iconEdent.png"/>
 </head>
 
@@ -189,7 +189,7 @@
                       <div class="col-lg-6 form-group">
                         <label for="nome" class="control-label col-lg-2">Nome Completo<span class="required">*</span></label>
                         <div class="col-lg-10">
-                          <input class=" form-control" type="text" name="nome" required="required" placeholder="Digite o Nome" value="<?= $nome; ?>"/>
+                          <input class="form-control" type="text" name="nome" required="required" placeholder="Digite o Nome" value="<?= $nome; ?>"/>
                         </div>
                       </div>
 
@@ -285,7 +285,7 @@
                       <div class="col-lg-6 form-group">
                         <label for="cep" class="control-label col-lg-2">CEP<span class="required">*</span></label>
                         <div class="col-lg-10">
-                          <input class="form-control" type="text" name="cep" required="required" placeholder="Digite o CEP" value="<?= $cep; ?>"/>
+                          <input class="form-control" type="text" id="cep" name="cep" placeholder="00.000-000" required="required" maxlength="10" value="<?= $cep; ?>"/>
                         </div>
                       </div>
 
@@ -319,7 +319,7 @@
                       <div class="col-lg-6 form-group">
                         <label for="endereco_residencial" class="control-label col-lg-2">Endereço Residencial<span class="required">*</span></label>
                         <div class="col-lg-10">
-                          <input class="form-control"  type="text" name="endereco_residencial" required="required" placeholder="Digite o Endereço" value="<?= $endereco_residencial; ?>"/>
+                          <input class="form-control" type="text" id="endereco_residencial" name="endereco_residencial" class="form-control" placeholder="Digite o Endereço" required="required" value="<?= $endereco_residencial; ?>"/>
                         </div>
                       </div>
 
@@ -330,7 +330,7 @@
                       <div class="col-lg-6 form-group">
                         <label for="bairro" class="control-label col-lg-2">Bairro<span class="required">*</span></label>
                         <div class="col-lg-10">
-                          <input class="form-control" type="text" name="bairro" required="required" placeholder="Digite o Bairro" value="<?= $bairro; ?>" />
+                          <input class="form-control" type="text" id="bairro" name="bairro" class="form-control" placeholder="Digite o Bairro" required="required" value="<?= $bairro; ?>"/>
                         </div>
                       </div>
 
@@ -346,7 +346,7 @@
                       <div class="col-lg-6 form-group">
                         <label for="cidade" class="control-label col-lg-2">Cidade<span class="required">*</span></label>
                         <div class="col-lg-10">
-                          <input class="form-control" type="text" name="cidade" required="required" placeholder="Digite a Cidade" value="<?= $cidade; ?>"/>
+                          <input class="form-control" type="text" id="cidade" name="cidade" class="form-control" placeholder="Digite a Cidade" required="required" value="<?= $cidade; ?>"/>
                         </div>
                       </div>
 
@@ -376,14 +376,46 @@
   </section>
 
   <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
-  <script src="js/jquery-ui-1.10.4.min.js"></script>
-  <script src="js/jquery-1.8.3.min.js"></script>
-  <script src="js/jquery.scrollTo.min.js"></script>
-  <script src="js/jquery.nicescroll.js" type="text/javascript"></script>
-  <script src="js/jquery.customSelect.min.js"></script>
+  <script type="text/javascript" src="js/jquery-ui-1.10.4.min.js"></script>
+  <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+  <script type="text/javascript" src="js/jquery.scrollTo.min.js"></script>
+  <script type="text/javascript" src="js/jquery.nicescroll.js"></script>
+  <script type="text/javascript" src="js/jquery.customSelect.min.js"></script>
   <script type="text/javascript" src="js/bootstrap.min.js"></script>
   <script type="text/javascript" src="js/jquery-ui-1.9.2.custom.min.js"></script>
-  <script src="js/scripts.js"></script>
+  <script type="text/javascript" src="js/jquery.mask.min.js"></script>
+  <script type="text/javascript" src="js/scripts.js"></script>
+  <script>
+    const cepField = $('#cep');
+    cepField.keyup(function(e) {
+      let value = e.target.value;
+      if (!value) {
+        return;
+      }
+      value = value.toString().replace(/[^\d]+/g, '');
+      if (value.length > 2) {
+        value = `${value.substring(0, 2)}.${value.substring(2,)}`;
+      }
+      if (value.length > 6) {
+        value = `${value.substring(0, 6)}-${value.substring(6,)}`;
+      }
+      if (value.length === 10 && value.match(/[\d]{2}\.[\d]{3}-[\d]{3}/g)) {
+        $.get(`http://viacep.com.br/ws/${value.toString().replace(/[^\d]+/g, '')}/json`, function(data) {
+          let body = typeof data === 'string' ? JSON.parse(data) : data;
+          if (body.logradouro) {
+            $('#endereco_residencial').val(body.logradouro);
+          }
+          if (body.bairro) {
+            $('#bairro').val(body.bairro);
+          }
+          if (body.localidade) {
+            $('#cidade').val(body.localidade);
+          }
+        });
+      }
+      e.target.value = value;
+    });
+  </script>
 </body>
 
 </html>
