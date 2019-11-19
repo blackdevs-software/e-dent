@@ -61,7 +61,7 @@ if (!isset($usuario_tipo) || $usuario_tipo !== 'coordenador') {
                     <div class="form">
                       <label for="search" class="control-label col-lg-2">Pesquise o usuário: <span class="required">*</span></label>
                       <div class="col-lg-6">
-                        <input type="text" name="search" class="form-control" placeholder="Busque pelo titulo, observação" required autofocus value="<?= $search ? $search : ''; ?>">
+                        <input type="text" name="search" class="form-control" placeholder="Busque pelo nome, RG ou CPF" required autofocus value="<?= $search ? $search : ''; ?>">
                       </div>
                       <div class="col-lg-2">
                         <input class="btn btn-primary" type="submit">

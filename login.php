@@ -104,34 +104,29 @@ if ($_POST && $_POST['email'] && $_POST['password']) {
   <link rel="icon" type="image/png" href="images/icons/iconEdent.png"/>
 </head>
 
-<body clsas="">
-  <div class="container">
-    <form class="login-form" action="login.php" method="POST">
-
+<body>
+  <div class="container-login-wrap">
+    <form action="login.php" method="POST">
       <div class="login-wrap">
-        <div class="input-group">
-          <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+        <div class="form-group text-center">
+          <div>
             <img src="images/icons/iconEdent2.png">
           </div>
         </div>
-
-        <div class="input-group">
+        <div class="form-group">
           <input type="email" class="form-control" name="email" value="" placeholder="E-mail" autofocus>
         </div>
-
-        <div class="input-group">
+        <div class="form-group">
           <input type="password" class="form-control" name="password" value="" placeholder="Senha">
         </div>
-
-        <div class="input-group">
+        <button type="submit">
+          Login
+        </button>
+        <div class="form-group text-center">
           <label style="font-size: 14px; font-weight: bold; cursor: pointer;">
             <input type="checkbox" name="remember" value="1" checked> Lembrar
           </label>
         </div>
-
-        <button class="btn btn-primary btn-lg btn-block" type="submit">
-          Login <i class="fas fa-sign-in-alt"></i>
-        </button>
       </div>
     </form>
   </div>
