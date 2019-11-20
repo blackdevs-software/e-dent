@@ -180,14 +180,14 @@
                       <div class="col-lg-6 form-group">
                         <label for="rg" class="control-label col-lg-2">RG<span class="required">*</span></label>
                         <div class="col-lg-10">
-                          <input class="form-control" name="rg" type="text" placeholder="123456789" value="<?= $rg; ?>"/>
+                          <input class="form-control" onkeypress="$(this).mask('99.999.999-9')" id="rg" name="rg" type="text" placeholder="99.999.999-9" required="required" value="<?= $rg; ?>"/>
                         </div>
                       </div>
 
                       <div class="col-lg-6 form-group">
                         <label for="cpf" class="control-label col-lg-2">CPF<span class="required">*</span></label>
                         <div class="col-lg-10">
-                          <input class="form-control" type="text" name="cpf" placeholder="12345678910" value="<?= $cpf; ?>"/>
+                          <input class="form-control" onkeypress="$(this).mask('000.000.000-00');" type="text" id="cpf" name="cpf" required="required" placeholder="000.000.000-00" value="<?= $cpf; ?>"/>
                         </div>
                       </div>
                     </div>
@@ -203,7 +203,7 @@
                       <div class="col-lg-6 form-group">
                         <label for="telefone" class="control-label col-lg-2">Telefone<span class="required">*</span></label>
                         <div class="col-lg-10">
-                          <input class="form-control" name="telefone" type="text" placeholder="(99)99999-9999" value="<?= $telefone; ?>"/>
+                          <input class="form-control" onkeypress="$(this).mask('(00) 0000-00000')" type="text" id="telefone" name="telefone" required="required" placeholder="(00) 0000-00000" value="<?= $telefone; ?>"/>
                         </div>
                       </div>
                     </div>

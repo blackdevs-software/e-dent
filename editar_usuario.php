@@ -10,11 +10,10 @@
 
   if (!empty($_POST)) {
     if (empty($_POST['idUsuario']) || empty($_POST['nome']) || empty($_POST['email'])
-      || empty($_POST['senha']) || empty($_POST['rg']) || empty($_POST['cpf'])
-      || empty($_POST['tipo_usuario']) || empty($_POST['data_nasc']) || empty($_POST['telefone'])
-      || empty($_POST['sexo']) || empty($_POST['estado_civil']) || empty($_POST['bairro'])
-      || empty($_POST['cep']) || empty($_POST['cidade']) || empty($_POST['endereco_residencial'])
-      || empty($_POST['confirmar_senha'])) {
+      || empty($_POST['rg']) || empty($_POST['cpf']) || empty($_POST['tipo_usuario'])
+      || empty($_POST['data_nasc']) || empty($_POST['telefone']) || empty($_POST['sexo'])
+      || empty($_POST['estado_civil']) || empty($_POST['bairro']) || empty($_POST['cep'])
+      || empty($_POST['cidade']) || empty($_POST['endereco_residencial'])) {
       ?>
         <script>
           alert('Todos os campos são obrigatorios!');
@@ -23,21 +22,10 @@
       header('Refresh: 0; lista_usuario.php');
       return;
     } else {
-      if ($_POST['senha'] !== $_POST['confirmar_senha']) {
-        ?>
-          <script>
-            alert('Senhas não coincidem!');
-          </script>
-        <?php
-        header('Refresh: 0; lista_usuario.php');
-        return;
-      }
-
       $id = $_POST['idUsuario'];
       $data = [
         'nome' => trim(htmlspecialchars(filter_var($_POST['nome'], FILTER_SANITIZE_STRING))),
         'email' => trim(htmlspecialchars(filter_var($_POST['email'], FILTER_SANITIZE_STRING))),
-        'senha' => trim(htmlspecialchars(filter_var($_POST['senha'], FILTER_SANITIZE_STRING))),
         'rg' => trim(htmlspecialchars(filter_var($_POST['rg'], FILTER_SANITIZE_STRING))),
         'cpf' => trim(htmlspecialchars(filter_var($_POST['cpf'], FILTER_SANITIZE_STRING))),
         'tipo_usuario' => $_POST['tipo_usuario'],
@@ -51,7 +39,19 @@
         'cidade' => $_POST['cidade'],
       ];
 
-      $data['senha'] = md5($data['senha']);
+      if (!empty($_POST['senha']) || !empty($_POST['confirmar_senha'])) {
+        if ($_POST['senha'] !== $_POST['confirmar_senha']) {
+          ?>
+            <script>
+              alert('Senhas não coincidem!');
+            </script>
+          <?php
+          header('Refresh: 0; lista_usuario.php');
+          return;
+        }
+        $data['senha'] = trim(htmlspecialchars(filter_var($_POST['senha'], FILTER_SANITIZE_STRING)));
+        $data['senha'] = md5($data['senha']);
+      }
 
       $update_fields = [];
 
@@ -205,14 +205,14 @@
                       <div class="col-lg-6 form-group">
                         <label for="rg" class="control-label col-lg-2">RG<span class="required">*</span></label>
                         <div class="col-lg-10">
-                          <input class="form-control" type="text" name="rg" required="required" placeholder="123456789" value="<?= $rg; ?>"/>
+                          <input class="form-control" onkeypress="$(this).mask('99.999.999-9')" type="text" id="rg" name="rg" required="required" placeholder="99.999.999-9" value="<?= $rg; ?>"/>
                         </div>
                       </div>
 
                       <div class="col-lg-6 form-group">
                         <label for="cpf" class="control-label col-lg-2">CPF<span class="required">*</span></label>
                         <div class="col-lg-10">
-                          <input class="form-control" type="text" name="cpf" required="required" placeholder="12345678910" value="<?= $cpf; ?>"/>
+                          <input class="form-control" onkeypress="$(this).mask('000.000.000-00');" type="text" id="cpf" name="cpf" required="required" placeholder="000.000.000-00" value="<?= $cpf; ?>"/>
                         </div>
                       </div>
                     </div>
@@ -251,7 +251,7 @@
                       <div class="col-lg-6 form-group">
                         <label for="telefone" class="control-label col-lg-2">Telefone<span class="required">*</span></label>
                         <div class="col-lg-10">
-                          <input class="form-control" type="text" name="telefone" required="required" placeholder="(99)99999-9999" value="<?= $telefone; ?>"/>
+                          <input class="form-control" onkeypress="$(this).mask('(00) 0000-00000')" type="text" id="telefone" name="telefone" required="required" placeholder="(00) 0000-00000" value="<?= $telefone; ?>"/>
                         </div>
                       </div>
 
@@ -335,9 +335,9 @@
                       </div>
 
                       <div class="col-lg-6 form-group">
-                        <label for="senha" class="control-label col-lg-2">Senha<span class="required">*</span></label>
+                        <label for="senha" class="control-label col-lg-2">Senha</label>
                         <div class="col-lg-10">
-                          <input class="form-control" type="password" name="senha" required="required" placeholder="Digite a Senha"/>
+                          <input class="form-control" type="password" name="senha" placeholder="Digite a Senha"/>
                         </div>
                       </div>
                     </div>
@@ -351,9 +351,9 @@
                       </div>
 
                       <div class="col-lg-6 form-group">
-                        <label for="confirmar_senha" class="control-label col-lg-2">Confirme a Senha<span class="required">*</span></label>
+                        <label for="confirmar_senha" class="control-label col-lg-2">Confirme a Senha</label>
                         <div class="col-lg-10">
-                          <input class="form-control" type="password" name="confirmar_senha" required="required" placeholder="Confirme a senha"/>
+                          <input class="form-control" type="password" name="confirmar_senha" placeholder="Confirme a senha"/>
                         </div>
                       </div>
                     </div>

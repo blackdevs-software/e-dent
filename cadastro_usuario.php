@@ -23,19 +23,8 @@
       header('Refresh: 0; cadastro_paciente.php');
       return;
     } else {
-      if ($_POST['senha'] !== $_POST['confirmar_senha']) {
-        ?>
-          <script>
-            alert('Senhas não coincidem!');
-          </script>
-        <?php
-        header('Refresh: 0; cadastro_usuario.php');
-        return;
-      }
-
       $nome = trim(htmlspecialchars(filter_var($_POST['nome'], FILTER_SANITIZE_STRING)));
       $email = trim(htmlspecialchars(filter_var($_POST['email'], FILTER_SANITIZE_STRING)));
-      $senha = trim(htmlspecialchars(filter_var($_POST['senha'], FILTER_SANITIZE_STRING)));
       $rg = trim(htmlspecialchars(filter_var($_POST['rg'], FILTER_SANITIZE_STRING)));
       $cpf = trim(htmlspecialchars(filter_var($_POST['cpf'], FILTER_SANITIZE_STRING)));
       $tipo_usuario = $_POST['tipo_usuario'];
@@ -48,6 +37,16 @@
       $bairro = $_POST['bairro'];
       $cidade = $_POST['cidade'];
 
+      if ($_POST['senha'] !== $_POST['confirmar_senha']) {
+        ?>
+          <script>
+            alert('Senhas não coincidem!');
+          </script>
+        <?php
+        header('Refresh: 0; cadastro_usuario.php');
+        return;
+      }
+      $senha = trim(htmlspecialchars(filter_var($_POST['senha'], FILTER_SANITIZE_STRING)));
       $senha = md5($senha);
 
       $query = mysqli_query($conn, "SELECT * FROM usuario WHERE email = '{$email}' OR rg = '{$rg}' OR cpf = '{$cpf}'");
@@ -158,14 +157,14 @@
                       <div class="col-lg-6 form-group">
                         <label for="rg" class="control-label col-lg-2">RG<span class="required">*</span></label>
                         <div class="col-lg-10">
-                          <input class="form-control" onkeypress="$(this).mask('99.999.999-9')" type="text" name="rg" required="required" placeholder="99.999.999-9"/>
+                          <input class="form-control" onkeypress="$(this).mask('99.999.999-9')" type="text" id="rg" name="rg" required="required" placeholder="99.999.999-9" value=""/>
                         </div>
                       </div>
 
                       <div class="col-lg-6 form-group">
                         <label for="cpf" class="control-label col-lg-2">CPF<span class="required">*</span></label>
                         <div class="col-lg-10">
-                          <input class="form-control" onkeypress="$(this).mask('000.000.000-00');" type="text" name="cpf" required="required" placeholder="000.000.000-00"/>
+                          <input class="form-control" onkeypress="$(this).mask('000.000.000-00');" type="text" id="cpf" name="cpf" required="required" placeholder="000.000.000-00" value=""/>
                         </div>
                       </div>
                     </div>
@@ -194,7 +193,7 @@
                       <div class="col-lg-6 form-group">
                         <label for="telefone" class="control-label col-lg-2">Telefone<span class="required">*</span></label>
                         <div class="col-lg-10">
-                          <input class="form-control" onkeypress="$(this).mask('(00) 0000-00009')" type="text" name="telefone" required="required" placeholder="(00) 0000-00009"/>
+                          <input class="form-control" onkeypress="$(this).mask('(00) 0000-00000')" type="text" id="telefone" name="telefone" required="required" placeholder="(00) 0000-00000" value=""/>
                         </div>
                       </div>
 
