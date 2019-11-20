@@ -63,8 +63,9 @@ if (!isset($usuario_tipo) || $usuario_tipo !== 'coordenador') {
                       <div class="col-lg-6">
                         <input type="text" name="search" class="form-control" placeholder="Busque pelo nome, RG ou CPF" required autofocus value="<?= $search ? $search : ''; ?>">
                       </div>
-                      <div class="col-lg-2">
+                      <div class="col-lg-4">
                         <input class="btn btn-primary" type="submit">
+                        <input class="btn btn-secondary" type="button" value="Limpar pesquisa" onclick="window.location.href = window.location.origin + window.location.pathname">
                       </div>
                     </div>
                   </form>
