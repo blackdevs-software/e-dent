@@ -6,8 +6,11 @@ COPY . /var/www/html/
 
 RUN mv /var/www/html/000-default.conf /etc/apache2/sites-enabled/000-default.conf
 
+RUN chmod +x ./docker-entrypoint.sh
+COPY ./docker-entrypoint.sh /var/www/html/docker-entrypoint.sh
+
 EXPOSE 80
-CMD ["apache2", "-DFOREGROUND"]
+ENTRYPOINT [ "/bin/bash", "/var/www/html/docker-entrypoint.sh" ]
 
 # Build this image
 # docker image build -f Dockerfile -t app .

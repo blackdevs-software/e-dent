@@ -13,7 +13,7 @@ docker-compose up -d
 > To import data run the following command in terminal/shell;
 
 ```bash
-mysql -u root -p -h 127.0.0.1 -P 3306 < ./migrations/data.sql
+mysql -u ${MYSQL_USER} -p${MYSQL_PASS} -h ${MYSQL_HOST} -P ${MYSQL_PORT} < ./migrations/data.sql
 ```
 
 * Execution
