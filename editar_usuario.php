@@ -186,14 +186,14 @@
                     <input type="hidden" name="idUsuario" value="<?= $idU; ?>">
 
                     <div class="row">
-                      <div class="col-lg-6 form-group">
+                      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
                         <label for="nome" class="control-label col-lg-2">Nome Completo<span class="required">*</span></label>
                         <div class="col-lg-10">
                           <input class="form-control" type="text" name="nome" required="required" placeholder="Digite o Nome" value="<?= $nome; ?>"/>
                         </div>
                       </div>
 
-                      <div class="col-lg-6 form-group">
+                      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
                         <label for="email" class="control-label col-lg-2">Email<span class="required">*</span></label>
                         <div class="col-lg-10">
                           <input class="form-control" name="email" type="email" placeholder="email@dominio.com" value="<?= $email; ?>"/>
@@ -202,14 +202,14 @@
                     </div>
 
                     <div class="row">
-                      <div class="col-lg-6 form-group">
+                      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
                         <label for="rg" class="control-label col-lg-2">RG<span class="required">*</span></label>
                         <div class="col-lg-10">
                           <input class="form-control" onkeypress="$(this).mask('99.999.999-9')" type="text" id="rg" name="rg" required="required" placeholder="99.999.999-9" value="<?= $rg; ?>"/>
                         </div>
                       </div>
 
-                      <div class="col-lg-6 form-group">
+                      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
                         <label for="cpf" class="control-label col-lg-2">CPF<span class="required">*</span></label>
                         <div class="col-lg-10">
                           <input class="form-control" onkeypress="$(this).mask('000.000.000-00');" type="text" id="cpf" name="cpf" required="required" placeholder="000.000.000-00" value="<?= $cpf; ?>"/>
@@ -218,7 +218,7 @@
                     </div>
 
                     <div class="row">
-                      <div class="col-lg-6 form-group">
+                      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
                         <label for="tipo_usuario" class="control-label col-lg-2">Tipo Usuário<span class="required">*</span></label>
                         <div class="col-lg-10">
                           <select name="tipo_usuario" class="form-control" required="required">
@@ -239,7 +239,7 @@
                         </div>
                       </div>
 
-                      <div class="col-lg-6 form-group">
+                      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
                         <label for="data_nasc" class="control-label col-lg-2">Data de Nascimento<span class="required">*</span></label>
                         <div class="col-lg-10">
                           <input class="form-control" type="date" name="data_nasc" required="required" value="<?= $data_nasc; ?>"/>
@@ -248,14 +248,14 @@
                     </div>
 
                     <div class="row">
-                      <div class="col-lg-6 form-group">
+                      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
                         <label for="telefone" class="control-label col-lg-2">Telefone<span class="required">*</span></label>
                         <div class="col-lg-10">
                           <input class="form-control" onkeypress="$(this).mask('(00) 0000-00000')" type="text" id="telefone" name="telefone" required="required" placeholder="(00) 0000-00000" value="<?= $telefone; ?>"/>
                         </div>
                       </div>
 
-                      <div class="col-lg-6 form-group">
+                      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
                         <label for="sexo" class="control-label col-lg-2">Sexo<span class="required">*</span></label>
                         <div class="col-lg-10">
                           <select name="sexo" class="form-control" required="required">
@@ -282,14 +282,14 @@
                     </div>
 
                     <div class="row">
-                      <div class="col-lg-6 form-group">
+                      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
                         <label for="cep" class="control-label col-lg-2">CEP<span class="required">*</span></label>
                         <div class="col-lg-10">
                           <input class="form-control" type="text" id="cep" name="cep" placeholder="00.000-000" required="required" maxlength="10" value="<?= $cep; ?>"/>
                         </div>
                       </div>
 
-                      <div class="col-lg-6 form-group">
+                      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
                         <label for="estado_civil" class="control-label col-lg-2">Estado Civil<span class="required">*</span></label>
                         <div class="col-lg-10">
                           <select name="estado_civil" class="form-control" required="required">
@@ -316,25 +316,25 @@
                     </div>
 
                     <div class="row">
-                      <div class="col-lg-6 form-group">
+                      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
                         <label for="endereco_residencial" class="control-label col-lg-2">Endereço Residencial<span class="required">*</span></label>
                         <div class="col-lg-10">
                           <input class="form-control" type="text" id="endereco_residencial" name="endereco_residencial" class="form-control" placeholder="Digite o Endereço" required="required" value="<?= $endereco_residencial; ?>"/>
                         </div>
                       </div>
 
-                      <div class="col-lg-6 form-group"></div>
+                      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group"></div>
                     </div>
 
                     <div class="row">
-                      <div class="col-lg-6 form-group">
+                      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
                         <label for="bairro" class="control-label col-lg-2">Bairro<span class="required">*</span></label>
                         <div class="col-lg-10">
                           <input class="form-control" type="text" id="bairro" name="bairro" class="form-control" placeholder="Digite o Bairro" required="required" value="<?= $bairro; ?>"/>
                         </div>
                       </div>
 
-                      <div class="col-lg-6 form-group">
+                      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
                         <label for="senha" class="control-label col-lg-2">Senha</label>
                         <div class="col-lg-10">
                           <input class="form-control" type="password" name="senha" placeholder="Digite a Senha"/>
@@ -343,14 +343,14 @@
                     </div>
 
                     <div class="row">
-                      <div class="col-lg-6 form-group">
+                      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
                         <label for="cidade" class="control-label col-lg-2">Cidade<span class="required">*</span></label>
                         <div class="col-lg-10">
                           <input class="form-control" type="text" id="cidade" name="cidade" class="form-control" placeholder="Digite a Cidade" required="required" value="<?= $cidade; ?>"/>
                         </div>
                       </div>
 
-                      <div class="col-lg-6 form-group">
+                      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
                         <label for="confirmar_senha" class="control-label col-lg-2">Confirme a Senha</label>
                         <div class="col-lg-10">
                           <input class="form-control" type="password" name="confirmar_senha" placeholder="Confirme a senha"/>
