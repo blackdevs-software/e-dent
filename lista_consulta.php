@@ -55,7 +55,7 @@ include_once('check_session.php');
                     <div class="form">
                       <label for="search" class="control-label col-lg-2 cold-md-2 col-sm-12 col-xs-12">Pesquise a consulta: <span class="required">*</span></label>
                       <div class="col-lg-6 cold-md-6 col-sm-6 col-xs-12">
-                        <input type="text" name="search" class="form-control" placeholder="Busque pelo titulo, observação" required autofocus value="<?= $search ? $search : ''; ?>">
+                        <input type="text" name="search" class="form-control" placeholder="Busque pelo titulo, observação ou nome do paciente" required autofocus value="<?= $search ? $search : ''; ?>">
                       </div>
                       <div class="col-lg-4 cold-md-4 col-sm-6 col-xs-12">
                         <input class="btn btn-primary" type="submit" value="Pesquisar">
@@ -107,7 +107,8 @@ include_once('check_session.php');
 
                             $where_search = "WHERE
                                               consulta.titulo LIKE '%{$search}%' OR
-                                              consulta.observacao LIKE '%{$search}%'";
+                                              consulta.observacao LIKE '%{$search}%' OR
+                                              paciente.nome LIKE '%{$search}%'";
 
                             // If there is a search in query param, use it
                             $where = $search ? $where_search : '';
