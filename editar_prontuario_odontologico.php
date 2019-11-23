@@ -108,7 +108,11 @@ include_once('check_session.php');
           return;
         }
 
-        $id = $_GET['id'];
+        $id = intval($_GET['id']);
+        if (empty($id)) {
+          header('Refresh: 0; prontuario_odontologico.php');
+          return;
+        }
 
         $query = "SELECT * FROM prontuario_odontologico WHERE idProntuarioOdontologico = {$id}";
 

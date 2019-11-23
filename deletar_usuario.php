@@ -2,8 +2,7 @@
   include_once('check_session.php');
   include_once('connection.php');
 
-  $id = $_GET['id'];
-
+  $id = intval($_GET['id']);
   if (empty($id)) {
     header('Refresh: 0; lista_usuario.php');
     return;

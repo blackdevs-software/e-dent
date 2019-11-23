@@ -97,7 +97,12 @@
     header('Location: lista_usuario.php');
     return;
   }
-  $idU = $_GET['id'];
+
+  $idU = intval($_GET['id']);
+  if (empty($idU)) {
+    header('Refresh: 0; lista_usuario.php');
+    return;
+  }
 
   $sql = mysqli_query($conn, "SELECT idUsuario, nome, email, senha, rg, cpf, tipo_usuario, data_nasc, telefone, sexo, estado_civil, bairro, cep, cidade, endereco_residencial FROM usuario WHERE idUsuario = $idU");
 

@@ -74,7 +74,11 @@
   if (empty($_GET['id'])) {
     header('Location: lista_paciente.php');
   }
-  $idP = $_GET['id'];
+  $idP = intval($_GET['id']);
+  if (empty($idP)) {
+    header('Refresh: 0; lista_paciente.php');
+    return;
+  }
 
   $sql = mysqli_query($conn, "SELECT idPaciente, email, nome, rg, cpf, data_nasc, telefone, sexo, estado_civil, endereco, bairro, cep, cidade FROM paciente WHERE idPaciente = {$idP} ");
 

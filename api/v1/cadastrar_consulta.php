@@ -13,10 +13,10 @@
       return;
   }
 
-  $paciente = $_POST['paciente'];
+  $paciente = intval($_POST['paciente']);
   $titulo = trim(htmlspecialchars(filter_var($_POST['titulo'], FILTER_SANITIZE_STRING)));
   $observacao = trim(htmlspecialchars(filter_var($_POST['observacao'], FILTER_SANITIZE_STRING)));
-  $data_hora = $_POST['data_hora'];
+  $data_hora = date('Y-m-d H:i:s', strtotime($_POST['data_hora']));
 
   // verify if it already exists an appointment
   $query = mysqli_query($conn, "SELECT * FROM consulta where data_hora = '{$data_hora}'");

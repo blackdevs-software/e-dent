@@ -63,11 +63,16 @@ include_once('check_session.php');
     <div class="modal-dialog" role="document">
       <div class="modal-content">
 
-        <div class="modal-header">
-          <h5 class="modal-title" id="modalLabel">Adicionar consulta</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+        <div class="modal-header" style="min-height: 50px;">
+          <div class="col-lg-10">
+            <h4 class="modal-title" id="modalLabel" style="font-weight: bold; color: #000;">Adicionar consulta</h4>
+          </div>
+
+          <div class="col-lg-2">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
         </div>
 
         <div class="modal-body">
@@ -83,7 +88,7 @@ include_once('check_session.php');
                     <?php
                       include_once('connection.php');
 
-                      $query = "SELECT idPaciente, nome FROM paciente LIMIT 50";
+                      $query = "SELECT idPaciente, nome FROM paciente";
 
                       $result = mysqli_query($conn, $query);
 
@@ -183,10 +188,12 @@ include_once('check_session.php');
       editable: false,
       eventLimit: true,
       select: function(arg) {
-        $('#data').val(moment(arg.start).format('YYYY-MM-DD'));
-        $('#modal').modal('show');
+        if (moment(arg.start).isValid()) {
+          $('#data').val(moment(arg.start).format('YYYY-MM-DD'));
+          $('#modal').modal('show');
 
-        calendar.unselect();
+          calendar.unselect();
+        }
       },
       events: {
         url: './api/v1/lista_consulta.php',
@@ -208,6 +215,10 @@ include_once('check_session.php');
       const data = $('#data').val();
       const hora = $('#hora').val();
       const data_hora = moment(`${data} ${hora}`).format('YYYY-MM-DD HH:mm:ss');
+      if (!moment(`${data} ${hora}`).isValid()) {
+        alert('Data/Hora invalida');
+        return;
+      }
 
       const formData = new FormData();
       formData.append('paciente', paciente);
@@ -237,7 +248,7 @@ include_once('check_session.php');
             editable: false,
           });
         } else {
-          alert(result.message);
+          alert(result.message || 'Houve um erro');
         }
       } catch (e) {
         alert('Houve um erro');

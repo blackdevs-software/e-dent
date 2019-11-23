@@ -62,7 +62,11 @@
   if (empty($_GET['id'])) {
     header('Location: lista_consulta.php');
   }
-  $id = $_GET['id'];
+  $id = intval($_GET['id']);
+  if (empty($id)) {
+    header('Refresh: 0; lista_consulta.php');
+    return;
+  }
 
   $sql = mysqli_query($conn, "SELECT * FROM consulta WHERE idConsulta = {$id} ");
 

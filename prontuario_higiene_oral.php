@@ -56,7 +56,7 @@ include_once('check_session.php');
                           <?php
                             include_once('connection.php');
 
-                            $query = "SELECT idPaciente, nome FROM paciente LIMIT 50";
+                            $query = "SELECT idPaciente, nome FROM paciente";
 
                             $result = mysqli_query($conn, $query);
 
