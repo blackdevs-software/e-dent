@@ -78,6 +78,26 @@ include_once('check_session.php');
                           </tr>
 
                           <?php
+                            if (empty($search)) {
+                              // pagination logic
+                              $count_query = mysqli_query($conn, "SELECT COUNT(idConsulta) as COUNTER FROM consulta");
+                              $fetch_rows = mysqli_fetch_assoc($count_query);
+                              $total_rows = $fetch_rows['COUNTER'] ? (int) $fetch_rows['COUNTER'] : 0;
+
+                              $limit = 10;
+                              $num_pages = intval(ceil($total_rows / $limit));
+
+                              $page = !empty($_GET['page']) ? intval($_GET['page']) : 1;
+                              $page = $page <= 1 ? 1 : $page;
+                              $page = $page >= $num_pages ? $num_pages : $page;
+                              $page = (int) $page;
+
+                              $offset = (int) ($page - 1) * $limit;
+                            } else {
+                              $limit = 1000;
+                              $offset = 0;
+                            }
+
                             // Build query
                             $fields = "consulta.idConsulta,
                                         consulta.titulo,
@@ -100,9 +120,9 @@ include_once('check_session.php');
                                               paciente on paciente.idPaciente = consulta.fk_idPaciente
                                             {$where}
                                             ORDER BY consulta.data_hora DESC
-                                            LIMIT 50";
+                                            LIMIT {$offset}, {$limit}";
 
-                            $result = mysqli_query($conn, $sql_search);
+                            $result  = mysqli_query($conn, $sql_search);
 
                             if ($result) {
                               while ($data = mysqli_fetch_array($result)) {
@@ -127,6 +147,12 @@ include_once('check_session.php');
                           ?>
                         </tbody>
                       </table>
+
+                      <?php
+                        if (empty($search)) {
+                          include('pagination.php');
+                        }
+                      ?>
                     </section>
                   </div>
                 </div>

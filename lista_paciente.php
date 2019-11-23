@@ -80,6 +80,26 @@ include_once('check_session.php');
                           <th style="text-align: center;">Ações</th>
                         </tr>
                         <?php
+                          if (empty($search)) {
+                            // pagination logic
+                            $count_query = mysqli_query($conn, "SELECT COUNT(idPaciente) as COUNTER FROM paciente");
+                            $fetch_rows = mysqli_fetch_assoc($count_query);
+                            $total_rows = $fetch_rows['COUNTER'] ? (int) $fetch_rows['COUNTER'] : 0;
+
+                            $limit = 10;
+                            $num_pages = intval(ceil($total_rows / $limit));
+
+                            $page = !empty($_GET['page']) ? intval($_GET['page']) : 1;
+                            $page = $page <= 1 ? 1 : $page;
+                            $page = $page >= $num_pages ? $num_pages : $page;
+                            $page = (int) $page;
+
+                            $offset = (int) ($page - 1) * $limit;
+                          } else {
+                            $limit = 1000;
+                            $offset = 0;
+                          }
+
                           // Build query
                           $fields = "pac.idPaciente,
                                       pac.nome,
@@ -98,21 +118,21 @@ include_once('check_session.php');
                           $where = $search ? $where_search : '';
 
                           $query = "SELECT
-                                    {$fields},
-                                    group_concat(distinct ppho.fk_idProntuarioHigieneOral) as idsProntuariosPPHO,
-                                    group_concat(distinct pphm.fk_idProntuarioHistoriaMedica) as idsProntuariosPPHM,
-                                    group_concat(distinct ppo.fk_idProntuarioOdontologico) as idsProntuariosPPO
-                                  FROM
-                                    paciente pac
-                                  LEFT JOIN paciente_prontuario_higiene_oral ppho ON
-                                    ppho.fk_idPaciente = pac.idPaciente
-                                  LEFT JOIN paciente_prontuario_historia_medica pphm ON
-                                    pphm.fk_idPaciente = pac.idPaciente
-                                  LEFT JOIN paciente_prontuario_odontologico ppo ON
-                                    ppo.fk_idPaciente = pac.idPaciente
-                                  {$where}
-                                  GROUP BY pac.idPaciente
-                                  LIMIT 50";
+                                      {$fields},
+                                      group_concat(distinct ppho.fk_idProntuarioHigieneOral) as idsProntuariosPPHO,
+                                      group_concat(distinct pphm.fk_idProntuarioHistoriaMedica) as idsProntuariosPPHM,
+                                      group_concat(distinct ppo.fk_idProntuarioOdontologico) as idsProntuariosPPO
+                                    FROM
+                                      paciente pac
+                                    LEFT JOIN paciente_prontuario_higiene_oral ppho ON
+                                      ppho.fk_idPaciente = pac.idPaciente
+                                    LEFT JOIN paciente_prontuario_historia_medica pphm ON
+                                      pphm.fk_idPaciente = pac.idPaciente
+                                    LEFT JOIN paciente_prontuario_odontologico ppo ON
+                                      ppo.fk_idPaciente = pac.idPaciente
+                                    {$where}
+                                    GROUP BY pac.idPaciente
+                                    LIMIT {$offset}, {$limit}";
 
                           $result = mysqli_query($conn, $query);
 
@@ -236,6 +256,12 @@ include_once('check_session.php');
                         ?>
                       </tbody>
                     </table>
+
+                    <?php
+                      if (empty($search)) {
+                        include('pagination.php');
+                      }
+                    ?>
                   </section>
                 </div>
               </div>

@@ -86,6 +86,26 @@ if (!isset($usuario_tipo) || $usuario_tipo !== 'coordenador') {
                           </tr>
 
                           <?php
+                            if (empty($search)) {
+                              // pagination logic
+                              $count_query = mysqli_query($conn, "SELECT COUNT(idUsuario) as COUNTER FROM usuario");
+                              $fetch_rows = mysqli_fetch_assoc($count_query);
+                              $total_rows = $fetch_rows['COUNTER'] ? (int) $fetch_rows['COUNTER'] : 0;
+
+                              $limit = 10;
+                              $num_pages = intval(ceil($total_rows / $limit));
+
+                              $page = !empty($_GET['page']) ? intval($_GET['page']) : 1;
+                              $page = $page <= 1 ? 1 : $page;
+                              $page = $page >= $num_pages ? $num_pages : $page;
+                              $page = (int) $page;
+
+                              $offset = (int) ($page - 1) * $limit;
+                            } else {
+                              $limit = 1000;
+                              $offset = 0;
+                            }
+
                             // Build query
                             $fields = "idUsuario,
                                         nome,
@@ -103,7 +123,12 @@ if (!isset($usuario_tipo) || $usuario_tipo !== 'coordenador') {
                             // If there is a search in query param, use it
                             $where = $search ? $where_search : '';
 
-                            $sql_search = "SELECT {$fields} FROM usuario {$where} LIMIT 50";
+                            $sql_search = "SELECT
+                                            {$fields}
+                                          FROM
+                                            usuario
+                                          {$where}
+                                          LIMIT {$offset}, {$limit}";
 
                             $result = mysqli_query($conn, $sql_search);
 
@@ -132,6 +157,12 @@ if (!isset($usuario_tipo) || $usuario_tipo !== 'coordenador') {
                           ?>
                         </tbody>
                       </table>
+
+                      <?php
+                        if (empty($search)) {
+                          include('pagination.php');
+                        }
+                      ?>
                     </section>
                   </div>
                 </div>
