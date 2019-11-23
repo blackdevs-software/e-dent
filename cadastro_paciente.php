@@ -19,7 +19,7 @@
       $email = trim(htmlspecialchars(filter_var($_POST['email'], FILTER_SANITIZE_STRING)));
       $rg = trim(htmlspecialchars(filter_var($_POST['rg'], FILTER_SANITIZE_STRING)));
       $cpf = trim(htmlspecialchars(filter_var($_POST['cpf'], FILTER_SANITIZE_STRING)));
-      $data_nasc = $_POST['data_nasc'];
+      $data_nasc = date('Y-m-d H:i:s', strtotime($_POST['data_nasc']));
       $telefone = $_POST['telefone'];
       $sexo = $_POST['sexo'];
       $estado_civil = $_POST['estado_civil'];
@@ -159,7 +159,7 @@
                       <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
                         <label for="telefone" class="control-label col-lg-2">Telefone<span class="required">*</span></label>
                         <div class="col-lg-10">
-                          <input class="form-control" onkeypress="$(this).mask('(00) 0000-00000')" type="text" id="telefone" name="telefone" required="required" placeholder="(00) 0000-00000" value=""/>
+                          <input class="form-control" onkeypress="$(this).mask('(00)00009-0000')" type="text" id="telefone" name="telefone" required="required" placeholder="(00)00000-0000" value=""/>
                         </div>
                       </div>
                     </div>
