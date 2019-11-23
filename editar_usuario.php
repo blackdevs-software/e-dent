@@ -2,6 +2,7 @@
   include_once('check_session.php');
   include_once('connection.php');
 
+  // only coordinator is allowed to access this page
   if (!isset($usuario_tipo) || $usuario_tipo !== 'coordenador') {
     header('HTTP/1.1 302 Found');
     header('Location: index.php');
