@@ -80,7 +80,7 @@
     return;
   }
 
-  $sql = mysqli_query($conn, "SELECT idPaciente, email, nome, rg, cpf, data_nasc, telefone, sexo, estado_civil, endereco, bairro, cep, cidade FROM paciente WHERE idPaciente = {$idP} ");
+  $sql = mysqli_query($conn, "SELECT idPaciente, email, nome, rg, cpf, data_nasc, telefone, sexo, estado_civil, endereco, bairro, cep, cidade FROM paciente WHERE idPaciente = {$idP} AND deleted_at IS NULL");
 
   $rows = mysqli_num_rows($sql);
 

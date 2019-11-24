@@ -46,7 +46,7 @@ include_once('check_session.php');
 
               <div class="row" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
                 <div class="align-center">
-                  <h2 style="text-align: center;">Bem Vindo <?= ucfirst($usuario_nome); ?></h2>
+                  <h2 style="text-align: center;">Bem Vindo <?= ucwords($usuario_nome); ?></h2>
                 </div>
                 <br>
                 <br>
@@ -88,7 +88,7 @@ include_once('check_session.php');
                     <?php
                       include_once('connection.php');
 
-                      $query = "SELECT idPaciente, nome FROM paciente";
+                      $query = "SELECT idPaciente, nome FROM paciente WHERE deleted_at IS NULL";
 
                       $result = mysqli_query($conn, $query);
 

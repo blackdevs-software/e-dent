@@ -56,7 +56,7 @@ include_once('check_session.php');
                           <?php
                             include_once('connection.php');
 
-                            $query = "SELECT idPaciente, nome FROM paciente";
+                            $query = "SELECT idPaciente, nome FROM paciente WHERE deleted_at IS NULL";
 
                             $result = mysqli_query($conn, $query);
 

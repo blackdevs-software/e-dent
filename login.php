@@ -24,7 +24,8 @@ if ($_POST && $_POST['email'] && $_POST['password']) {
               FROM
                 usuario
               WHERE
-                email = '{$email}'
+                email = '{$email}' AND
+                deleted_at IS NULL
               LIMIT 1";
 
     $result = mysqli_query($conn, $query);

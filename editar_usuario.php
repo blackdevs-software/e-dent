@@ -105,7 +105,7 @@
     return;
   }
 
-  $sql = mysqli_query($conn, "SELECT idUsuario, nome, email, senha, rg, cpf, tipo_usuario, data_nasc, telefone, sexo, estado_civil, bairro, cep, cidade, endereco_residencial FROM usuario WHERE idUsuario = $idU");
+  $sql = mysqli_query($conn, "SELECT idUsuario, nome, email, senha, rg, cpf, tipo_usuario, data_nasc, telefone, sexo, estado_civil, bairro, cep, cidade, endereco_residencial FROM usuario WHERE idUsuario = {$idU} AND deleted_at IS NULL");
 
   $rows = mysqli_num_rows($sql);
 
