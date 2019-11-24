@@ -28,7 +28,7 @@
       $rg = trim(htmlspecialchars(filter_var($_POST['rg'], FILTER_SANITIZE_STRING)));
       $cpf = trim(htmlspecialchars(filter_var($_POST['cpf'], FILTER_SANITIZE_STRING)));
       $tipo_usuario = $_POST['tipo_usuario'];
-      $data_nasc = date('Y-m-d H:i:s', strtotime($_POST['data_nasc']));
+      $data_nasc = date('Y-m-d', strtotime($_POST['data_nasc']));
       $telefone = $_POST['telefone'];
       $sexo = $_POST['sexo'];
       $estado_civil = $_POST['estado_civil'];
@@ -36,6 +36,58 @@
       $endereco_residencial = $_POST['endereco_residencial'];
       $bairro = $_POST['bairro'];
       $cidade = $_POST['cidade'];
+
+      // validate email
+      if ((!empty($email) && !preg_match("/^[\w]{1,15}[\.]?[\w]{1,15}[\.]?[\w]{1,10}[@][^\W][\w]{1,15}[\.][\w]{1,15}[\.]?[\w]{0,5}[^\W$]/", $email))
+        || (!empty($data['email']) && !preg_match("/^[\w]{1,15}[\.]?[\w]{1,15}[\.]?[\w]{1,10}[@][^\W][\w]{1,15}[\.][\w]{1,15}[\.]?[\w]{0,5}[^\W$]/", $data['email']))) {
+        ?>
+          <script>
+            alert('E-mail inválido!');
+          </script>
+        <?php
+
+        header('Refresh: 0; cadastro_usuario.php');
+        return;
+      }
+
+      // validate rg
+      if ((!empty($rg) && !preg_match("/^[0-9]{2}\.[0-9]{3}\.[0-9]{3}-[0-9]$/", $rg))
+        || (!empty($data['rg']) && !preg_match("/^[0-9]{2}\.[0-9]{3}\.[0-9]{3}-[0-9]$/", $data['rg']))) {
+        ?>
+          <script>
+            alert('RG inválido!');
+          </script>
+        <?php
+
+        header('Refresh: 0; cadastro_usuario.php');
+        return;
+      }
+
+      // validate cpf
+      if ((!empty($cpf) && !preg_match("/^[0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2}$/", $cpf))
+        || (!empty($data['cpf']) && !preg_match("/^[0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2}$/", $data['cpf']))) {
+        ?>
+          <script>
+            alert('CPF inválido!');
+          </script>
+        <?php
+
+        header('Refresh: 0; cadastro_usuario.php');
+        return;
+      }
+
+      // validate data_nasc
+      if ((!empty($data_nasc) && $data_nasc > date('Y-m-d'))
+        || (!empty($data['data_nasc']) && $data['data_nasc'] > date('Y-m-d'))) {
+        ?>
+          <script>
+            alert('Data de nascimento inválida!');
+          </script>
+        <?php
+
+        header('Refresh: 0; cadastro_usuario.php');
+        return;
+      }
 
       if ($_POST['senha'] !== $_POST['confirmar_senha']) {
         ?>

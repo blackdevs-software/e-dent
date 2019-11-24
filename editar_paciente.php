@@ -22,7 +22,7 @@
         'email' => trim(htmlspecialchars(filter_var($_POST['email'], FILTER_SANITIZE_STRING))),
         'rg' => trim(htmlspecialchars(filter_var($_POST['rg'], FILTER_SANITIZE_STRING))),
         'cpf' => trim(htmlspecialchars(filter_var($_POST['cpf'], FILTER_SANITIZE_STRING))),
-        'data_nasc' => date('Y-m-d H:i:s', strtotime($_POST['data_nasc'])),
+        'data_nasc' => date('Y-m-d', strtotime($_POST['data_nasc'])),
         'telefone' => $_POST['telefone'],
         'sexo' => $_POST['sexo'],
         'estado_civil' => $_POST['estado_civil'],
@@ -31,6 +31,58 @@
         'cep' => $_POST['cep'],
         'cidade' => $_POST['cidade'],
       ];
+
+      // validate email
+      if ((!empty($email) && !preg_match("/^[\w]{1,15}[\.]?[\w]{1,15}[\.]?[\w]{1,10}[@][^\W][\w]{1,15}[\.][\w]{1,15}[\.]?[\w]{0,5}[^\W$]/", $email))
+        || (!empty($data['email']) && !preg_match("/^[\w]{1,15}[\.]?[\w]{1,15}[\.]?[\w]{1,10}[@][^\W][\w]{1,15}[\.][\w]{1,15}[\.]?[\w]{0,5}[^\W$]/", $data['email']))) {
+        ?>
+          <script>
+            alert('E-mail inválido!');
+          </script>
+        <?php
+
+        header('Refresh: 0; lista_paciente.php');
+        return;
+      }
+
+      // validate rg
+      if ((!empty($rg) && !preg_match("/^[0-9]{2}\.[0-9]{3}\.[0-9]{3}-[0-9]$/", $rg))
+        || (!empty($data['rg']) && !preg_match("/^[0-9]{2}\.[0-9]{3}\.[0-9]{3}-[0-9]$/", $data['rg']))) {
+        ?>
+          <script>
+            alert('RG inválido!');
+          </script>
+        <?php
+
+        header('Refresh: 0; lista_paciente.php');
+        return;
+      }
+
+      // validate cpf
+      if ((!empty($cpf) && !preg_match("/^[0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2}$/", $cpf))
+        || (!empty($data['cpf']) && !preg_match("/^[0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2}$/", $data['cpf']))) {
+        ?>
+          <script>
+            alert('CPF inválido!');
+          </script>
+        <?php
+
+        header('Refresh: 0; lista_paciente.php');
+        return;
+      }
+
+      // validate data_nasc
+      if ((!empty($data_nasc) && $data_nasc > date('Y-m-d'))
+        || (!empty($data['data_nasc']) && $data['data_nasc'] > date('Y-m-d'))) {
+        ?>
+          <script>
+            alert('Data de nascimento inválida!');
+          </script>
+        <?php
+
+        header('Refresh: 0; lista_paciente.php');
+        return;
+      }
 
       $update_fields = [];
 
@@ -132,6 +184,21 @@
   <link href="css/style.css" rel="stylesheet">
   <link href="css/style-responsive.css" rel="stylesheet"/>
   <link rel="icon" type="image/png" href="images/icons/iconEdent.png"/>
+  <style>
+    input {
+      border: 1px solid #c7c7cc;
+    }
+    input[type="text"]:not(:placeholder-shown),
+    input[type="email"]:not(:placeholder-shown),
+    input[type="password"]:not(:placeholder-shown) {
+      border: 1px solid #ff1e1e;
+    }
+    input[type="text"]:valid,
+    input[type="email"]:valid,
+    input[type="password"]:valid {
+      border: 1px solid #0ee10e;
+    }
+  </style>
 </head>
 
 <body>
@@ -175,7 +242,7 @@
                       <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
                         <label for="email" class="control-label col-lg-2">Email<span class="required">*</span></label>
                         <div class="col-lg-10">
-                          <input class="form-control" name="email" type="email" placeholder="email@dominio.com" value="<?= $email; ?>"/>
+                          <input class="form-control" name="email" type="email" required="required" placeholder="email@dominio.com" value="<?= $email; ?>"/>
                         </div>
                       </div>
                     </div>
@@ -184,14 +251,14 @@
                       <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
                         <label for="rg" class="control-label col-lg-2">RG<span class="required">*</span></label>
                         <div class="col-lg-10">
-                          <input class="form-control" onkeypress="$(this).mask('99.999.999-9')" id="rg" name="rg" type="text" placeholder="99.999.999-9" required="required" value="<?= $rg; ?>"/>
+                          <input class="form-control" onkeypress="$(this).mask('99.999.999-9')" type="text" id="rg" name="rg" required="required" placeholder="99.999.999-9" value="<?= $rg; ?>" pattern="[0-9]{2}\.[0-9]{3}\.[0-9]{3}-[0-9]"/>
                         </div>
                       </div>
 
                       <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
                         <label for="cpf" class="control-label col-lg-2">CPF<span class="required">*</span></label>
                         <div class="col-lg-10">
-                          <input class="form-control" onkeypress="$(this).mask('000.000.000-00');" type="text" id="cpf" name="cpf" required="required" placeholder="000.000.000-00" value="<?= $cpf; ?>"/>
+                          <input class="form-control" onkeypress="$(this).mask('000.000.000-00');" type="text" id="cpf" name="cpf" required="required" placeholder="000.000.000-00" value="<?= $cpf; ?>" pattern="[0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2}"/>
                         </div>
                       </div>
                     </div>
@@ -207,7 +274,7 @@
                       <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
                         <label for="telefone" class="control-label col-lg-2">Telefone<span class="required">*</span></label>
                         <div class="col-lg-10">
-                          <input class="form-control" onkeypress="$(this).mask('(00)00009-0000')" type="text" id="telefone" name="telefone" required="required" placeholder="(00)00000-0000" value="<?= $telefone; ?>"/>
+                          <input class="form-control" onkeypress="$(this).mask('(00)00009-0000')" type="text" id="telefone" name="telefone" required="required" placeholder="(00)00000-0000" value="<?= $telefone; ?>" pattern="\([0-9]{2}\)[0-9]{4,5}-[0-9]{4}"/>
                         </div>
                       </div>
                     </div>
@@ -268,7 +335,7 @@
                       <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
                         <label for="cep" class="control-label col-lg-2">CEP<span class="required">*</span></label>
                         <div class="col-lg-10">
-                          <input class="form-control" type="text" id="cep" name="cep" placeholder="00.000-000" required="required" maxlength="10" value="<?= $cep; ?>"/>
+                          <input class="form-control" type="text" id="cep" name="cep" placeholder="00.000-000" required="required" maxlength="10" value="<?= $cep; ?>" pattern="[0-9]{2}\.[0-9]{3}-[0-9]{3}"/>
                         </div>
                       </div>
 
