@@ -7,7 +7,7 @@
   include_once('../../check_session.php');
   include_once('../../connection.php');
 
-  $query = mysqli_query($conn, "SELECT * FROM consulta");
+  $query = mysqli_query($conn, "SELECT * FROM consulta WHERE deleted_at IS NULL");
   $rows = mysqli_num_rows($query);
 
   if ($rows == 0) {

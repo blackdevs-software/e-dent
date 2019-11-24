@@ -8,7 +8,7 @@
     return;
   }
 
-  $query = "DELETE FROM usuario WHERE idUsuario = {$id}";
+  $query = "UPDATE usuario SET deleted_at = current_timestamp WHERE idUsuario = {$id}";
 
   $result = mysqli_query($conn, $query);
 

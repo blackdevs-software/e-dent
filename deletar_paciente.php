@@ -8,7 +8,7 @@
     return;
   }
 
-  $query = "DELETE FROM paciente WHERE idPaciente = {$id}";
+  $query = "UPDATE paciente SET deleted_at = current_timestamp WHERE idPaciente = {$id}";
 
   $result = mysqli_query($conn, $query);
 

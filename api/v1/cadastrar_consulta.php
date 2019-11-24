@@ -19,7 +19,7 @@
   $data_hora = date('Y-m-d H:i:s', strtotime($_POST['data_hora']));
 
   // verify if it already exists an appointment
-  $query = mysqli_query($conn, "SELECT * FROM consulta where data_hora = '{$data_hora}'");
+  $query = mysqli_query($conn, "SELECT * FROM consulta where data_hora = '{$data_hora}' AND deleted_at IS NULL");
   $rows = mysqli_num_rows($query);
 
   if ($rows > 0) {

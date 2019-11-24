@@ -8,7 +8,7 @@
     return;
   }
 
-  $query = "DELETE FROM consulta WHERE idConsulta = {$id}";
+  $query = "UPDATE consulta SET deleted_at = current_timestamp WHERE idConsulta = {$id}";
 
   $result = mysqli_query($conn, $query);
 
