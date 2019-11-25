@@ -156,5 +156,5 @@ CREATE TABLE `paciente_prontuario_odontologico` (
 INSERT INTO usuario
   (nome, email, senha, rg, cpf, tipo_usuario, data_nasc, telefone, sexo, estado_civil, bairro, cep, cidade, endereco_residencial)
 VALUES
-  ('admin', 'admin@edent.com', '21232f297a57a5a743894a0e4a801fc3', '00000000-0', '000000000-00', 'coordenador', '2000-01-01', '99999-9999', 'm', 's', 'Centro', '81000-000', 'Curitiba', 'Rua Teste')
+  ('admin', 'admin@edent.com', '21232f297a57a5a743894a0e4a801fc3', '00.000.000-0', '000.000.000-00', 'coordenador', '2000-01-01', '(41)99999-9999', 'm', 's', 'Boqueirão', '81.650-100', 'Curitiba', 'Rua Aparício Lemes')
 ;
