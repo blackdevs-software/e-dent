@@ -18,6 +18,12 @@
   $observacao = trim(htmlspecialchars(filter_var($_POST['observacao'], FILTER_SANITIZE_STRING)));
   $data_hora = date('Y-m-d H:i:s', strtotime($_POST['data_hora']));
 
+  $status = trim(htmlspecialchars(filter_var($_POST['status'], FILTER_SANITIZE_STRING)));
+  if (!in_array($status, ['agendada', 'finalizada', 'cancelada'])) {
+    echo json_encode(['message' => 'Houve um erro']);
+    return;
+  }
+
   // verify if it already exists an appointment
   $query = mysqli_query($conn, "SELECT * FROM consulta where data_hora = '{$data_hora}' AND deleted_at IS NULL");
   $rows = mysqli_num_rows($query);
@@ -34,6 +40,7 @@
               fk_idPaciente,
               titulo,
               observacao,
+              status,
               data_hora,
               created_at
             )
@@ -43,6 +50,7 @@
               {$paciente},
               '{$titulo}',
               '{$observacao}',
+              '{$status}',
               '{$data_hora}',
               NOW()
             )";

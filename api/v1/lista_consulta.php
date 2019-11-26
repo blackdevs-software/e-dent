@@ -23,6 +23,8 @@
       'title' => $data['titulo'],
       'start' => $data['data_hora'],
       'end' => $data['data_hora'],
+      'color' => $data['status'] === 'finalizada' ? '#068900' : ($data['status'] === 'cancelada' ? '#F40000' : '#3891FF'),
+      'url' => './editar_consulta.php?id=' . $data['idConsulta'],
     ];
     $result[] = $entry;
   }

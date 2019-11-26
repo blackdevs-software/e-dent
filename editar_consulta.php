@@ -17,6 +17,7 @@
       $data = [
         'titulo' => $_POST['titulo'],
         'observacao' => $_POST['observacao'],
+        'status' => $_POST['status'],
         'data_hora' => date('Y-m-d H:i:s', strtotime($_POST['data'] . ' ' . $_POST['hora'])),
       ];
 
@@ -80,6 +81,7 @@
       $idConsulta = $data['idConsulta'];
       $titulo = $data['titulo'];
       $observacao = $data['observacao'];
+      $status = $data['status'];
       $data_hora = date('Y-m-d H:i:s', strtotime($data['data_hora']));
 
       $exploded_date = explode(' ', $data_hora);
@@ -109,7 +111,7 @@
 
 <body>
   <section id="container">
-    <header class="header" style="background-color: #111; border-bottom: #fff 1px solid;">
+    <header class="header" style="background-color: #008E47; border-bottom: #fff 1px solid;">
       <div class="toggle-nav" style="margin-top: 15px;">
         <div class="icon-reorder tooltips" data-original-title="Menu lateral" data-placement="bottom">
         <i class="fas fa-bars" style="color: #fff;"></i>
@@ -151,6 +153,37 @@
                           <textarea class="form-control" name="observacao" style="width:100%; height:100px; resize: vertical;" required="required" placeholder="Se não tiver observações escreva que não possui."><?= $observacao; ?></textarea>
                         </div>
                       </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-lg-6 form-group">
+                        <label for="status" class="control-label col-lg-2">Status<span class="required">*</span></label>
+                        <div class="col-lg-10" style="height: 34px !important; margin-bottom: 10px;">
+                          <select id="status" name="status" class="form-control" required="required">
+                            <?php
+                              $opt_status = ['agendada', 'finalizada', 'cancelada'];
+
+                              foreach ($opt_status as $option) {
+                                if ($status === $option) {
+                                  ?>
+                                    <option selected value="<?= $option; ?>">
+                                      <?= ucwords($option); ?>
+                                    </option>
+                                  <?php
+                                } else {
+                                  ?>
+                                    <option value="<?= $option; ?>">
+                                      <?= ucwords($option); ?>
+                                    </option>
+                                  <?php
+                                }
+                              }
+                            ?>
+                          </select>
+                          <br>
+                        </div>
+                      </div>
+                      <div class="col-lg-6 form-group"></div>
                     </div>
 
                     <br>

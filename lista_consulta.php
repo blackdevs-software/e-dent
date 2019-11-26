@@ -28,14 +28,15 @@ include_once('check_session.php');
     $search = trim(htmlspecialchars(filter_var($search, FILTER_SANITIZE_STRING)));
 
     $all_filters = [
-      ['value' => 'active', 'name' => 'Ativos'],
-      ['value' => 'inactive', 'name' => 'Inativos'],
       ['value' => 'all', 'name' => 'Todos'],
+      ['value' => 'agendada', 'name' => 'Agendadas'],
+      ['value' => 'finalizada', 'name' => 'Finalizadas'],
+      ['value' => 'cancelada', 'name' => 'Canceladas'],
     ];
     $filter = isset ($_GET['filter']) ? $_GET['filter'] : '';
     // Sanitize query param
     $filter = trim(htmlspecialchars(filter_var($filter, FILTER_SANITIZE_STRING)));
-    $filter = in_array($filter, ['active', 'inactive', 'all']) ? $filter : 'active';
+    $filter = in_array($filter, ['agendada', 'finalizada', 'cancelada', 'all']) ? $filter : 'all';
 
     // validation to force some query parameters
     $page_tmp = !empty($_GET['page']) ? intval($_GET['page']) : 1;
@@ -50,7 +51,7 @@ include_once('check_session.php');
     }
   ?>
   <section id="container">
-    <header class="header" style="background-color: #111; border-bottom: #fff 1px solid;">
+    <header class="header" style="background-color: #008E47; border-bottom: #fff 1px solid;">
       <div class="toggle-nav" style="margin-top: 15px;">
         <div class="icon-reorder tooltips" data-original-title="Menu lateral" data-placement="bottom">
         <i class="fas fa-bars" style="color: #fff;"></i>
@@ -116,18 +117,20 @@ include_once('check_session.php');
                           <th style="text-align: center;">Titulo</th>
                           <th style="text-align: center;">Observação</th>
                           <th style="text-align: center;">Data/Hora</th>
+                          <th style="text-align: center;">Status</th>
                           <th style="text-align: center;">Paciente</th>
                           <th style="text-align: center;">Ações</th>
                         </tr>
-
                         <?php
                           if (empty($search)) {
                             // pagination logic
                             $where_count = '';
-                            if ($filter === 'active') {
-                              $where_count = "deleted_at IS NULL";
-                            } else if ($filter === 'inactive') {
-                              $where_count = "deleted_at IS NOT NULL";
+                            if ($filter === 'agendada') {
+                              $where_count = "status = 'agendada'";
+                            } else if ($filter === 'finalizada') {
+                              $where_count = "status = 'finalizada'";
+                            } else if ($filter === 'cancelada') {
+                              $where_count = "status = 'cancelada'";
                             }
                             $where_count = !empty($where_count) ? "WHERE {$where_count}" : "";
 
@@ -154,26 +157,31 @@ include_once('check_session.php');
                                       consulta.titulo,
                                       consulta.observacao,
                                       date_format(consulta.data_hora, '%d/%m/%Y %H:%i') as dataHora,
+                                      consulta.status,
                                       paciente.nome as pacienteNome,
                                       consulta.deleted_at";
 
-                          $where = !empty($search) || (!empty($filter) && (in_array($filter, ['active', 'inactive']))) ? 'WHERE ' : '';
+                          $where = !empty($search) || (!empty($filter) && (in_array($filter, ['agendada', 'finalizada', 'cancelada']))) ? 'WHERE ' : '';
 
                           if (!empty($search)) {
                             $where .= "(consulta.titulo LIKE '%{$search}%' OR
                                         consulta.observacao LIKE '%{$search}%' OR
                                         paciente.nome LIKE '%{$search}%') ";
 
-                            if ($filter === 'active') {
-                              $where .= "AND consulta.deleted_at IS NULL";
-                            } else if ($filter === 'inactive') {
-                              $where .= "AND consulta.deleted_at IS NOT NULL";
+                            if ($filter === 'agendada') {
+                              $where .= "AND consulta.status = 'agendada'";
+                            } else if ($filter === 'finalizada') {
+                              $where .= "AND consulta.status = 'finalizada'";
+                            } else if ($filter === 'cancelada') {
+                              $where .= "AND consulta.status = 'cancelada'";
                             }
                           } else {
-                            if ($filter === 'active') {
-                              $where .= "consulta.deleted_at IS NULL";
-                            } else if ($filter === 'inactive') {
-                              $where .= "consulta.deleted_at IS NOT NULL";
+                            if ($filter === 'agendada') {
+                              $where .= "consulta.status = 'agendada'";
+                            } else if ($filter === 'finalizada') {
+                              $where .= "consulta.status = 'finalizada'";
+                            } else if ($filter === 'cancelada') {
+                              $where .= "consulta.status = 'cancelada'";
                             }
                           }
 
@@ -196,6 +204,7 @@ include_once('check_session.php');
                                   <td style="text-align: center;"><?= $data['titulo']; ?></td>
                                   <td style="text-align: center;"><?= $data['observacao']; ?></td>
                                   <td style="text-align: center;"><?= $data['dataHora']; ?></td>
+                                  <td style="text-align: center;"><?= $data['status']; ?></td>
                                   <td style="text-align: center;"><?= $data['pacienteNome']; ?></td>
                                   <td style="text-align: center;">
                                     <?php
@@ -203,9 +212,6 @@ include_once('check_session.php');
                                         ?>
                                           <a class="btn btn-sm btn-primary" href="editar_consulta.php?id=<?= $data['idConsulta']; ?>">
                                             <i class="fas fa-edit"></i>
-                                          </a>
-                                          <a class="btn btn-sm btn-danger" href="deletar_consulta.php?id=<?= $data['idConsulta']; ?>">
-                                            <i class="fas fa-trash"></i>
                                           </a>
                                         <?php
                                       }
@@ -245,7 +251,7 @@ include_once('check_session.php');
   <script src="js/scripts.js"></script>
   <script>
     $('#select_filter').change(function(e) {
-      const filter = e.target.value || 'active';
+      const filter = e.target.value || 'all';
       let query = '';
       if (window.location.toString().indexOf('search=') > 0) {
         const idx = window.location.toString().indexOf('search=');

@@ -28,14 +28,14 @@ include_once('check_session.php');
     $search = trim(htmlspecialchars(filter_var($search, FILTER_SANITIZE_STRING)));
 
     $all_filters = [
+      ['value' => 'all', 'name' => 'Todos'],
       ['value' => 'active', 'name' => 'Ativos'],
       ['value' => 'inactive', 'name' => 'Inativos'],
-      ['value' => 'all', 'name' => 'Todos'],
     ];
     $filter = isset ($_GET['filter']) ? $_GET['filter'] : '';
     // Sanitize query param
     $filter = trim(htmlspecialchars(filter_var($filter, FILTER_SANITIZE_STRING)));
-    $filter = in_array($filter, ['active', 'inactive', 'all']) ? $filter : 'active';
+    $filter = in_array($filter, ['active', 'inactive', 'all']) ? $filter : 'all';
 
     // validation to force some query parameters
     $page_tmp = !empty($_GET['page']) ? intval($_GET['page']) : 1;
@@ -50,7 +50,7 @@ include_once('check_session.php');
     }
   ?>
   <section id="container">
-    <header class="header" style="background-color: #111; border-bottom: #fff 1px solid;">
+    <header class="header" style="background-color: #008E47; border-bottom: #fff 1px solid;">
       <div class="toggle-nav" style="margin-top: 15px;">
         <div class="icon-reorder tooltips" data-original-title="Menu lateral" data-placement="bottom">
         <i class="fas fa-bars" style="color: #fff;"></i>
@@ -88,26 +88,6 @@ include_once('check_session.php');
               </div>
 
               <div class="panel-body">
-                <div class="row">
-                  <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12 form-group pull-right">
-                    <select id="select_filter" name="select_filter" class="form-control">
-                      <?php
-                        foreach ($all_filters as $f) {
-                          if ($f['value'] == $filter) {
-                            ?>
-                              <option value="<?= $f['value']; ?>" selected><?= $f['name']; ?></option>
-                            <?php
-                          } else {
-                            ?>
-                              <option value="<?= $f['value']; ?>"><?= $f['name']; ?></option>
-                            <?php
-                          }
-                        }
-                      ?>
-                    </select>
-                  </div>
-                </div>
-
                 <div class="col-lg-12">
                   <section class="panel">
                     <table class="table table-striped table-advance table-hover">
@@ -196,6 +176,7 @@ include_once('check_session.php');
                                       ppo.fk_idPaciente = pac.idPaciente
                                     {$where}
                                     GROUP BY pac.idPaciente
+                                    ORDER BY pac.created_at DESC
                                     LIMIT {$offset}, {$limit}";
 
                           $result = mysqli_query($conn, $query);
@@ -239,9 +220,6 @@ include_once('check_session.php');
                                         ?>
                                           <a class="btn btn-sm btn-primary" href="editar_paciente.php?id=<?= $data['idPaciente']; ?>">
                                             <i class="fas fa-edit"></i>
-                                          </a>
-                                          <a class="btn btn-sm btn-danger" href="deletar_paciente.php?id=<?= $data['idPaciente']; ?>">
-                                            <i class="fas fa-trash"></i>
                                           </a>
                                         <?php
                                       }
@@ -353,7 +331,7 @@ include_once('check_session.php');
   <script src="js/scripts.js"></script>
   <script>
     $('#select_filter').change(function(e) {
-      const filter = e.target.value || 'active';
+      const filter = e.target.value || 'all';
       let query = '';
       if (window.location.toString().indexOf('search=') > 0) {
         const idx = window.location.toString().indexOf('search=');

@@ -4,11 +4,11 @@
 
   $id = intval($_GET['id']);
   if (empty($id)) {
-    header('Refresh: 0; lista_paciente.php');
+    header('Refresh: 0; lista_usuario.php');
     return;
   }
 
-  $query = "UPDATE paciente SET deleted_at = current_timestamp WHERE idPaciente = {$id}";
+  $query = "UPDATE usuario SET deleted_at = NULL WHERE idUsuario = {$id}";
 
   $result = mysqli_query($conn, $query);
 
@@ -18,16 +18,16 @@
         alert('Houve um erro!');
       </script>
     <?php
-    header('Refresh: 0; lista_paciente.php');
+    header('Refresh: 0; lista_usuario.php');
     return;
   }
 
   ?>
     <script>
-      alert('Deletado com sucesso!');
+      alert('Reativado com sucesso!');
     </script>
   <?php
-  header('Refresh: 0; lista_paciente.php');
+  header('Refresh: 0; lista_usuario.php');
 
   mysqli_close($conn);
 ?>

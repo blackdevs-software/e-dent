@@ -35,14 +35,14 @@ if (!isset($usuario_tipo) || $usuario_tipo !== 'coordenador') {
     $search = trim(htmlspecialchars(filter_var($search, FILTER_SANITIZE_STRING)));
 
     $all_filters = [
+      ['value' => 'all', 'name' => 'Todos'],
       ['value' => 'active', 'name' => 'Ativos'],
       ['value' => 'inactive', 'name' => 'Inativos'],
-      ['value' => 'all', 'name' => 'Todos'],
     ];
     $filter = isset ($_GET['filter']) ? $_GET['filter'] : '';
     // Sanitize query param
     $filter = trim(htmlspecialchars(filter_var($filter, FILTER_SANITIZE_STRING)));
-    $filter = in_array($filter, ['active', 'inactive', 'all']) ? $filter : 'active';
+    $filter = in_array($filter, ['active', 'inactive', 'all']) ? $filter : 'all';
 
     // validation to force some query parameters
     $page_tmp = !empty($_GET['page']) ? intval($_GET['page']) : 1;
@@ -57,7 +57,7 @@ if (!isset($usuario_tipo) || $usuario_tipo !== 'coordenador') {
     }
   ?>
   <section id="container">
-    <header class="header" style="background-color: #111; border-bottom: #fff 1px solid;">
+    <header class="header" style="background-color: #008E47; border-bottom: #fff 1px solid;">
       <div class="toggle-nav" style="margin-top: 15px;">
         <div class="icon-reorder tooltips" data-original-title="Menu lateral" data-placement="bottom">
         <i class="fas fa-bars" style="color: #fff;"></i>
@@ -193,6 +193,7 @@ if (!isset($usuario_tipo) || $usuario_tipo !== 'coordenador') {
                                         FROM
                                           usuario
                                         {$where}
+                                        ORDER BY created_at DESC
                                         LIMIT {$offset}, {$limit}";
 
                           $result = mysqli_query($conn, $sql_search);
@@ -211,11 +212,17 @@ if (!isset($usuario_tipo) || $usuario_tipo !== 'coordenador') {
                                   <?php
                                     if (empty($data['deleted_at'])) {
                                       ?>
-                                        <a class="btn btn-sm btn-primary" href="editar_usuario.php?id=<?= $data['idUsuario']; ?>">
+                                        <a class="btn btn-sm btn-primary" title="Editar" href="editar_usuario.php?id=<?= $data['idUsuario']; ?>">
                                           <i class="fas fa-edit"></i>
                                         </a>
-                                        <a class="btn btn-sm btn-danger" href="deletar_usuario.php?id=<?= $data['idUsuario']; ?>">
+                                        <button class="btn btn-sm btn-danger" title="Deletar" onclick="deleteUser(<?= $data['idUsuario']; ?>)">
                                           <i class="fas fa-trash"></i>
+                                        </button>
+                                      <?php
+                                    } else {
+                                      ?>
+                                        <a class="btn btn-sm btn-primary" title="Reativar" href="reativar_usuario.php?id=<?= $data['idUsuario']; ?>">
+                                          <i class="fas fa-check"></i>
                                         </a>
                                       <?php
                                     }
@@ -255,7 +262,7 @@ if (!isset($usuario_tipo) || $usuario_tipo !== 'coordenador') {
   <script src="js/scripts.js"></script>
   <script>
     $('#select_filter').change(function(e) {
-      const filter = e.target.value || 'active';
+      const filter = e.target.value || 'all';
       let query = '';
       if (window.location.toString().indexOf('search=') > 0) {
         const idx = window.location.toString().indexOf('search=');
@@ -267,6 +274,13 @@ if (!isset($usuario_tipo) || $usuario_tipo !== 'coordenador') {
       }
       window.location.href = url;
     });
+
+    function deleteUser(id) {
+      const res = confirm('Deseja realmente excluir?');
+      if (res) {
+        window.location.href = `${window.location.origin}/deletar_usuario.php?id=${id}`;
+      }
+    }
   </script>
 </body>
 

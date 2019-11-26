@@ -37,6 +37,9 @@ CREATE TABLE `prontuario_higiene_oral` (
   `higiene_lingua` enum('uma vez por dia', 'mais de uma vez por dia', 'duas vezes ou mais vezes por dia') NOT NULL,
   `fio_dental` enum('nao costumo usar', 'uma vez por semana', 'uma vez por dia', 'mais de uma vez por dia', 'duas ou mais vezes por dia') NOT NULL,
   `observacao` TEXT NOT NULL,
+  `created_at` DATETIME DEFAULT current_timestamp,
+  `updated_at` DATETIME NULL,
+  `deleted_at` DATETIME NULL,
   PRIMARY KEY (`idProntuarioHigieneOral`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
@@ -49,6 +52,9 @@ CREATE TABLE `prontuario_historia_medica` (
   `historia_familiar` TEXT NOT NULL,
   `historia_pessoal_social` TEXT NOT NULL,
   `observacao` TEXT NOT NULL,
+  `created_at` DATETIME DEFAULT current_timestamp,
+  `updated_at` DATETIME NULL,
+  `deleted_at` DATETIME NULL,
   PRIMARY KEY (`idProntuarioHistoriaMedica`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
@@ -64,6 +70,9 @@ CREATE TABLE `prontuario_odontologico` (
   `mau_halito` enum('sim', 'nao') NOT NULL,
   `toma_cafe_refrigerante` enum('sim', 'nao') NOT NULL,
   `observacao` TEXT NOT NULL,
+  `created_at` DATETIME DEFAULT current_timestamp,
+  `updated_at` DATETIME NULL,
+  `deleted_at` DATETIME NULL,
   PRIMARY KEY (`idProntuarioOdontologico`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
@@ -103,6 +112,7 @@ CREATE TABLE `consulta` (
   `fk_idPaciente` int(11) NOT NULL,
   `titulo` varchar(255) NOT NULL,
   `observacao` TEXT NOT NULL,
+  `status` enum('agendada', 'finalizada', 'cancelada') NOT NULL,
   `data_hora` DATETIME NOT NULL,
   `created_at` DATETIME DEFAULT current_timestamp,
   `updated_at` DATETIME NULL,
