@@ -57,13 +57,13 @@ if (!isset($usuario_tipo) || $usuario_tipo !== 'coordenador') {
     }
   ?>
   <section id="container">
-    <header class="header" style="background-color: #008E47; border-bottom: #fff 1px solid;">
+    <header class="header" style="background-color: #009788; border-bottom: #fff 1px solid;">
       <div class="toggle-nav" style="margin-top: 15px;">
         <div class="icon-reorder tooltips" data-original-title="Menu lateral" data-placement="bottom">
         <i class="fas fa-bars" style="color: #fff;"></i>
       </div>
       </div>
-      <a class="navbar-brand" href="index.php">
+      <a class="navbar-brand" href="login.php">
         <img src="images/icons/E-DENT-3.png" class="nav-item" alt="logo" style="width: 90px">
       </a>
     </header>
@@ -126,6 +126,7 @@ if (!isset($usuario_tipo) || $usuario_tipo !== 'coordenador') {
                           <th style="text-align: center;">RG</th>
                           <th style="text-align: center;">CPF</th>
                           <th style="text-align: center;">Telefone</th>
+                          <th style="text-align: center;">Status</th>
                           <th style="text-align: center;">Ações</th>
                         </tr>
 
@@ -208,6 +209,7 @@ if (!isset($usuario_tipo) || $usuario_tipo !== 'coordenador') {
                                 <td style="text-align: center;"><?= $data['rg']; ?></td>
                                 <td style="text-align: center;"><?= $data['cpf']; ?></td>
                                 <td style="text-align: center;"><?= $data['telefone']; ?></td>
+                                <td style="text-align: center;"><?= empty($data['deleted_at']) ? 'Ativo' : 'Inativo'; ?></td>
                                 <td style="text-align: center;">
                                   <?php
                                     if (empty($data['deleted_at'])) {
@@ -278,7 +280,7 @@ if (!isset($usuario_tipo) || $usuario_tipo !== 'coordenador') {
     function deleteUser(id) {
       const res = confirm('Deseja realmente excluir?');
       if (res) {
-        window.location.href = `${window.location.origin}/deletar_usuario.php?id=${id}`;
+        window.location.href = `deletar_usuario.php?id=${id}`;
       }
     }
   </script>

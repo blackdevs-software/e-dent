@@ -1,5 +1,5 @@
 <aside>
-  <div id="sidebar" class="nav-collapse" style="background-color: #008E47;">
+  <div id="sidebar" class="nav-collapse" style="background-color: #000;">
     <ul class="sidebar-menu">
       <li>
         <a href="index.php">
