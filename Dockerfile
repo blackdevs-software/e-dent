@@ -14,10 +14,11 @@ RUN a2enmod headers && a2enmod deflate
 
 EXPOSE 80
 ENTRYPOINT [ "/bin/bash", "/var/www/html/docker-entrypoint.sh" ]
+# CMD [ "apache2", "-D", "FOREGROUND" ]
 
 # Build this image
 # docker image build -f Dockerfile -t app .
 
 # Run this image
 # docker container run --name app -p 80:80 app
-# docker container run -it --name app -p 80:80 app bash
+# docker container run -it --name app --entrypoint "" -p 80:80 app bash

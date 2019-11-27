@@ -4,112 +4,89 @@ metadata:
   name: app-deployment
 spec:
   replicas: 1
-  revisionHistoryLimit: 100
+  # revisionHistoryLimit: 100
   selector:
     matchLabels:
       component: app
+
   template:
     metadata:
+      name: edent-app
       labels:
         component: app
+
     spec:
       containers:
         - name: client
-          image: juliocesarmidia/edent-app:v1.0.0
+          # image: juliocesarmidia/edent-app:v1.0.0
+          image: httpd:2.4.41
+
           ports:
             - name: app-port
               containerPort: 80
-          # livenessProbe:
-          #   httpGet:
-          #     path: /
-          #     port: app-port
-          #   initialDelaySeconds: 10
-          #   timeoutSeconds: 30
-          # readinessProbe:
-          #   httpGet:
-          #     path: /
-          #     port: app-port
-          #   initialDelaySeconds: 10
-          #   timeoutSeconds: 30
-          # lifecycle:
-            # postStart:
-            #   exec:
-            #     command:
-            #       [
-            #         "sh",
-            #         "-c",
-            #         'echo "$(date +%s): postStart" && echo "$NODE_ENV"',
-            #       ]
-            # preStop:
-            #   exec:
-            #     command:
-            #       [
-            #         "sh",
-            #         "-c",
-            #         'echo "$(date +%s): preStop" && echo "$NODE_ENV"',
-            #       ]
-          volumeMounts:
-            - name: cred-volume
-              mountPath: /etc/creds
-              readOnly: true
+          # imagePullPolicy: Never
+
           env:
             - name: MYSQL_HOST
-              value: 192.168.0.11
+              value: 127.0.0.1
 
             - name: MYSQL_DATABASE
               value: db_odontologia
 
-            # - name: MYSQL_USER
-            #   value: root
+            - name: MYSQL_USER
+              value: root
 
-            # - name: MYSQL_PASSWORD
-            #   value: admin
+            - name: MYSQL_PASSWORD
+              value: admin
 
             - name: APP_DOMAIN
-              value: edent.blackdevs.com.br
+              value: edent.local
 
             - name: APP_IP
-              valueFrom:
-                fieldRef:
-                  fieldPath: status.hostIP
+              value: 127.0.0.1
 
-            - name: _POD_IP
-              valueFrom:
-                fieldRef:
-                  fieldPath: status.podIP
+            # - name: APP_IP
+            #   valueFrom:
+            #     fieldRef:
+            #       fieldPath: status.hostIP
 
-            - name: _NAMESPACE
-              valueFrom:
-                fieldRef:
-                  fieldPath: metadata.namespace
+            # - name: _POD_IP
+            #   valueFrom:
+            #     fieldRef:
+            #       fieldPath: status.podIP
 
-            - name: _POD_NAME
-              valueFrom:
-                fieldRef:
-                  fieldPath: metadata.name
+            # - name: _NAMESPACE
+            #   valueFrom:
+            #     fieldRef:
+            #       fieldPath: metadata.namespace
 
-            - name: _POD_UID
-              valueFrom:
-                fieldRef:
-                  fieldPath: metadata.uid
+            # - name: _POD_NAME
+            #   valueFrom:
+            #     fieldRef:
+            #       fieldPath: metadata.name
 
-            - name: _HOST_IP
-              valueFrom:
-                fieldRef:
-                  fieldPath: status.hostIP
+            # - name: _POD_UID
+            #   valueFrom:
+            #     fieldRef:
+            #       fieldPath: metadata.uid
 
-            - name: _LIMIT_MEMORY
-              valueFrom:
-                resourceFieldRef:
-                  containerName: client
-                  resource: limits.memory
-                  divisor: 1Mi
+            # - name: _HOST_IP
+            #   valueFrom:
+            #     fieldRef:
+            #       fieldPath: status.hostIP
 
-            - name: _LIMIT_CPU
-              valueFrom:
-                resourceFieldRef:
-                  containerName: client
-                  resource: limits.cpu
+            # - name: _LIMIT_MEMORY
+            #   valueFrom:
+            #     resourceFieldRef:
+            #       containerName: client
+            #       resource: limits.memory
+            #       divisor: 1Mi
+
+            # - name: _LIMIT_CPU
+            #   valueFrom:
+            #     resourceFieldRef:
+            #       containerName: client
+            #       resource: limits.cpu
 
             # status.hostIP	                      The IP address of the node where the Pod us running.
             # metadata.name	                      The Pod name (notice that this is different than the container’s name. A Pod may have more than one container)
@@ -124,12 +101,49 @@ spec:
             # limits.cpu	                        The CPU limit of the Pod
             # limits.memory	                      The memory limit of the Pod
 
+          # livenessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: app-port
+          #   initialDelaySeconds: 10
+          #   timeoutSeconds: 30
+          # readinessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: app-port
+          #   initialDelaySeconds: 10
+          #   timeoutSeconds: 30
+          # lifecycle:
+          #   postStart:
+          #     exec:
+          #       command:
+          #         [
+          #           "sh",
+          #           "-c",
+          #           'echo "$(date +%s): postStart" && echo "$NODE_ENV"',
+          #         ]
+          #   preStop:
+          #     exec:
+          #       command:
+          #         [
+          #           "sh",
+          #           "-c",
+          #           'echo "$(date +%s): preStop" && echo "$NODE_ENV"',
+          #         ]
+
+          # volumeMounts:
+          #   - name: cred-volume
+          #     mountPath: /etc/creds
+          #     readOnly: true
+
           resources:
             limits:
               memory: "8Mi"
               cpu: "30m"
+
       restartPolicy: Always
-      volumes:
-        - name: cred-volume
-          secret:
-            secretName: env-secrets
+
+      # volumes:
+      #   - name: cred-volume
+      #     secret:
+      #       secretName: env-secrets

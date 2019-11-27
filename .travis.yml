@@ -23,3 +23,5 @@ after_success:
   # push latest image and 1.0.0 version to docker registry
   - docker image push juliocesarmidia/edent-app:v1.0.0
   - docker image push juliocesarmidia/edent-app:$SHA
+
+  # docker container run -it --rm -p 80:80 --name edent-app juliocesarmidia/edent-app:v1.0.0

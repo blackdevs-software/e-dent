@@ -57,7 +57,7 @@ if (!isset($usuario_tipo) || $usuario_tipo !== 'coordenador') {
     }
   ?>
   <section id="container">
-    <header class="header" style="background-color: #009788; border-bottom: #fff 1px solid;">
+    <header class="header" style="background-color: #000; border-bottom: #fff 1px solid;">
       <div class="toggle-nav" style="margin-top: 15px;">
         <div class="icon-reorder tooltips" data-original-title="Menu lateral" data-placement="bottom">
         <i class="fas fa-bars" style="color: #fff;"></i>
