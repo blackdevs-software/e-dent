@@ -1,0 +1,133 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-deployment
+spec:
+  replicas: 3
+  revisionHistoryLimit: 100
+  selector:
+    matchLabels:
+      component: app
+  template:
+    metadata:
+      labels:
+        component: app
+    spec:
+      containers:
+        - name: client
+          image: juliocesarmidia/edent-app:v1.0.0
+          ports:
+            - name: app-port
+              containerPort: 80
+          livenessProbe:
+            httpGet:
+              path: /
+              port: app-port
+            initialDelaySeconds: 10
+            timeoutSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /
+              port: app-port
+            initialDelaySeconds: 10
+            timeoutSeconds: 30
+          lifecycle:
+            postStart:
+              exec:
+                command:
+                  [
+                    "sh",
+                    "-c",
+                    'echo "$(date +%s): postStart" && echo "$NODE_ENV"',
+                  ]
+            preStop:
+              exec:
+                command:
+                  [
+                    "sh",
+                    "-c",
+                    'echo "$(date +%s): preStop" && echo "$NODE_ENV"',
+                  ]
+          volumeMounts:
+            - name: cred-volume
+              mountPath: /etc/creds
+              readOnly: true
+          env:
+            - name: MYSQL_HOST
+              value: 127.0.0.1
+
+            - name: MYSQL_DATABASE
+              value: db_odontologia
+
+            # - name: MYSQL_USER
+            #   value: root
+
+            # - name: MYSQL_PASSWORD
+            #   value: admin
+
+            - name: APP_DOMAIN
+              value: edent.blackdevs.com.br
+
+            - name: APP_IP
+              value: 127.0.0.1
+
+            - name: _POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+
+            - name: _NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+
+            - name: _POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+
+            - name: _POD_UID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.uid
+
+            - name: _HOST_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
+
+            - name: _LIMIT_MEMORY
+              valueFrom:
+                resourceFieldRef:
+                  containerName: client
+                  resource: limits.memory
+                  divisor: 1Mi
+
+            - name: _LIMIT_CPU
+              valueFrom:
+                resourceFieldRef:
+                  containerName: client
+                  resource: limits.cpu
+
+            # status.hostIP	                      The IP address of the node where the Pod us running.
+            # metadata.name	                      The Pod name (notice that this is different than the container’s name. A Pod may have more than one container)
+            # metadata.namespace	                The namespace of the Pod
+            # status.podIP	                      The IP address of the Pod
+            # spec.serviceAccountName	            The service account that was used with the Pod.
+            # metadata.uid	                      The UID of the running Pod
+            # metadata.labels[‘label’]	          The value of the label put on the Pod. For example, if a Pod is labeled env=prod, then metadata.labels[‘env’] returns ‘prod’.
+            # metadata.annotations[‘annotation’]	Similar to labels, it gets the value of the specified annotation.
+            # requests.cpu	                      The amount of CPU specified in the requests field of the Pod definition
+            # requests.memory	                    The amount of memory specified in the requests field of the Pod definition
+            # limits.cpu	                        The CPU limit of the Pod
+            # limits.memory	                      The memory limit of the Pod
+
+          resources:
+            limits:
+              memory: "8Mi"
+              cpu: "30m"
+      restartPolicy: Always
+      volumes:
+        - name: cred-volume
+          secret:
+            secretName: env-secrets

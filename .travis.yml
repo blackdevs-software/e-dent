@@ -11,7 +11,7 @@ before_install:
   - docker image build --tag juliocesarmidia/edent-app:$SHA -f ./Dockerfile .
 
 script:
-  - docker container run --name edent-app juliocesarmidia/edent-app:$SHA
+  - docker container run -it --rm --name edent-app --entrypoint "" juliocesarmidia/edent-app:$SHA bash -c "echo"
 
 after_success:
   - docker image build --tag juliocesarmidia/edent-app:v1.0.0 -f Dockerfile .

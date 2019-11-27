@@ -209,7 +209,7 @@
         <i class="fas fa-bars" style="color: #fff;"></i>
       </div>
       </div>
-      <a class="navbar-brand" href="login.php">
+      <a class="navbar-brand" href="index.php">
         <img src="images/icons/E-DENT-3.png" class="nav-item" alt="logo" style="width: 90px">
       </a>
     </header>
