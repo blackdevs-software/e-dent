@@ -18,8 +18,8 @@ spec:
 # spec:
 #   ports:
 #   - port: 80
-#     targetPort: todoapp-port
+#     targetPort: app-port
 #     protocol: TCP
 #   selector:
-#     component: todoapp
+#     component: app
 #   type: LoadBalancer

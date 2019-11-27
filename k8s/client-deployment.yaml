@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: app-deployment
 spec:
-  replicas: 3
+  replicas: 1
   revisionHistoryLimit: 100
   selector:
     matchLabels:
@@ -19,42 +19,42 @@ spec:
           ports:
             - name: app-port
               containerPort: 80
-          livenessProbe:
-            httpGet:
-              path: /
-              port: app-port
-            initialDelaySeconds: 10
-            timeoutSeconds: 30
-          readinessProbe:
-            httpGet:
-              path: /
-              port: app-port
-            initialDelaySeconds: 10
-            timeoutSeconds: 30
-          lifecycle:
-            postStart:
-              exec:
-                command:
-                  [
-                    "sh",
-                    "-c",
-                    'echo "$(date +%s): postStart" && echo "$NODE_ENV"',
-                  ]
-            preStop:
-              exec:
-                command:
-                  [
-                    "sh",
-                    "-c",
-                    'echo "$(date +%s): preStop" && echo "$NODE_ENV"',
-                  ]
+          # livenessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: app-port
+          #   initialDelaySeconds: 10
+          #   timeoutSeconds: 30
+          # readinessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: app-port
+          #   initialDelaySeconds: 10
+          #   timeoutSeconds: 30
+          # lifecycle:
+            # postStart:
+            #   exec:
+            #     command:
+            #       [
+            #         "sh",
+            #         "-c",
+            #         'echo "$(date +%s): postStart" && echo "$NODE_ENV"',
+            #       ]
+            # preStop:
+            #   exec:
+            #     command:
+            #       [
+            #         "sh",
+            #         "-c",
+            #         'echo "$(date +%s): preStop" && echo "$NODE_ENV"',
+            #       ]
           volumeMounts:
             - name: cred-volume
               mountPath: /etc/creds
               readOnly: true
           env:
             - name: MYSQL_HOST
-              value: 127.0.0.1
+              value: 192.168.0.11
 
             - name: MYSQL_DATABASE
               value: db_odontologia
@@ -69,7 +69,9 @@ spec:
               value: edent.blackdevs.com.br
 
             - name: APP_IP
-              value: 127.0.0.1
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
 
             - name: _POD_IP
               valueFrom:
