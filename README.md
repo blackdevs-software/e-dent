@@ -2,10 +2,17 @@
 
 ## Instructions
 
-### Running with Docker
+### Running with Docker Compose
 
 ```bash
 docker-compose up -d
+```
+
+### Running with docker
+
+```bash
+docker image build --tag juliocesarmidia/edent-app:v1.0.0 -f Dockerfile .
+docker container run --name edent-app juliocesarmidia/edent-app:v1.0.0
 ```
 
 ### Running appart (requires a web server and MySQL)

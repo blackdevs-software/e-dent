@@ -30,7 +30,7 @@ if (!isset($usuario_tipo) || $usuario_tipo !== 'coordenador') {
     include_once('connection.php');
 
     // handle query parameters
-    $search = isset ($_GET['search']) ? $_GET['search'] : '';
+    $search = isset($_GET['search']) ? $_GET['search'] : '';
     // Sanitize query param
     $search = trim(htmlspecialchars(filter_var($search, FILTER_SANITIZE_STRING)));
 
@@ -39,7 +39,7 @@ if (!isset($usuario_tipo) || $usuario_tipo !== 'coordenador') {
       ['value' => 'active', 'name' => 'Ativos'],
       ['value' => 'inactive', 'name' => 'Inativos'],
     ];
-    $filter = isset ($_GET['filter']) ? $_GET['filter'] : '';
+    $filter = isset($_GET['filter']) ? $_GET['filter'] : '';
     // Sanitize query param
     $filter = trim(htmlspecialchars(filter_var($filter, FILTER_SANITIZE_STRING)));
     $filter = in_array($filter, ['active', 'inactive', 'all']) ? $filter : 'all';

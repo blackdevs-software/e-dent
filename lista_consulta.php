@@ -23,7 +23,7 @@ include_once('check_session.php');
     include_once('connection.php');
 
     // handle query parameters
-    $search = isset ($_GET['search']) ? $_GET['search'] : '';
+    $search = isset($_GET['search']) ? $_GET['search'] : '';
     // Sanitize query param
     $search = trim(htmlspecialchars(filter_var($search, FILTER_SANITIZE_STRING)));
 
@@ -33,7 +33,7 @@ include_once('check_session.php');
       ['value' => 'finalizada', 'name' => 'Finalizadas'],
       ['value' => 'cancelada', 'name' => 'Canceladas'],
     ];
-    $filter = isset ($_GET['filter']) ? $_GET['filter'] : '';
+    $filter = isset($_GET['filter']) ? $_GET['filter'] : '';
     // Sanitize query param
     $filter = trim(htmlspecialchars(filter_var($filter, FILTER_SANITIZE_STRING)));
     $filter = in_array($filter, ['agendada', 'finalizada', 'cancelada', 'all']) ? $filter : 'all';
@@ -210,7 +210,7 @@ include_once('check_session.php');
                                     <?php
                                       if (empty($data['deleted_at'])) {
                                         ?>
-                                          <a class="btn btn-sm btn-primary" href="editar_consulta.php?id=<?= $data['idConsulta']; ?>">
+                                          <a class="btn btn-sm btn-primary" title="Editar" href="editar_consulta.php?id=<?= $data['idConsulta']; ?>">
                                             <i class="fas fa-edit"></i>
                                           </a>
                                         <?php

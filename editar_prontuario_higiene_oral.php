@@ -39,8 +39,6 @@ include_once('check_session.php');
     <?php
         include_once('connection.php');
 
-        $observacao = $_POST['observacao'];
-
         if (!empty($_POST)) {
           if (empty($_POST['bochecho']) || empty($_POST['creme_dental']) || empty($_POST['palito'])
             || empty($_POST['higiene_lingua']) || empty($_POST['fio_dental']) || empty($_POST['observacao'])) {

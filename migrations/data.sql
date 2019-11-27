@@ -112,7 +112,7 @@ CREATE TABLE `consulta` (
   `fk_idPaciente` int(11) NOT NULL,
   `titulo` varchar(255) NOT NULL,
   `observacao` TEXT NOT NULL,
-  `status` enum('agendada', 'finalizada', 'cancelada') NOT NULL,
+  `status` enum('agendada', 'finalizada', 'cancelada') NOT NULL DEFAULT 'agendada',
   `data_hora` DATETIME NOT NULL,
   `created_at` DATETIME DEFAULT current_timestamp,
   `updated_at` DATETIME NULL,
