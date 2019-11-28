@@ -1,5 +1,8 @@
 # E-dent
 
+[![Build Status](https://badgen.net/travis/julio-cesar-development/e-dent?icon=travis)](https://travis-ci.com/julio-cesar-development/e-dent)
+[![GitHub Status](https://badgen.net/github/status/julio-cesar-development/e-dent)](https://github.com/julio-cesar-development/e-dent)
+
 ## Instructions
 
 ### Running with Docker Compose

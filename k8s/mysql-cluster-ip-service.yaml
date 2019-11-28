@@ -1,0 +1,49 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-service
+  namespace: default
+  labels:
+    app: edent
+
+spec:
+  # type: LoadBalancer
+  type: ClusterIP
+  # clusterIP: 10.96.0.3
+
+  selector:
+    app: edent
+    tier: mysql
+
+  ports:
+    - port: 3306
+      # targetPort: 3306
+      # protocol: TCP
+
+  # headless service
+  # clusterIP: None
+
+
+# mysql -u root
+# mysql -u root -padmin -h 127.0.0.1
+# /etc/mysql/mysql.conf.d/mysqld.cnf
+
+
+# cat <<EOF>> /etc/mysql/mysql.conf.d/mysqld.cnf
+# [mysqld]
+# default_authentication_plugin=mysql_native_password
+# skip-name-resolve
+# explicit_defaults_for_timestamp
+# pid-file=/var/run/mysqld/mysqld.pid
+# socket=/var/run/mysqld/mysqld.sock
+# datadir=/var/lib/mysql
+# log-error=/var/log/mysql/error.log
+# bind-address=0.0.0.0
+# port=3306
+# symbolic-links=0
+# max_connections=10000
+# EOF
+
+# kubectl exec -it $(kgp | grep mysql | awk '{print $1}') bash
+
+# mysql -u $MYSQL_USER -p$MYSQL_PASSWORD -h $MYSQL_HOST $MYSQL_DATABASE

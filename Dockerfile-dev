@@ -35,17 +35,16 @@ RUN chown -R $APACHE_RUN_USER:$APACHE_RUN_USER /var/www/html/
 
 EXPOSE 80
 
-ENTRYPOINT [ "/bin/bash", "/var/www/html/docker-entrypoint.sh" ]
-# CMD [ "apache2", "-D", "FOREGROUND" ]
+CMD [ "apache2", "-D", "FOREGROUND" ]
 
 # Build this image
-# docker image build -f Dockerfile -t edent-app .
+# docker image build -f Dockerfile -t edent-app-dev .
 
 # Run this image
-# docker container run --rm --name edent-app -p 80:80 edent-app
-# docker container run --rm -it --name edent-app --entrypoint "" -p 80:80 edent-app bash
+# docker container run --rm --name edent-app-dev -p 80:80 edent-app-dev
+# docker container run --rm -it --name edent-app-dev --entrypoint "" -p 80:80 edent-app-dev bash
 
-# docker container run --rm -v $PWD:/var/www/html/ --name edent-app -p 80:80 edent-app
+# docker container run --rm -v $PWD:/var/www/html/ --name edent-app-dev -p 80:80 edent-app-dev
 
 # docker container run --rm -p 8080:80 -it php:rc-apache bash
 

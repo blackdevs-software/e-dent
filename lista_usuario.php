@@ -7,6 +7,37 @@ if (!isset($usuario_tipo) || $usuario_tipo !== 'coordenador') {
   header('Location: index.php');
   return;
 }
+
+include_once('connection.php');
+
+// handle query parameters
+$search = isset($_GET['search']) ? $_GET['search'] : '';
+// Sanitize query param
+$search = trim(htmlspecialchars(filter_var($search, FILTER_SANITIZE_STRING)));
+
+$all_filters = [
+  ['value' => 'all', 'name' => 'Todos'],
+  ['value' => 'active', 'name' => 'Ativos'],
+  ['value' => 'inactive', 'name' => 'Inativos'],
+];
+$filter = isset($_GET['filter']) ? $_GET['filter'] : '';
+// Sanitize query param
+$filter = trim(htmlspecialchars(filter_var($filter, FILTER_SANITIZE_STRING)));
+$filter = in_array($filter, ['active', 'inactive', 'all']) ? $filter : 'all';
+
+// validation to force some query parameters
+$page_tmp = !empty($_GET['page']) ? intval($_GET['page']) : 1;
+$page_tmp = $page_tmp <= 1 ? 1 : $page_tmp;
+
+if (empty($_GET['page']) || empty($_GET['filter'])) {
+  if ($search) {
+    header("Location: lista_usuario.php?page={$page_tmp}&filter={$filter}&search={$search}");
+    return;
+  } else {
+    header("Location: lista_usuario.php?page={$page_tmp}&filter={$filter}");
+    return;
+  }
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -26,36 +57,6 @@ if (!isset($usuario_tipo) || $usuario_tipo !== 'coordenador') {
 </head>
 
 <body>
-  <?php
-    include_once('connection.php');
-
-    // handle query parameters
-    $search = isset($_GET['search']) ? $_GET['search'] : '';
-    // Sanitize query param
-    $search = trim(htmlspecialchars(filter_var($search, FILTER_SANITIZE_STRING)));
-
-    $all_filters = [
-      ['value' => 'all', 'name' => 'Todos'],
-      ['value' => 'active', 'name' => 'Ativos'],
-      ['value' => 'inactive', 'name' => 'Inativos'],
-    ];
-    $filter = isset($_GET['filter']) ? $_GET['filter'] : '';
-    // Sanitize query param
-    $filter = trim(htmlspecialchars(filter_var($filter, FILTER_SANITIZE_STRING)));
-    $filter = in_array($filter, ['active', 'inactive', 'all']) ? $filter : 'all';
-
-    // validation to force some query parameters
-    $page_tmp = !empty($_GET['page']) ? intval($_GET['page']) : 1;
-    $page_tmp = $page_tmp <= 1 ? 1 : $page_tmp;
-
-    if (empty($_GET['page']) || empty($_GET['filter'])) {
-      if ($search) {
-        header("location: lista_usuario.php?page={$page_tmp}&filter={$filter}&search={$search}");
-      } else {
-        header("location: lista_usuario.php?page={$page_tmp}&filter={$filter}");
-      }
-    }
-  ?>
   <section id="container">
     <header class="header" style="background-color: #000; border-bottom: #fff 1px solid;">
       <div class="toggle-nav" style="margin-top: 15px;">

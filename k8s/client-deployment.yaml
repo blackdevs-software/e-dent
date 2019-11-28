@@ -2,53 +2,71 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: app-deployment
+  namespace: default
+  labels:
+    app: edent
+
 spec:
   replicas: 1
   # revisionHistoryLimit: 100
+
   selector:
     matchLabels:
-      component: app
+      app: edent
+      tier: client
+
+  # strategy:
+  #   type: Recreate
 
   template:
     metadata:
       name: edent-app
       labels:
-        component: app
+        app: edent
+        tier: client
 
     spec:
+      # hostname: blackdevs
+      # subdomain: edent
       containers:
         - name: client
-          # image: juliocesarmidia/edent-app:v1.0.0
-          image: httpd:2.4.41
+          image: juliocesarmidia/edent-app:v1.0.0
+          # kubectl set image deployment/app-deployment client=juliocesarmidia/edent-app:b31e7ee69e6fa22cacc0311dbfe9fe5d48063e91
 
           ports:
-            - name: app-port
-              containerPort: 80
-          # imagePullPolicy: Never
+            - containerPort: 80
+              name: client-port
+              # imagePullPolicy: Never
 
           env:
-            - name: MYSQL_HOST
-              value: 127.0.0.1
-
-            - name: MYSQL_DATABASE
-              value: db_odontologia
-
             - name: MYSQL_USER
               value: root
+              # valueFrom:
+              #   secretKeyRef:
+              #     name: env-secrets
+              #     key: MYSQL_USER
 
             - name: MYSQL_PASSWORD
               value: admin
+              # valueFrom:
+              #   secretKeyRef:
+              #     name: env-secrets
+              #     key: MYSQL_PASSWORD
+
+            - name: MYSQL_HOST
+              value: mysql-service
+              # value: 127.0.0.1
+
+            - name: MYSQL_DATABASE
+              value: db_odontologia
 
             - name: APP_DOMAIN
               value: edent.local
 
             - name: APP_IP
-              value: 127.0.0.1
-
-            # - name: APP_IP
-            #   valueFrom:
-            #     fieldRef:
-            #       fieldPath: status.hostIP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
 
             # - name: _POD_IP
             #   valueFrom:
@@ -88,58 +106,28 @@ spec:
             #       containerName: client
             #       resource: limits.cpu
 
-            # status.hostIP	                      The IP address of the node where the Pod us running.
-            # metadata.name	                      The Pod name (notice that this is different than the container’s name. A Pod may have more than one container)
-            # metadata.namespace	                The namespace of the Pod
-            # status.podIP	                      The IP address of the Pod
-            # spec.serviceAccountName	            The service account that was used with the Pod.
-            # metadata.uid	                      The UID of the running Pod
-            # metadata.labels[‘label’]	          The value of the label put on the Pod. For example, if a Pod is labeled env=prod, then metadata.labels[‘env’] returns ‘prod’.
-            # metadata.annotations[‘annotation’]	Similar to labels, it gets the value of the specified annotation.
-            # requests.cpu	                      The amount of CPU specified in the requests field of the Pod definition
-            # requests.memory	                    The amount of memory specified in the requests field of the Pod definition
-            # limits.cpu	                        The CPU limit of the Pod
-            # limits.memory	                      The memory limit of the Pod
-
           # livenessProbe:
           #   httpGet:
           #     path: /
-          #     port: app-port
+          #     port: 80
           #   initialDelaySeconds: 10
           #   timeoutSeconds: 30
           # readinessProbe:
           #   httpGet:
           #     path: /
-          #     port: app-port
+          #     port: 80
           #   initialDelaySeconds: 10
           #   timeoutSeconds: 30
-          # lifecycle:
-          #   postStart:
-          #     exec:
-          #       command:
-          #         [
-          #           "sh",
-          #           "-c",
-          #           'echo "$(date +%s): postStart" && echo "$NODE_ENV"',
-          #         ]
-          #   preStop:
-          #     exec:
-          #       command:
-          #         [
-          #           "sh",
-          #           "-c",
-          #           'echo "$(date +%s): preStop" && echo "$NODE_ENV"',
-          #         ]
 
           # volumeMounts:
           #   - name: cred-volume
           #     mountPath: /etc/creds
           #     readOnly: true
 
-          resources:
-            limits:
-              memory: "8Mi"
-              cpu: "30m"
+          # resources:
+          #   limits:
+          #     memory: "16Mi"
+          #     cpu: "80m"
 
       restartPolicy: Always
 

@@ -2,9 +2,14 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: app-ingress
+  namespace: default
+  labels:
+    app: edent
+
   annotations:
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/rewrite-target: /
+
 spec:
   rules:
     # - host: edent.local
