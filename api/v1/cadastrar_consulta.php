@@ -64,7 +64,6 @@
   }
 
   mysqli_close($conn);
-
   echo json_encode([
     'message' => 'Cadastrado com sucesso',
     'id' => $inserted_id,

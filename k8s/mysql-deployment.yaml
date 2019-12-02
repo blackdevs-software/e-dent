@@ -15,8 +15,8 @@ spec:
       app: edent
       tier: mysql
 
-  # strategy:
-  #   type: Recreate
+  strategy:
+    type: Recreate
 
   template:
     metadata:
@@ -37,25 +37,11 @@ spec:
 
           env:
             - name: MYSQL_ROOT_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: env-secrets
-                  key: MYSQL_ROOT_PASSWORD
-
-            # - name: MYSQL_DATABASE
-            #   value: db_odontologia
-
-            # - name: MYSQL_USER
-            #   valueFrom:
-            #     secretKeyRef:
-            #       name: env-secrets
-            #       key: MYSQL_USER
-
-            # - name: MYSQL_PASSWORD
-            #   valueFrom:
-            #     secretKeyRef:
-            #       name: env-secrets
-            #       key: MYSQL_PASSWORD
+              value: admin
+              # valueFrom:
+              #   secretKeyRef:
+              #     name: env-secrets
+              #     key: MYSQL_ROOT_PASSWORD
 
           args: ["--default-authentication-plugin=mysql_native_password"]
 
@@ -75,19 +61,6 @@ spec:
           #   limits:
           #     memory: "16Mi"
           #     cpu: "80m"
-
-          # livenessProbe:
-          #   httpGet:
-          #     path: /
-          #     port: app-port
-          #   initialDelaySeconds: 10
-          #   timeoutSeconds: 30
-          # readinessProbe:
-          #   httpGet:
-          #     path: /
-          #     port: app-port
-          #   initialDelaySeconds: 10
-          #   timeoutSeconds: 30
 
       restartPolicy: Always
 

@@ -29,7 +29,6 @@
     $result[] = $entry;
   }
 
-  echo json_encode($result);
-
   mysqli_close($conn);
+  echo json_encode($result);
 ?>

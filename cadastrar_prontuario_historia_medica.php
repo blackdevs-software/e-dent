@@ -19,11 +19,6 @@
   $inserted_id = mysqli_insert_id($conn);
 
   if (empty($inserted_id)) {
-    ?>
-      <script>
-        alert('Houve um erro ao cadastrar!');
-      </script>
-    <?php
     header('Refresh: 0; prontuario_historia_medica.php');
     return;
   }
@@ -37,22 +32,10 @@
   $inserted_id = mysqli_insert_id($conn);
 
   if (empty($inserted_id)) {
-    ?>
-      <script>
-        alert('Houve um erro ao cadastrar!');
-      </script>
-    <?php
     header('Refresh: 0; prontuario_historia_medica.php');
     return;
   }
 
   mysqli_close($conn);
-?>
-
-<script>
-  alert('Prontuario de História Médica cadastrada!');
-</script>
-
-<?PHP
   header('Refresh: 0; prontuario_historia_medica.php');
 ?>

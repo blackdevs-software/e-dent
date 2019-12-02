@@ -8,15 +8,15 @@ metadata:
 
 spec:
   replicas: 1
-  # revisionHistoryLimit: 100
+  revisionHistoryLimit: 100
 
   selector:
     matchLabels:
       app: edent
       tier: client
 
-  # strategy:
-  #   type: Recreate
+  strategy:
+    type: Recreate
 
   template:
     metadata:
@@ -31,7 +31,6 @@ spec:
       containers:
         - name: client
           image: juliocesarmidia/edent-app:v1.0.0
-          # kubectl set image deployment/app-deployment client=juliocesarmidia/edent-app:b31e7ee69e6fa22cacc0311dbfe9fe5d48063e91
 
           ports:
             - containerPort: 80
@@ -55,7 +54,6 @@ spec:
 
             - name: MYSQL_HOST
               value: mysql-service
-              # value: 127.0.0.1
 
             - name: MYSQL_DATABASE
               value: db_odontologia
@@ -68,61 +66,18 @@ spec:
                 fieldRef:
                   fieldPath: status.hostIP
 
-            # - name: _POD_IP
-            #   valueFrom:
-            #     fieldRef:
-            #       fieldPath: status.podIP
-
-            # - name: _NAMESPACE
-            #   valueFrom:
-            #     fieldRef:
-            #       fieldPath: metadata.namespace
-
-            # - name: _POD_NAME
-            #   valueFrom:
-            #     fieldRef:
-            #       fieldPath: metadata.name
-
-            # - name: _POD_UID
-            #   valueFrom:
-            #     fieldRef:
-            #       fieldPath: metadata.uid
-
-            # - name: _HOST_IP
-            #   valueFrom:
-            #     fieldRef:
-            #       fieldPath: status.hostIP
-
-            # - name: _LIMIT_MEMORY
-            #   valueFrom:
-            #     resourceFieldRef:
-            #       containerName: client
-            #       resource: limits.memory
-            #       divisor: 1Mi
-
-            # - name: _LIMIT_CPU
-            #   valueFrom:
-            #     resourceFieldRef:
-            #       containerName: client
-            #       resource: limits.cpu
-
-          # livenessProbe:
-          #   httpGet:
-          #     path: /
-          #     port: 80
-          #   initialDelaySeconds: 10
-          #   timeoutSeconds: 30
-          # readinessProbe:
-          #   httpGet:
-          #     path: /
-          #     port: 80
-          #   initialDelaySeconds: 10
-          #   timeoutSeconds: 30
-
-          # volumeMounts:
-          #   - name: cred-volume
-          #     mountPath: /etc/creds
-          #     readOnly: true
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 10
+            timeoutSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 10
+            timeoutSeconds: 30
 
           # resources:
           #   limits:
@@ -130,8 +85,3 @@ spec:
           #     cpu: "80m"
 
       restartPolicy: Always
-
-      # volumes:
-      #   - name: cred-volume
-      #     secret:
-      #       secretName: env-secrets

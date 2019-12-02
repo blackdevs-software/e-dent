@@ -42,11 +42,6 @@ include_once('check_session.php');
         if (!empty($_POST)) {
           if (empty($_POST['bochecho']) || empty($_POST['creme_dental']) || empty($_POST['palito'])
             || empty($_POST['higiene_lingua']) || empty($_POST['fio_dental']) || empty($_POST['observacao'])) {
-            ?>
-              <script>
-                alert('Todos os campos são obrigatorios!');
-              </script>
-            <?php
             header('Refresh: 0; prontuario_higiene_oral.php');
             return;
           } else {
@@ -81,19 +76,6 @@ include_once('check_session.php');
 
             $result = mysqli_query($conn, $query);
 
-            if ($result) {
-              ?>
-                <script>
-                  alert('Cadastro alterado com sucesso no sistema!');
-                </script>
-              <?php
-            } else {
-              ?>
-                <script>
-                  alert('Erro ao alterar o cadastro do paciente!');
-                </script>
-              <?php
-            }
             header('Refresh: 0; prontuario_higiene_oral.php');
             return;
           }

@@ -8,8 +8,6 @@ metadata:
 
 data:
   data.yaml: |
-    UPDATE mysql.user set authentication_string = PASSWORD('admin') where user = 'root';
-
     DROP SCHEMA IF EXISTS db_odontologia;
     CREATE SCHEMA IF NOT EXISTS db_odontologia;
     USE db_odontologia;

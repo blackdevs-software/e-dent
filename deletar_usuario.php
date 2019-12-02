@@ -13,21 +13,10 @@
   $result = mysqli_query($conn, $query);
 
   if (empty($result)) {
-    ?>
-      <script>
-        alert('Houve um erro!');
-      </script>
-    <?php
     header('Refresh: 0; lista_usuario.php');
     return;
   }
 
-  ?>
-    <script>
-      alert('Deletado com sucesso!');
-    </script>
-  <?php
-  header('Refresh: 0; lista_usuario.php');
-
   mysqli_close($conn);
+  header('Refresh: 0; lista_usuario.php');
 ?>

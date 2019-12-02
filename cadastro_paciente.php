@@ -7,11 +7,6 @@
       || empty($_POST['sexo']) || empty($_POST['estado_civil']) || empty($_POST['rg'])
       || empty($_POST['cpf']) || empty($_POST['endereco']) || empty($_POST['bairro'])
       || empty($_POST['cep']) || empty($_POST['cidade']) || empty($_POST['email'])) {
-    ?>
-      <script>
-        alert('Todos os campos são obrigatorios');
-      </script>
-    <?php
       header('Refresh: 0; cadastro_paciente.php');
       return;
     } else {
@@ -31,12 +26,6 @@
       // validate email
       if ((!empty($email) && !preg_match("/^[\w]{1,15}[\.]?[\w]{1,15}[\.]?[\w]{1,10}[@][^\W][\w]{1,15}[\.][\w]{1,15}[\.]?[\w]{0,5}[^\W$]/", $email))
         || (!empty($data['email']) && !preg_match("/^[\w]{1,15}[\.]?[\w]{1,15}[\.]?[\w]{1,10}[@][^\W][\w]{1,15}[\.][\w]{1,15}[\.]?[\w]{0,5}[^\W$]/", $data['email']))) {
-        ?>
-          <script>
-            alert('E-mail inválido!');
-          </script>
-        <?php
-
         header('Refresh: 0; cadastro_paciente.php');
         return;
       }
@@ -44,12 +33,6 @@
       // validate rg
       if ((!empty($rg) && !preg_match("/^[0-9]{2}\.[0-9]{3}\.[0-9]{3}-[0-9]$/", $rg))
         || (!empty($data['rg']) && !preg_match("/^[0-9]{2}\.[0-9]{3}\.[0-9]{3}-[0-9]$/", $data['rg']))) {
-        ?>
-          <script>
-            alert('RG inválido!');
-          </script>
-        <?php
-
         header('Refresh: 0; cadastro_paciente.php');
         return;
       }
@@ -57,12 +40,6 @@
       // validate cpf
       if ((!empty($cpf) && !preg_match("/^[0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2}$/", $cpf))
         || (!empty($data['cpf']) && !preg_match("/^[0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2}$/", $data['cpf']))) {
-        ?>
-          <script>
-            alert('CPF inválido!');
-          </script>
-        <?php
-
         header('Refresh: 0; cadastro_paciente.php');
         return;
       }
@@ -70,12 +47,6 @@
       // validate data_nasc
       if ((!empty($data_nasc) && $data_nasc > date('Y-m-d'))
         || (!empty($data['data_nasc']) && $data['data_nasc'] > date('Y-m-d'))) {
-        ?>
-          <script>
-            alert('Data de nascimento inválida!');
-          </script>
-        <?php
-
         header('Refresh: 0; cadastro_paciente.php');
         return;
       }
@@ -85,12 +56,6 @@
       $result = mysqli_fetch_array($query);
 
       if ($result > 0) {
-        ?>
-          <script>
-            alert('Paciente já cadastrado no sistema, reveja os dados!');
-          </script>
-        <?php
-
         header('Refresh: 0; cadastro_paciente.php');
         return;
       } else {
@@ -102,19 +67,9 @@
         $result = mysqli_query($conn, $query);
 
         if ($result) {
-          ?>
-            <script>
-              alert('Paciente cadastrado com sucesso no sistema!');
-            </script>
-          <?php
           header('Refresh: 0; lista_paciente.php');
           return;
         } else {
-          ?>
-            <script>
-              alert('Erro ao cadastrar paciente!');
-            </script>
-          <?php
           header('Refresh: 0; cadastro_paciente.php');
           return;
         }
@@ -122,7 +77,6 @@
     }
   }
 ?>
-
 <!DOCTYPE html>
 <html lang="pt-br">
 

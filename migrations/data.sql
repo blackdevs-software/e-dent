@@ -1,12 +1,6 @@
-UPDATE mysql.user set authentication_string = PASSWORD('admin') where user = 'root';
-
 DROP SCHEMA IF EXISTS db_odontologia;
 CREATE SCHEMA IF NOT EXISTS db_odontologia;
 USE db_odontologia;
-
--- CREATE USER 'edent'@'%' IDENTIFIED BY 'K84fhY5sfA13LG5';
--- GRANT ALL ON *.* TO 'edent'@'%' WITH GRANT OPTION;
--- FLUSH PRIVILEGES;
 
 /* Patient */
 DROP TABLE IF EXISTS `paciente`;

@@ -8,11 +8,6 @@ if ($_POST && $_POST['email'] && $_POST['password']) {
   $remember = isset($_POST['remember']) && $_POST['remember'] === '1' ? 1 : 0;
 
   if (preg_match('/[^(a-z0-9_\-@\.)]+/', $email)) {
-    ?>
-      <script>
-        alert('E-mail inválido');
-      </script>
-    <?php
     header('Refresh: 0; login.php');
     return;
   } else {
@@ -31,11 +26,6 @@ if ($_POST && $_POST['email'] && $_POST['password']) {
     $result = mysqli_query($conn, $query);
 
     if ($result->num_rows <> 1) {
-      ?>
-        <script>
-          alert('Usuário ou senha inválida');
-        </script>
-      <?php
       header('Refresh: 0; login.php');
       return;
     }
@@ -43,11 +33,6 @@ if ($_POST && $_POST['email'] && $_POST['password']) {
     if ($result) {
       while ($data = mysqli_fetch_array($result)) {
         if ($data['senha'] !== $password) {
-          ?>
-            <script>
-              alert('Senha inválida');
-            </script>
-          <?php
           header('Refresh: 0; login.php');
           return;
         }
@@ -66,11 +51,6 @@ if ($_POST && $_POST['email'] && $_POST['password']) {
         $result = mysqli_query($conn, $query);
 
         if (!$result) {
-          ?>
-            <script>
-              alert('Ocorreu um erro');
-            </script>
-          <?php
           header('Refresh: 0; login.php');
           return;
         }

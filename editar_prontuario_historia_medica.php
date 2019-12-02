@@ -42,11 +42,6 @@ include_once('check_session.php');
         if (!empty($_POST)) {
           if (empty($_POST['queixa_principal']) || empty($_POST['historia_doenca_atual']) || empty($_POST['historia_progressa'])
             || empty($_POST['historia_familiar']) || empty($_POST['historia_pessoal_social']) || empty($_POST['observacao'])) {
-            ?>
-              <script>
-                alert('Todos os campos são obrigatorios!');
-              </script>
-            <?php
             header('Refresh: 0; prontuario_historia_medica.php');
             return;
           } else {
@@ -81,19 +76,6 @@ include_once('check_session.php');
 
             $result = mysqli_query($conn, $query);
 
-            if ($result) {
-              ?>
-                <script>
-                  alert('Cadastro alterado com sucesso no sistema!');
-                </script>
-              <?php
-            } else {
-              ?>
-                <script>
-                  alert('Erro ao alterar o cadastro do paciente!');
-                </script>
-              <?php
-            }
             header('Refresh: 0; prontuario_historia_medica.php');
             return;
           }

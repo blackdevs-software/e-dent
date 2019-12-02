@@ -43,11 +43,6 @@ include_once('check_session.php');
           if (empty($_POST['dificuldade_engolir_alimentos']) || empty($_POST['protese_dentadura']) || empty($_POST['quanto_tempo_perdeu_dentes'])
             || empty($_POST['adaptado_protese']) || empty($_POST['dentes_sensiveis']) || empty($_POST['gengiva_sangra'])
             || empty($_POST['mau_halito']) || empty($_POST['toma_cafe_refrigerante']) || empty($_POST['observacao'])) {
-            ?>
-              <script>
-                alert('Todos os campos são obrigatorios!');
-              </script>
-            <?php
             header('Refresh: 0; prontuario_odontologico.php');
             return;
           } else {
@@ -85,19 +80,6 @@ include_once('check_session.php');
 
             $result = mysqli_query($conn, $query);
 
-            if ($result) {
-              ?>
-                <script>
-                  alert('Cadastro alterado com sucesso no sistema!');
-                </script>
-              <?php
-            } else {
-              ?>
-                <script>
-                  alert('Erro ao alterar o cadastro do paciente!');
-                </script>
-              <?php
-            }
             header('Refresh: 0; prontuario_odontologico.php');
             return;
           }
