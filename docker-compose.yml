@@ -12,7 +12,7 @@ services:
       - db
     environment:
       MYSQL_HOST: ${MYSQL_HOST:-db}
-      MYSQL_DATABASE: ${MYSQL_DATABASE:-db_odontologia}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-dbodontologia}
       MYSQL_USER: ${MYSQL_USER:-root}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD:-admin}
       APP_DOMAIN: ${APP_DOMAIN:-edent.local}
@@ -36,7 +36,9 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD:-admin}
-      MYSQL_DATABASE: ${MYSQL_DATABASE:-db_odontologia}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-dbodontologia}
+      MYSQL_USER: ${MYSQL_USER:-edentuser}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-edentpass}
     networks:
       - netlocal
     volumes:

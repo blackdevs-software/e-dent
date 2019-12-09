@@ -20,6 +20,3 @@ data:
     port=3306
     symbolic-links=0
     max_connections=10000
----
-
-# /etc/mysql/mysql.conf.d/mysqld.cnf

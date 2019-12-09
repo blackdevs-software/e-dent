@@ -8,10 +8,6 @@ metadata:
 
 data:
   data.yaml: |
-    DROP SCHEMA IF EXISTS db_odontologia;
-    CREATE SCHEMA IF NOT EXISTS db_odontologia;
-    USE db_odontologia;
-
     /* Patient */
     DROP TABLE IF EXISTS `paciente`;
     CREATE TABLE `paciente` (
@@ -178,6 +174,3 @@ data:
     VALUES
       ('admin', 'admin@edent.com', '21232f297a57a5a743894a0e4a801fc3', '00.000.000-0', '000.000.000-00', 'coordenador', '2000-01-01', '(41)99999-9999', 'm', 's', 'Boqueirão', '81.650-100', 'Curitiba', 'Rua Aparicio Lemes')
     ;
----
-
-# /docker-entrypoint-initdb.d/data.sql

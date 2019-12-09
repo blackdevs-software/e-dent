@@ -29,10 +29,14 @@
 #     requests:
 #       storage: 4Gi
 
+
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: mysql-pv-claim
+  namespace: default
+  labels:
+    app: edent
 spec:
   accessModes:
     - ReadWriteOnce

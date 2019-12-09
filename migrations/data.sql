@@ -1,7 +1,3 @@
-DROP SCHEMA IF EXISTS db_odontologia;
-CREATE SCHEMA IF NOT EXISTS db_odontologia;
-USE db_odontologia;
-
 /* Patient */
 DROP TABLE IF EXISTS `paciente`;
 CREATE TABLE `paciente` (

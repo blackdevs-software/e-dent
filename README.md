@@ -11,11 +11,19 @@
 docker-compose up -d
 ```
 
-### Running with docker
+### Running with Docker
 
 ```bash
 docker image build --tag juliocesarmidia/edent-app:v1.0.0 -f Dockerfile .
 docker container run --name edent-app juliocesarmidia/edent-app:v1.0.0
+```
+
+### Running with Kubernetes
+
+```bash
+kubectl apply -f ./k8s/
+# or
+chmod +x ./deploy.sh && . $_
 ```
 
 ### Running appart (requires a web server and MySQL)

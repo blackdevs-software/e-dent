@@ -26,8 +26,6 @@ spec:
         tier: client
 
     spec:
-      # hostname: blackdevs
-      # subdomain: edent
       containers:
         - name: client
           image: juliocesarmidia/edent-app:v1.0.0
@@ -35,28 +33,22 @@ spec:
           ports:
             - containerPort: 80
               name: client-port
-              # imagePullPolicy: Never
 
           env:
             - name: MYSQL_USER
               value: root
-              # valueFrom:
-              #   secretKeyRef:
-              #     name: env-secrets
-              #     key: MYSQL_USER
 
             - name: MYSQL_PASSWORD
-              value: admin
-              # valueFrom:
-              #   secretKeyRef:
-              #     name: env-secrets
-              #     key: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: env-secrets
+                  key: mysqlrootpassword
+
+            - name: MYSQL_DATABASE
+              value: dbodontologia
 
             - name: MYSQL_HOST
               value: mysql-service
-
-            - name: MYSQL_DATABASE
-              value: db_odontologia
 
             - name: APP_DOMAIN
               value: edent.local
