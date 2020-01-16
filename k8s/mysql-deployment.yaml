@@ -68,10 +68,14 @@ spec:
               mountPath: /docker-entrypoint-initdb.d/data.sql
               subPath: data.yaml
 
-          # resources:
-          #   limits:
-          #     memory: "16Mi"
-          #     cpu: "80m"
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "200m"
+
+            limits:
+              memory: "256Mi"
+              cpu: "500m"
 
           args: ["--default-authentication-plugin=mysql_native_password"]
 

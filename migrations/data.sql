@@ -1,3 +1,6 @@
+CREATE DATABASE IF NOT EXISTS `dbodontologia`;
+USE `dbodontologia`;
+
 /* Patient */
 DROP TABLE IF EXISTS `paciente`;
 CREATE TABLE `paciente` (

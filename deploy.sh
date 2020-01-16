@@ -23,3 +23,6 @@ kubectl apply -f ./k8s/client-cluster-ip-service.yaml
 
 # ingress
 kubectl apply -f ./k8s/ingress-service.yaml
+
+# auto scaling pods
+kubectl apply -f ./k8s/hpa.yaml

@@ -7,9 +7,6 @@ COPY . /var/www/html/
 RUN mv /var/www/html/000-default.conf /etc/apache2/sites-enabled/000-default.conf
 RUN mv /var/www/html/security.conf /etc/apache2/conf-enabled/security.conf
 
-RUN chmod +x ./docker-entrypoint.sh
-COPY ./docker-entrypoint.sh /var/www/html/docker-entrypoint.sh
-
 RUN apt-get update -y && \
     apt-get install -y curl \
     iputils-ping traceroute \
@@ -35,8 +32,7 @@ RUN chown -R $APACHE_RUN_USER:$APACHE_RUN_USER /var/www/html/
 
 EXPOSE 80
 
-ENTRYPOINT [ "/bin/bash", "/var/www/html/docker-entrypoint.sh" ]
-# CMD [ "apache2", "-D", "FOREGROUND" ]
+CMD [ "apache2", "-D", "FOREGROUND" ]
 
 # Build this image
 # docker image build -f Dockerfile -t edent-app .
