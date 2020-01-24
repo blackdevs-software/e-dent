@@ -13,6 +13,9 @@ kubectl apply -f ./k8s/secrets.yaml
 # pvc
 kubectl apply -f ./k8s/database-persistent-volume-claim.yaml
 
+# nginx ingress controller
+kubectl apply -f ./k8s/nginx-ingress-controller.yaml
+
 # deployment and service mysql
 kubectl apply -f ./k8s/mysql-deployment.yaml
 kubectl apply -f ./k8s/mysql-cluster-ip-service.yaml
