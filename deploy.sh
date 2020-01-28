@@ -17,7 +17,7 @@ kubectl apply -f ./k8s/database-persistent-volume-claim.yaml
 kubectl apply -f ./k8s/nginx-ingress-controller.yaml
 
 # deployment and service mysql
-kubectl apply -f ./k8s/mysql-deployment.yaml
+kubectl apply -f ./k8s/mysql-statefulset.yaml
 kubectl apply -f ./k8s/mysql-cluster-ip-service.yaml
 
 # deployment and service application

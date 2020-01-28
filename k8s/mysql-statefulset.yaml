@@ -1,7 +1,7 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
-  name: mysql-deployment
+  name: mysql-statefulset
   namespace: default
   labels:
     app: edent
@@ -10,13 +10,12 @@ spec:
   replicas: 1
   revisionHistoryLimit: 100
 
+  serviceName: mysql-service
+
   selector:
     matchLabels:
       app: edent
       tier: mysql
-
-  strategy:
-    type: Recreate
 
   template:
     metadata:
