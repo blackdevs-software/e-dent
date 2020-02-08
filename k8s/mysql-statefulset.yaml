@@ -3,8 +3,6 @@ kind: StatefulSet
 metadata:
   name: mysql-statefulset
   namespace: default
-  labels:
-    app: edent
 
 spec:
   replicas: 1
@@ -14,15 +12,13 @@ spec:
 
   selector:
     matchLabels:
-      app: edent
-      tier: mysql
+      app: edentmysql
 
   template:
     metadata:
       name: edent-mysql
       labels:
-        app: edent
-        tier: mysql
+        app: edentmysql
 
     spec:
       containers:
@@ -38,26 +34,34 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: env-secrets
-                  key: mysqlrootpassword
+                  key: MYSQL_ROOT_PASSWORD
 
             - name: MYSQL_USER
               valueFrom:
                 secretKeyRef:
                   name: env-secrets
-                  key: mysqlusername
+                  key: MYSQL_USER
 
             - name: MYSQL_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: env-secrets
-                  key: mysqlpassword
+                  key: MYSQL_PASSWORD
 
             - name: MYSQL_DATABASE
-              value: dbodontologia
+              valueFrom:
+                secretKeyRef:
+                  name: env-secrets
+                  key: MYSQL_DATABASE
+
+            - name: MACHINE_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
 
           volumeMounts:
-            - name: mysql-persistent-storage
-              mountPath: /var/lib/mysql
+            # - name: mysql-persistent-storage
+            #   mountPath: /var/lib/mysql
 
             - name: config-volume
               mountPath: /etc/mysql/mysql.conf.d/mysqld.cnf
@@ -81,9 +85,9 @@ spec:
       restartPolicy: Always
 
       volumes:
-        - name: mysql-persistent-storage
-          persistentVolumeClaim:
-            claimName: mysql-pv-claim
+        # - name: mysql-persistent-storage
+        #   persistentVolumeClaim:
+        #     claimName: mysql-pv-claim
 
         - name: config-volume
           configMap:

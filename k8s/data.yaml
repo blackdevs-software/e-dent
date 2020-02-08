@@ -4,7 +4,7 @@ metadata:
   name: mysql-data
   namespace: default
   labels:
-    app: edent
+    app: edentmysql
 
 data:
   data.yaml: |

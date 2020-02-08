@@ -13,10 +13,8 @@ services:
     environment:
       MYSQL_HOST: ${MYSQL_HOST:-db}
       MYSQL_DATABASE: ${MYSQL_DATABASE:-dbodontologia}
-      MYSQL_USER: ${MYSQL_USER:-root}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-admin}
-      APP_DOMAIN: ${APP_DOMAIN:-edent.local}
-      APP_IP: ${APP_IP:-127.0.0.1}
+      MYSQL_USER: ${MYSQL_USER:-edentuser}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-edentpass}
     networks:
       - netlocal
     healthcheck:

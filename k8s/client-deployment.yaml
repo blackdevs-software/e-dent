@@ -3,8 +3,6 @@ kind: Deployment
 metadata:
   name: app-deployment
   namespace: default
-  labels:
-    app: edent
 
 spec:
   # replicas: 3
@@ -12,7 +10,7 @@ spec:
 
   selector:
     matchLabels:
-      app: edent
+      app: edentclient
 
   strategy:
     type: Recreate
@@ -21,7 +19,7 @@ spec:
     metadata:
       name: edent-app
       labels:
-        app: edent
+        app: edentclient
 
     spec:
       containers:
@@ -33,25 +31,28 @@ spec:
               name: client-port
 
           env:
+            - name: MYSQL_HOST
+              value: mysql-service
+
+            - name: MYSQL_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: env-secrets
+                  key: MYSQL_DATABASE
+
             - name: MYSQL_USER
-              value: root
+              valueFrom:
+                secretKeyRef:
+                  name: env-secrets
+                  key: MYSQL_USER
 
             - name: MYSQL_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: env-secrets
-                  key: mysqlrootpassword
+                  key: MYSQL_PASSWORD
 
-            - name: MYSQL_DATABASE
-              value: dbodontologia
-
-            - name: MYSQL_HOST
-              value: mysql-service
-
-            - name: APP_DOMAIN
-              value: edent.local
-
-            - name: APP_IP
+            - name: MACHINE_IP
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP

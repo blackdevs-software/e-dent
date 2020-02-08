@@ -3,31 +3,19 @@ kind: Service
 metadata:
   name: mysql-service
   namespace: default
-  labels:
-    app: edent
 
 spec:
-  # type: LoadBalancer
   type: ClusterIP
 
   selector:
-    app: edent
-    tier: mysql
+    app: edentmysql
 
   ports:
     - port: 3306
-      # targetPort: 3306
-      # protocol: TCP
-
-  # headless service
-  # clusterIP: None
-
-
 
 # mysql -u root
 # mysql -u root -padmin -h 127.0.0.1
 # /etc/mysql/mysql.conf.d/mysqld.cnf
-
 
 # cat <<EOF>> /etc/mysql/mysql.conf.d/mysqld.cnf
 # [mysqld]
@@ -44,6 +32,6 @@ spec:
 # max_connections=10000
 # EOF
 
-# kubectl exec -it $(kgp | grep mysql | awk '{print $1}') bash
+# kubectl exec -it $(kubectl get pod | grep mysql | awk '{print $1}') bash
 
 # mysql -u $MYSQL_USER -p$MYSQL_PASSWORD -h $MYSQL_HOST $MYSQL_DATABASE

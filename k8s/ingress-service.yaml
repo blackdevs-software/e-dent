@@ -3,8 +3,6 @@ kind: Ingress
 metadata:
   name: app-ingress
   namespace: default
-  labels:
-    app: edent
 
   # annotations:
   #   external-dns.alpha.kubernetes.io/hostname: edent.blackdevs.com.br
@@ -14,10 +12,17 @@ metadata:
 
 spec:
   rules:
-    # - host: edent.local
+    # - host: edent.blackdevs.com.br
+    #   http:
+    #     paths:
+    #       - path: /
+    #         backend:
+    #           serviceName: appclient-service
+    #           servicePort: 80
+
     - http:
         paths:
           - path: /
             backend:
-              serviceName: app-service
+              serviceName: appclient-service
               servicePort: 80

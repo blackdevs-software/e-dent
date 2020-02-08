@@ -1,42 +1,11 @@
-# apiVersion: v1
-# kind: PersistentVolume
-# metadata:
-#   name: mysql-pv-volume
-#   namespace: default
-#   labels:
-#     app: edent
-
-# spec:
-#   storageClassName: manual
-#   capacity:
-#     storage: 4Gi
-#   accessModes:
-#     - ReadWriteOnce
-#   hostPath:
-#     path: "/mnt/data"
-
-# ---
-
-# apiVersion: v1
-# kind: PersistentVolumeClaim
-# metadata:
-#   name: mysql-pv-claim
-# spec:
-#   storageClassName: manual
-#   accessModes:
-#     - ReadWriteOnce
-#   resources:
-#     requests:
-#       storage: 4Gi
-
-
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: mysql-pv-claim
   namespace: default
   labels:
-    app: edent
+    app: edentmysql
+
 spec:
   accessModes:
     - ReadWriteOnce
