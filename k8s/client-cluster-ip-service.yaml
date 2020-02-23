@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: appclient-service
+  name: app-service
   namespace: default
 
 spec:

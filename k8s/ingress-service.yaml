@@ -10,19 +10,21 @@ metadata:
   #   kubernetes.io/ingress.class: nginx
   #   nginx.ingress.kubernetes.io/rewrite-target: /
 
+# spec:
+#   rules:
+#     - host: edent.blackdevs.com.br
+#       http:
+#         paths:
+#           - path: /
+#             backend:
+#               serviceName: app-service
+#               servicePort: 80
+
 spec:
   rules:
-    # - host: edent.blackdevs.com.br
-    #   http:
-    #     paths:
-    #       - path: /
-    #         backend:
-    #           serviceName: appclient-service
-    #           servicePort: 80
-
     - http:
         paths:
           - path: /
             backend:
-              serviceName: appclient-service
+              serviceName: app-service
               servicePort: 80
