@@ -1,13 +1,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: app-deployment
-  namespace: default
+  name: client-deployment
+  namespace: edent
 
 spec:
-  # replicas: 3
-  revisionHistoryLimit: 100
-
   selector:
     matchLabels:
       app: edentclient
@@ -25,6 +22,7 @@ spec:
       containers:
         - name: client
           image: juliocesarmidia/edent-app:v1.0.0
+          imagePullPolicy: IfNotPresent
 
           ports:
             - containerPort: 80
@@ -52,11 +50,6 @@ spec:
                   name: env-secrets
                   key: MYSQL_PASSWORD
 
-            - name: MACHINE_IP
-              valueFrom:
-                fieldRef:
-                  fieldPath: status.hostIP
-
           livenessProbe:
             httpGet:
               path: /
@@ -73,10 +66,10 @@ spec:
           resources:
             requests:
               memory: "128Mi"
-              cpu: "200m"
+              cpu: "150m"
 
             limits:
               memory: "256Mi"
-              cpu: "500m"
+              cpu: "300m"
 
       restartPolicy: Always

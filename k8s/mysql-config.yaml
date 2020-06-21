@@ -2,12 +2,12 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: mysql-config
-  namespace: default
+  namespace: edent
   labels:
     app: edentmysql
 
 data:
-  config.yaml: |
+  mysql-config.yaml: |
     [mysqld]
     default_authentication_plugin=mysql_native_password
     skip-name-resolve

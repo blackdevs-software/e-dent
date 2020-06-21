@@ -1,0 +1,10 @@
+rule NoLatestTag ensure {
+  fetch("$.spec.template.spec.containers..image")
+    .as(:image)
+    .pick(:tag)
+    .contains("latest") == false
+}
+
+rule NoDefaultNamespace ensure {
+	fetch("$.metadata.namespace").first != "default"
+}

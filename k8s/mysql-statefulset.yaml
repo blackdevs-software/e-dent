@@ -2,12 +2,10 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: mysql-statefulset
-  namespace: default
+  namespace: edent
 
 spec:
   replicas: 1
-  revisionHistoryLimit: 100
-
   serviceName: mysql-service
 
   selector:
@@ -23,7 +21,8 @@ spec:
     spec:
       containers:
         - name: mysql
-          image: mysql:5.7.22
+          image: mysql:8.0
+          imagePullPolicy: IfNotPresent
 
           ports:
             - containerPort: 3306
@@ -54,40 +53,35 @@ spec:
                   name: env-secrets
                   key: MYSQL_DATABASE
 
-            - name: MACHINE_IP
-              valueFrom:
-                fieldRef:
-                  fieldPath: status.hostIP
-
           volumeMounts:
-            # - name: mysql-persistent-storage
+            # - name: mysql-persistent-volume
             #   mountPath: /var/lib/mysql
 
             - name: config-volume
               mountPath: /etc/mysql/mysql.conf.d/mysqld.cnf
-              subPath: config.yaml
+              subPath: mysql-config.yaml
 
             - name: data-volume
               mountPath: /docker-entrypoint-initdb.d/data.sql
-              subPath: data.yaml
+              subPath: mysql-data.yaml
 
           resources:
             requests:
               memory: "128Mi"
-              cpu: "200m"
+              cpu: "150m"
 
             limits:
               memory: "256Mi"
-              cpu: "500m"
+              cpu: "300m"
 
           args: ["--default-authentication-plugin=mysql_native_password"]
 
       restartPolicy: Always
 
       volumes:
-        # - name: mysql-persistent-storage
+        # - name: mysql-persistent-volume
         #   persistentVolumeClaim:
-        #     claimName: mysql-pv-claim
+        #     claimName: mysql-pvc
 
         - name: config-volume
           configMap:

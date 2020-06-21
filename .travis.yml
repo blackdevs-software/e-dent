@@ -1,24 +1,51 @@
-sudo: required
+language: shell # minimal
+
+os:
+  - linux
+
+dist: bionic
+
+branches:
+  only:
+    - master
+    - development
+
 services:
   - docker
 
-dist: trusty
-
 env:
-  - SHA=$(git rev-parse HEAD)
-
-before_install:
-  - docker image build --tag juliocesarmidia/edent-app:$SHA -f ./Dockerfile .
+  - SHA=$(git rev-parse --short=7 HEAD)
 
 script:
-  - docker container run -it --rm --name edent-app --entrypoint "" juliocesarmidia/edent-app:$SHA bash -c "uptime"
+  - |
+    # k8s validation
+    docker container run \
+      --name copper \
+      -it --rm \
+      -v "${PWD}:/data" \
+      -w /data superbrothers/copper:latest check \
+      --rules ./k8s_rules/rules.cop --file /data/k8s/client-deployment.yaml
+
+    # shell linter
+    docker container run -it \
+      --name shellcheck --rm \
+      -v "$PWD:/mnt" \
+      -w /mnt koalaman/shellcheck-alpine:stable shellcheck deploy.sh
+
+    # docker linter
+    docker container run -it \
+      --name copper --rm \
+      -v "${PWD}:/data" \
+      -w /data hadolint/hadolint:v1.18.0-alpine hadolint Dockerfile
 
 after_success:
-  - docker image build --tag juliocesarmidia/edent-app:$SHA --tag juliocesarmidia/edent-app:v1.0.0 -f Dockerfile .
+  - |
+  # build image
+  docker image build --tag juliocesarmidia/edent-app:$SHA --tag juliocesarmidia/edent-app:v1.0.0 -f Dockerfile .
 
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # docker hub login
+  echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
 
-  - docker image push juliocesarmidia/edent-app:v1.0.0
-  - docker image push juliocesarmidia/edent-app:$SHA
-
-  # docker container run -it --rm -p 80:80 --name edent-app juliocesarmidia/edent-app:v1.0.0
+  # push image
+  docker image push juliocesarmidia/edent-app:v1.0.0
+  docker image push juliocesarmidia/edent-app:$SHA
