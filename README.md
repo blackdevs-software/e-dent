@@ -1,6 +1,6 @@
 # E-dent
 
-[![Build Status](https://badgen.net/travis/julio-cesar-development/e-dent?icon=travis)](https://travis-ci.com/julio-cesar-development/e-dent)
+[![Build Status](https://travis-ci.org/julio-cesar-development/e-dent.svg)](https://travis-ci.org/julio-cesar-development/e-dent)
 [![GitHub Status](https://badgen.net/github/status/julio-cesar-development/e-dent)](https://github.com/julio-cesar-development/e-dent)
 
 ## Instructions
@@ -16,6 +16,8 @@ docker-compose up -d
 ```bash
 # require kubectl and helm installed
 chmod +x ./deploy.sh && bash deploy.sh
+# get objects
+kubectl get deploy,svc,pod,ingress,pv,pvc,hpa,configmap -n edent
 ```
 
 ### Running appart (requires a web server and MySQL)

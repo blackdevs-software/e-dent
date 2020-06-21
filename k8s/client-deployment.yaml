@@ -19,6 +19,28 @@ spec:
         app: edentclient
 
     spec:
+      initContainers:
+        - name: init-client
+          image: mysql:8.0
+          imagePullPolicy: IfNotPresent
+          command: ['sh', '-c', 'sleep 5 && while [ "$(mysqladmin -u e$MYSQL_USER -p$MYSQL_PASSWORD ping -h $MYSQL_HOST -P 3306 --silent 1> /dev/null 2>&1; echo $?)" -ne 0 ]; do echo "Waiting for MySQL" && sleep 1; done']
+
+          env:
+            - name: MYSQL_HOST
+              value: mysql-service.edent
+
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: env-secrets
+                  key: MYSQL_USER
+
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: env-secrets
+                  key: MYSQL_PASSWORD
+
       containers:
         - name: client
           image: juliocesarmidia/edent-app:v1.0.0
@@ -30,7 +52,7 @@ spec:
 
           env:
             - name: MYSQL_HOST
-              value: mysql-service
+              value: mysql-service.edent
 
             - name: MYSQL_DATABASE
               valueFrom:

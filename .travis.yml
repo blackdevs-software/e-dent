@@ -14,38 +14,28 @@ services:
   - docker
 
 env:
+  # set environment
   - SHA=$(git rev-parse --short=7 HEAD)
 
 script:
   - |
     # k8s validation
-    docker container run \
-      --name copper \
-      -it --rm \
-      -v "${PWD}:/data" \
-      -w /data superbrothers/copper:latest check \
-      --rules ./k8s_rules/rules.cop --file /data/k8s/client-deployment.yaml
+    docker container run --name copper -it --rm -v "$PWD:/data" -w /data superbrothers/copper:latest check --rules ./k8s_rules/rules.cop --file /data/k8s/client-deployment.yaml
 
     # shell linter
-    docker container run -it \
-      --name shellcheck --rm \
-      -v "$PWD:/mnt" \
-      -w /mnt koalaman/shellcheck-alpine:stable shellcheck deploy.sh
+    docker container run -it --name shellcheck --rm -v "$PWD:/mnt" -w /mnt koalaman/shellcheck-alpine:stable shellcheck deploy.sh
 
     # docker linter
-    docker container run -it \
-      --name copper --rm \
-      -v "${PWD}:/data" \
-      -w /data hadolint/hadolint:v1.18.0-alpine hadolint Dockerfile
+    docker container run -it --name copper --rm -v "$PWD:/data" -w /data hadolint/hadolint:v1.18.0-alpine hadolint Dockerfile
 
 after_success:
   - |
-  # build image
-  docker image build --tag juliocesarmidia/edent-app:$SHA --tag juliocesarmidia/edent-app:v1.0.0 -f Dockerfile .
+    # build image
+    docker image build --tag juliocesarmidia/edent-app:$SHA --tag juliocesarmidia/edent-app:v1.0.0 -f Dockerfile .
 
-  # docker hub login
-  echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+    # docker hub login
+    echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
 
-  # push image
-  docker image push juliocesarmidia/edent-app:v1.0.0
-  docker image push juliocesarmidia/edent-app:$SHA
+    # push image
+    docker image push juliocesarmidia/edent-app:v1.0.0
+    docker image push juliocesarmidia/edent-app:$SHA

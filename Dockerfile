@@ -4,8 +4,10 @@ LABEL maintainer="julio@blackdevs.com.br"
 WORKDIR /var/www/html/
 COPY . /var/www/html/
 
+# hadolint ignore=DL3008
 RUN apt-get update -yqq && \
     apt-get install -yqq \
+    --no-install-recommends \
     curl \
     iputils-ping \
     netcat \
