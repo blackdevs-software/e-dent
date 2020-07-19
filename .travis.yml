@@ -20,7 +20,7 @@ env:
 script:
   - |
     # k8s validation
-    docker container run --name copper -it --rm -v "$PWD:/data" -w /data superbrothers/copper:latest check --rules ./k8s_rules/rules.cop --file /data/k8s/client-deployment.yaml
+    docker container run --name copper -it --rm -v "$PWD:/data" -w /data superbrothers/copper:latest check --rules ./k8s_rules/rules.cop --file /data/k8s/application.yaml
 
     # shell linter
     docker container run -it --name shellcheck --rm -v "$PWD:/mnt" -w /mnt koalaman/shellcheck-alpine:stable shellcheck deploy.sh

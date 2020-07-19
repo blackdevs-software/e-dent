@@ -1,6 +1,31 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
+  name: mysql-config
+  namespace: edent
+  labels:
+    app: edentmysql
+
+data:
+  mysql-config.yaml: |
+    [mysqld]
+    default_authentication_plugin=mysql_native_password
+    skip-name-resolve
+    explicit_defaults_for_timestamp
+    pid-file=/var/run/mysqld/mysqld.pid
+    socket=/var/run/mysqld/mysqld.sock
+    datadir=/var/lib/mysql
+    log-error=/var/log/mysql/error.log
+    bind-address=0.0.0.0
+    port=3306
+    symbolic-links=0
+    max_connections=10000
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
   name: mysql-data
   namespace: edent
   labels:
@@ -174,3 +199,137 @@ data:
     VALUES
       ('admin', 'admin@edent.com', '21232f297a57a5a743894a0e4a801fc3', '00.000.000-0', '000.000.000-00', 'coordenador', '2000-01-01', '(41)99999-9999', 'm', 's', 'Boqueirão', '81.650-100', 'Curitiba', 'Rua Aparicio Lemes')
     ;
+
+# ---
+
+# apiVersion: v1
+# kind: PersistentVolumeClaim
+# metadata:
+#   name: mysql-pvc
+#   namespace: edent
+#   labels:
+#     app: edentmysql
+
+# spec:
+#   accessModes:
+#     - ReadWriteOnce
+#   resources:
+#     requests:
+#       storage: 4Gi
+
+---
+
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mysql-statefulset
+  namespace: edent
+
+spec:
+  replicas: 1
+  serviceName: mysql
+
+  selector:
+    matchLabels:
+      app: edentmysql
+
+  template:
+    metadata:
+      name: edent-mysql
+      labels:
+        app: edentmysql
+
+    spec:
+      containers:
+        - name: mysql
+          image: mysql:8.0
+          imagePullPolicy: IfNotPresent
+
+          ports:
+            - containerPort: 3306
+              name: mysql-port
+
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: env-secrets
+                  key: MYSQL_ROOT_PASSWORD
+
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: env-secrets
+                  key: MYSQL_USER
+
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: env-secrets
+                  key: MYSQL_PASSWORD
+
+            - name: MYSQL_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: env-secrets
+                  key: MYSQL_DATABASE
+
+          volumeMounts:
+            # - name: mysql-persistent-volume
+            #   mountPath: /var/lib/mysql
+
+            - name: config-volume
+              mountPath: /etc/mysql/mysql.conf.d/mysqld.cnf
+              subPath: mysql-config.yaml
+
+            - name: data-volume
+              mountPath: /docker-entrypoint-initdb.d/data.sql
+              subPath: mysql-data.yaml
+
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "150m"
+
+            limits:
+              memory: "256Mi"
+              cpu: "300m"
+
+          args: ["--default-authentication-plugin=mysql_native_password"]
+
+      restartPolicy: Always
+
+      volumes:
+        # - name: mysql-persistent-volume
+        #   persistentVolumeClaim:
+        #     claimName: mysql-pvc
+
+        - name: config-volume
+          configMap:
+            name: mysql-config
+
+        - name: data-volume
+          configMap:
+            name: mysql-data
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+  namespace: edent
+
+spec:
+  type: ClusterIP
+
+  selector:
+    app: edentmysql
+
+  ports:
+    - port: 3306
+      targetPort: mysql-port
+      protocol: TCP
+
+# kubectl exec -it $(kubectl get pod | grep mysql | awk '{print $1}') bash
+# mysql -u $MYSQL_USER -p$MYSQL_PASSWORD -h $MYSQL_HOST $MYSQL_DATABASE

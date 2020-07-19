@@ -23,11 +23,14 @@ spec:
         - name: init-client
           image: mysql:8.0
           imagePullPolicy: IfNotPresent
-          command: ['sh', '-c', 'sleep 5 && while [ "$(mysqladmin -u e$MYSQL_USER -p$MYSQL_PASSWORD ping -h $MYSQL_HOST -P 3306 --silent 1> /dev/null 2>&1; echo $?)" -ne 0 ]; do echo "Waiting for MySQL" && sleep 1; done']
+          command:
+            - 'sh'
+            - '-c'
+            - 'sleep 10 && while [ "$(mysqladmin -u e$MYSQL_USER -p$MYSQL_PASSWORD -h $MYSQL_HOST -P 3306 ping --silent 1> /dev/null 2>&1; echo $?)" -ne 0 ]; do echo "Waiting for MySQL" && sleep 5; done'
 
           env:
             - name: MYSQL_HOST
-              value: mysql-service.edent
+              value: mysql.edent
 
             - name: MYSQL_USER
               valueFrom:
@@ -52,7 +55,7 @@ spec:
 
           env:
             - name: MYSQL_HOST
-              value: mysql-service.edent
+              value: mysql.edent
 
             - name: MYSQL_DATABASE
               valueFrom:
@@ -95,3 +98,60 @@ spec:
               cpu: "300m"
 
       restartPolicy: Always
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: client-service
+  namespace: edent
+
+spec:
+  type: ClusterIP
+
+  selector:
+    app: edentclient
+
+  ports:
+    - port: 80
+      targetPort: client-port
+      protocol: TCP
+
+---
+
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: client-hpa
+  namespace: edent
+
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: client-deployment
+
+  minReplicas: 1
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 80
+
+---
+
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: app-ingress
+  namespace: edent
+
+  annotations:
+    kubernetes.io/ingress.class: nginx
+
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /
+            backend:
+              serviceName: client-service
+              servicePort: 80
